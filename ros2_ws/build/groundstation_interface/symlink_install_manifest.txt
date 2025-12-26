@@ -1,0 +1,15 @@
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/ament_index/resource_index/package_run_dependencies/groundstation_interface
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/ament_index/resource_index/parent_prefix_path/groundstation_interface
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/environment/ament_prefix_path.sh
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/environment/ament_prefix_path.dsv
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/environment/path.sh
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/environment/path.dsv
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/local_setup.bash
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/local_setup.sh
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/local_setup.zsh
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/local_setup.dsv
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/package.dsv
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/ament_index/resource_index/packages/groundstation_interface
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/cmake/groundstation_interfaceConfig.cmake
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/cmake/groundstation_interfaceConfig-version.cmake
+/home/jetson/ECE494-MUR/ros2_ws/install/groundstation_interface/share/groundstation_interface/package.xml

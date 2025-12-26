@@ -1,0 +1,9 @@
+/home/jetson/ECE494-MUR/ros2_ws/build/groundstation_interface/CMakeFiles/uninstall.dir
+/home/jetson/ECE494-MUR/ros2_ws/build/groundstation_interface/CMakeFiles/groundstation_interface_uninstall.dir
+/home/jetson/ECE494-MUR/ros2_ws/build/groundstation_interface/CMakeFiles/test.dir
+/home/jetson/ECE494-MUR/ros2_ws/build/groundstation_interface/CMakeFiles/edit_cache.dir
+/home/jetson/ECE494-MUR/ros2_ws/build/groundstation_interface/CMakeFiles/rebuild_cache.dir
+/home/jetson/ECE494-MUR/ros2_ws/build/groundstation_interface/CMakeFiles/list_install_components.dir
+/home/jetson/ECE494-MUR/ros2_ws/build/groundstation_interface/CMakeFiles/install.dir
+/home/jetson/ECE494-MUR/ros2_ws/build/groundstation_interface/CMakeFiles/install/local.dir
+/home/jetson/ECE494-MUR/ros2_ws/build/groundstation_interface/CMakeFiles/install/strip.dir
