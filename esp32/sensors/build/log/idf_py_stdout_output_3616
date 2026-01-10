@@ -1,0 +1,3130 @@
+Command: /home/nolan/.espressif/python_env/idf5.5_py3.10_env/bin/python /home/nolan/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /home/nolan/ECE494-MUR/esp32/sensors/build/sensors.elf /home/nolan/ECE494-MUR/esp32/sensors/build/bootloader/bootloader.elf -m '/home/nolan/.espressif/python_env/idf5.5_py3.10_env/bin/python' '/home/nolan/esp/esp-idf/tools/idf.py'
+ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6384
+load:0x40078000,len:15916
+load:0x40080400,len:3920
+entry 0x40080644
+[0;32mI (27) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (27) boot: compile time Jan  8 2026 17:11:12[0m
+[0;32mI (27) boot: Multicore bootloader[0m
+[0;32mI (28) boot: chip revision: v1.0[0m
+[0;32mI (31) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (35) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (38) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (42) boot: Enabling RNG early entropy source...[0m
+[0;32mI (46) boot: Partition Table:[0m
+[0;32mI (49) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (55) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (68) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (75) boot: End of partition table[0m
+[0;32mI (78) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=0b11ch ( 45340) map[0m
+[0;32mI (101) esp_image: segment 1: paddr=0001b144 vaddr=3ffb0000 size=02410h (  9232) load[0m
+[0;32mI (105) esp_image: segment 2: paddr=0001d55c vaddr=40080000 size=02abch ( 10940) load[0m
+[0;32mI (110) esp_image: segment 3: paddr=00020020 vaddr=400d0020 size=12d70h ( 77168) map[0m
+[0;32mI (139) esp_image: segment 4: paddr=00032d98 vaddr=40082abc size=0ab54h ( 43860) load[0m
+[0;32mI (156) esp_image: segment 5: paddr=0003d8f4 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (163) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (163) boot: Disabling RNG early entropy source...[0m
+[0;32mI (175) cpu_start: Multicore app[0m
+[0;32mI (183) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (183) cpu_start: Pro cpu start user code[0m
+[0;32mI (183) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (185) app_init: Application information:[0m
+[0;32mI (189) app_init: Project name:     sensors[0m
+[0;32mI (193) app_init: App version:      c357e4a[0m
+[0;32mI (196) app_init: Compile time:     Jan  8 2026 17:11:07[0m
+[0;32mI (201) app_init: ELF file SHA256:  bbd5527d1...[0m
+[0;32mI (206) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (210) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (213) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (217) efuse_init: Chip rev:         v1.0[0m
+[0;32mI (222) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (228) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (233) heap_init: At 3FFB2CF0 len 0002D310 (180 KiB): DRAM[0m
+[0;32mI (238) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (243) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (249) heap_init: At 4008D610 len 000129F0 (74 KiB): IRAM[0m
+[0;32mI (256) spi_flash: detected chip: generic[0m
+[0;32mI (258) spi_flash: flash io: dio[0m
+[0;33mW (261) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (274) main_task: Started on CPU0[0m
+[0;32mI (284) main_task: Calling app_main()[0m
+[0;32mI (284) main_task: Returned from app_main()[0m
+[0;32mI (314) mpu_example: GYRO => X: 65504, Y: 65523, Z: 65430[0m
+[0;32mI (314) mpu_example: ACCEL => X: 49016, Y: 912, Z: 1656[0m
+[0;32mI (314) mpu_example: TEMP: 27.277893[0m
+[0;32mI (344) mpu_example: GYRO => X: 65513, Y: 65517, Z: 65398[0m
+[0;32mI (344) mpu_example: ACCEL => X: 49088, Y: 824, Z: 1456[0m
+[0;32mI (344) mpu_example: TEMP: 28.044659[0m
+[0;32mI (374) mpu_example: GYRO => X: 65519, Y: 65281, Z: 65422[0m
+[0;32mI (374) mpu_example: ACCEL => X: 49056, Y: 1248, Z: 1432[0m
+[0;32mI (374) mpu_example: TEMP: 28.044659[0m
+[0;32mI (404) mpu_example: GYRO => X: 65519, Y: 65520, Z: 65407[0m
+[0;32mI (404) mpu_example: ACCEL => X: 49048, Y: 1152, Z: 1432[0m
+[0;32mI (404) mpu_example: TEMP: 28.044659[0m
+[0;32mI (434) mpu_example: GYRO => X: 65519, Y: 65526, Z: 65406[0m
+[0;32mI (434) mpu_example: ACCEL => X: 48904, Y: 856, Z: 1344[0m
+[0;32mI (434) mpu_example: TEMP: 28.044659[0m
+[0;32mI (464) mpu_example: GYRO => X: 65497, Y: 65517, Z: 65382[0m
+[0;32mI (464) mpu_example: ACCEL => X: 49008, Y: 1104, Z: 1440[0m
+[0;32mI (464) mpu_example: TEMP: 28.140503[0m
+[0;32mI (494) mpu_example: GYRO => X: 65522, Y: 65280, Z: 65396[0m
+[0;32mI (494) mpu_example: ACCEL => X: 49064, Y: 1248, Z: 1248[0m
+[0;32mI (494) mpu_example: TEMP: 28.044659[0m
+[0;32mI (524) mpu_example: GYRO => X: 65522, Y: 65510, Z: 65395[0m
+[0;32mI (524) mpu_example: ACCEL => X: 49088, Y: 888, Z: 1224[0m
+[0;32mI (524) mpu_example: TEMP: 28.044659[0m
+[0;32mI (554) mpu_example: GYRO => X: 65506, Y: 65527, Z: 65390[0m
+[0;32mI (554) mpu_example: ACCEL => X: 49288, Y: 968, Z: 1424[0m
+[0;32mI (554) mpu_example: TEMP: 28.044659[0m
+[0;32mI (584) mpu_example: GYRO => X: 65505, Y: 65502, Z: 65433[0m
+[0;32mI (584) mpu_example: ACCEL => X: 49256, Y: 1160, Z: 1712[0m
+[0;32mI (584) mpu_example: TEMP: 28.140503[0m
+[0;32mI (614) mpu_example: GYRO => X: 65526, Y: 65483, Z: 65363[0m
+[0;32mI (614) mpu_example: ACCEL => X: 49056, Y: 1120, Z: 1352[0m
+[0;32mI (614) mpu_example: TEMP: 28.044659[0m
+[0;32mI (644) mpu_example: GYRO => X: 65476, Y: 65337, Z: 65397[0m
+[0;32mI (644) mpu_example: ACCEL => X: 48984, Y: 992, Z: 1464[0m
+[0;32mI (644) mpu_example: TEMP: 27.900890[0m
+[0;32mI (674) mpu_example: GYRO => X: 65514, Y: 65375, Z: 65433[0m
+[0;32mI (674) mpu_example: ACCEL => X: 49008, Y: 800, Z: 1512[0m
+[0;32mI (674) mpu_example: TEMP: 28.044659[0m
+[0;32mI (704) mpu_example: GYRO => X: 65499, Y: 65266, Z: 65405[0m
+[0;32mI (704) mpu_example: ACCEL => X: 48944, Y: 1168, Z: 1472[0m
+[0;32mI (704) mpu_example: TEMP: 28.044659[0m
+[0;32mI (734) mpu_example: GYRO => X: 65512, Y: 378, Z: 65409[0m
+[0;32mI (734) mpu_example: ACCEL => X: 49144, Y: 1176, Z: 1448[0m
+[0;32mI (734) mpu_example: TEMP: 27.182047[0m
+[0;32mI (764) mpu_example: GYRO => X: 65494, Y: 95, Z: 65427[0m
+[0;32mI (764) mpu_example: ACCEL => X: 48912, Y: 1192, Z: 1448[0m
+[0;32mI (764) mpu_example: TEMP: 28.140503[0m
+[0;32mI (794) mpu_example: GYRO => X: 65461, Y: 65049, Z: 65398[0m
+[0;32mI (794) mpu_example: ACCEL => X: 49000, Y: 1160, Z: 1456[0m
+[0;32mI (794) mpu_example: TEMP: 28.092581[0m
+[0;32mI (824) mpu_example: GYRO => X: 65503, Y: 177, Z: 65437[0m
+[0;32mI (824) mpu_example: ACCEL => X: 49048, Y: 784, Z: 1392[0m
+[0;32mI (824) mpu_example: TEMP: 28.044659[0m
+[0;32mI (854) mpu_example: GYRO => X: 65516, Y: 65500, Z: 65430[0m
+[0;32mI (854) mpu_example: ACCEL => X: 49016, Y: 1216, Z: 1320[0m
+[0;32mI (854) mpu_example: TEMP: 27.948812[0m
+[0;32mI (884) mpu_example: GYRO => X: 65508, Y: 65469, Z: 65440[0m
+[0;32mI (884) mpu_example: ACCEL => X: 48992, Y: 936, Z: 1592[0m
+[0;32mI (884) mpu_example: TEMP: 28.619732[0m
+[0;32mI (914) mpu_example: GYRO => X: 65517, Y: 65493, Z: 65407[0m
+[0;32mI (914) mpu_example: ACCEL => X: 49120, Y: 952, Z: 1344[0m
+[0;32mI (914) mpu_example: TEMP: 27.900890[0m
+[0;32mI (944) mpu_example: GYRO => X: 26, Y: 65532, Z: 65426[0m
+[0;32mI (944) mpu_example: ACCEL => X: 49032, Y: 768, Z: 1512[0m
+[0;32mI (944) mpu_example: TEMP: 28.140503[0m
+[0;32mI (974) mpu_example: GYRO => X: 65534, Y: 6, Z: 65419[0m
+[0;32mI (974) mpu_example: ACCEL => X: 49096, Y: 984, Z: 1400[0m
+[0;32mI (974) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1004) mpu_example: GYRO => X: 65523, Y: 65521, Z: 65441[0m
+[0;32mI (1004) mpu_example: ACCEL => X: 49008, Y: 1232, Z: 1456[0m
+[0;32mI (1004) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1034) mpu_example: GYRO => X: 65503, Y: 65507, Z: 65461[0m
+[0;32mI (1034) mpu_example: ACCEL => X: 49120, Y: 1048, Z: 1512[0m
+[0;32mI (1034) mpu_example: TEMP: 28.140503[0m
+[0;32mI (1064) mpu_example: GYRO => X: 65500, Y: 5, Z: 65397[0m
+[0;32mI (1064) mpu_example: ACCEL => X: 49096, Y: 1224, Z: 1032[0m
+[0;32mI (1064) mpu_example: TEMP: 27.900890[0m
+[0;32mI (1094) mpu_example: GYRO => X: 65509, Y: 65508, Z: 65400[0m
+[0;32mI (1094) mpu_example: ACCEL => X: 48992, Y: 1104, Z: 1392[0m
+[0;32mI (1094) mpu_example: TEMP: 28.140503[0m
+[0;32mI (1124) mpu_example: GYRO => X: 65507, Y: 65512, Z: 65392[0m
+[0;32mI (1124) mpu_example: ACCEL => X: 49048, Y: 800, Z: 1520[0m
+[0;32mI (1124) mpu_example: TEMP: 27.948812[0m
+[0;32mI (1154) mpu_example: GYRO => X: 65501, Y: 65281, Z: 65440[0m
+[0;32mI (1154) mpu_example: ACCEL => X: 49072, Y: 992, Z: 1384[0m
+[0;32mI (1154) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1184) mpu_example: GYRO => X: 65491, Y: 65532, Z: 65383[0m
+[0;32mI (1184) mpu_example: ACCEL => X: 49072, Y: 1136, Z: 1352[0m
+[0;32mI (1184) mpu_example: TEMP: 28.619732[0m
+[0;32mI (1214) mpu_example: GYRO => X: 65516, Y: 0, Z: 65413[0m
+[0;32mI (1214) mpu_example: ACCEL => X: 48968, Y: 872, Z: 1168[0m
+[0;32mI (1214) mpu_example: TEMP: 28.140503[0m
+[0;32mI (1244) mpu_example: GYRO => X: 65529, Y: 65526, Z: 65405[0m
+[0;32mI (1244) mpu_example: ACCEL => X: 49072, Y: 992, Z: 1472[0m
+[0;32mI (1244) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1274) mpu_example: GYRO => X: 65508, Y: 12, Z: 65402[0m
+[0;32mI (1274) mpu_example: ACCEL => X: 49216, Y: 1128, Z: 1344[0m
+[0;32mI (1274) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1304) mpu_example: GYRO => X: 65511, Y: 248, Z: 65400[0m
+[0;32mI (1304) mpu_example: ACCEL => X: 49056, Y: 1216, Z: 1288[0m
+[0;32mI (1304) mpu_example: TEMP: 28.140503[0m
+[0;32mI (1334) mpu_example: GYRO => X: 3, Y: 65282, Z: 65388[0m
+[0;32mI (1334) mpu_example: ACCEL => X: 48776, Y: 1104, Z: 1616[0m
+[0;32mI (1334) mpu_example: TEMP: 27.182047[0m
+[0;32mI (1364) mpu_example: GYRO => X: 65523, Y: 1, Z: 65433[0m
+[0;32mI (1364) mpu_example: ACCEL => X: 48896, Y: 1056, Z: 1520[0m
+[0;32mI (1364) mpu_example: TEMP: 28.092581[0m
+[0;32mI (1394) mpu_example: GYRO => X: 65525, Y: 65517, Z: 65427[0m
+[0;32mI (1394) mpu_example: ACCEL => X: 49136, Y: 1048, Z: 1320[0m
+[0;32mI (1394) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1424) mpu_example: GYRO => X: 0, Y: 65518, Z: 65420[0m
+[0;32mI (1424) mpu_example: ACCEL => X: 49048, Y: 784, Z: 1376[0m
+[0;32mI (1424) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1454) mpu_example: GYRO => X: 65509, Y: 65535, Z: 65400[0m
+[0;32mI (1454) mpu_example: ACCEL => X: 49056, Y: 1144, Z: 1496[0m
+[0;32mI (1454) mpu_example: TEMP: 28.092581[0m
+[0;32mI (1484) mpu_example: GYRO => X: 65509, Y: 5, Z: 65438[0m
+[0;32mI (1484) mpu_example: ACCEL => X: 48984, Y: 1168, Z: 1416[0m
+[0;32mI (1484) mpu_example: TEMP: 28.619732[0m
+[0;32mI (1514) mpu_example: GYRO => X: 65507, Y: 31, Z: 65429[0m
+[0;32mI (1514) mpu_example: ACCEL => X: 49072, Y: 1048, Z: 1384[0m
+[0;32mI (1514) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1544) mpu_example: GYRO => X: 65524, Y: 65524, Z: 65407[0m
+[0;32mI (1544) mpu_example: ACCEL => X: 49016, Y: 984, Z: 1432[0m
+[0;32mI (1544) mpu_example: TEMP: 28.284273[0m
+[0;32mI (1574) mpu_example: GYRO => X: 65516, Y: 65519, Z: 65426[0m
+[0;32mI (1574) mpu_example: ACCEL => X: 48968, Y: 1056, Z: 1392[0m
+[0;32mI (1574) mpu_example: TEMP: 28.092581[0m
+[0;32mI (1604) mpu_example: GYRO => X: 65509, Y: 65513, Z: 65406[0m
+[0;32mI (1604) mpu_example: ACCEL => X: 49208, Y: 1016, Z: 1336[0m
+[0;32mI (1604) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1634) mpu_example: GYRO => X: 65512, Y: 6, Z: 65439[0m
+[0;32mI (1634) mpu_example: ACCEL => X: 49112, Y: 784, Z: 1528[0m
+[0;32mI (1634) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1664) mpu_example: GYRO => X: 65534, Y: 10, Z: 65396[0m
+[0;32mI (1664) mpu_example: ACCEL => X: 49024, Y: 904, Z: 1712[0m
+[0;32mI (1664) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1694) mpu_example: GYRO => X: 65522, Y: 65505, Z: 65400[0m
+[0;32mI (1694) mpu_example: ACCEL => X: 48992, Y: 1248, Z: 1152[0m
+[0;32mI (1694) mpu_example: TEMP: 28.092581[0m
+[0;32mI (1724) mpu_example: GYRO => X: 2, Y: 65480, Z: 65393[0m
+[0;32mI (1724) mpu_example: ACCEL => X: 48920, Y: 984, Z: 1448[0m
+[0;32mI (1724) mpu_example: TEMP: 28.140503[0m
+[0;32mI (1754) mpu_example: GYRO => X: 65515, Y: 65503, Z: 65405[0m
+[0;32mI (1754) mpu_example: ACCEL => X: 48984, Y: 944, Z: 1528[0m
+[0;32mI (1754) mpu_example: TEMP: 28.092581[0m
+[0;32mI (1784) mpu_example: GYRO => X: 65514, Y: 65500, Z: 65413[0m
+[0;32mI (1784) mpu_example: ACCEL => X: 49224, Y: 1208, Z: 1400[0m
+[0;32mI (1784) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1814) mpu_example: GYRO => X: 4, Y: 65515, Z: 65403[0m
+[0;32mI (1814) mpu_example: ACCEL => X: 48896, Y: 1144, Z: 1776[0m
+[0;32mI (1814) mpu_example: TEMP: 28.619732[0m
+[0;32mI (1844) mpu_example: GYRO => X: 65511, Y: 65510, Z: 65396[0m
+[0;32mI (1844) mpu_example: ACCEL => X: 49032, Y: 1056, Z: 1416[0m
+[0;32mI (1844) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1874) mpu_example: GYRO => X: 65516, Y: 65516, Z: 65435[0m
+[0;32mI (1874) mpu_example: ACCEL => X: 49056, Y: 904, Z: 1512[0m
+[0;32mI (1874) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1904) mpu_example: GYRO => X: 65522, Y: 65533, Z: 65450[0m
+[0;32mI (1904) mpu_example: ACCEL => X: 48976, Y: 952, Z: 1560[0m
+[0;32mI (1904) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1934) mpu_example: GYRO => X: 65517, Y: 65527, Z: 65388[0m
+[0;32mI (1934) mpu_example: ACCEL => X: 48984, Y: 1264, Z: 1320[0m
+[0;32mI (1934) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1964) mpu_example: GYRO => X: 65511, Y: 12, Z: 65407[0m
+[0;32mI (1964) mpu_example: ACCEL => X: 49120, Y: 1048, Z: 1520[0m
+[0;32mI (1964) mpu_example: TEMP: 28.044659[0m
+[0;32mI (1994) mpu_example: GYRO => X: 65501, Y: 65507, Z: 65431[0m
+[0;32mI (1994) mpu_example: ACCEL => X: 48984, Y: 816, Z: 1280[0m
+[0;32mI (1994) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2024) mpu_example: GYRO => X: 65532, Y: 65508, Z: 65424[0m
+[0;32mI (2024) mpu_example: ACCEL => X: 49048, Y: 1256, Z: 1360[0m
+[0;32mI (2024) mpu_example: TEMP: 28.092581[0m
+[0;32mI (2054) mpu_example: GYRO => X: 65504, Y: 16, Z: 65426[0m
+[0;32mI (2054) mpu_example: ACCEL => X: 48928, Y: 1264, Z: 1360[0m
+[0;32mI (2054) mpu_example: TEMP: 28.092581[0m
+[0;32mI (2084) mpu_example: GYRO => X: 65517, Y: 252, Z: 65424[0m
+[0;32mI (2084) mpu_example: ACCEL => X: 49000, Y: 1264, Z: 1352[0m
+[0;32mI (2084) mpu_example: TEMP: 28.092581[0m
+[0;32mI (2114) mpu_example: GYRO => X: 65516, Y: 65517, Z: 65431[0m
+[0;32mI (2114) mpu_example: ACCEL => X: 48944, Y: 1024, Z: 1048[0m
+[0;32mI (2114) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2144) mpu_example: GYRO => X: 254, Y: 65528, Z: 65427[0m
+[0;32mI (2144) mpu_example: ACCEL => X: 49352, Y: 888, Z: 1328[0m
+[0;32mI (2144) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2174) mpu_example: GYRO => X: 65508, Y: 65510, Z: 65416[0m
+[0;32mI (2174) mpu_example: ACCEL => X: 49104, Y: 952, Z: 1360[0m
+[0;32mI (2174) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2204) mpu_example: GYRO => X: 65518, Y: 12, Z: 65412[0m
+[0;32mI (2204) mpu_example: ACCEL => X: 49032, Y: 800, Z: 1400[0m
+[0;32mI (2204) mpu_example: TEMP: 27.948812[0m
+[0;32mI (2234) mpu_example: GYRO => X: 17, Y: 65505, Z: 65417[0m
+[0;32mI (2234) mpu_example: ACCEL => X: 49032, Y: 1016, Z: 1280[0m
+[0;32mI (2234) mpu_example: TEMP: 28.619732[0m
+[0;32mI (2264) mpu_example: GYRO => X: 65515, Y: 65525, Z: 65417[0m
+[0;32mI (2264) mpu_example: ACCEL => X: 49024, Y: 1104, Z: 1424[0m
+[0;32mI (2264) mpu_example: TEMP: 27.948812[0m
+[0;32mI (2294) mpu_example: GYRO => X: 65505, Y: 8, Z: 65424[0m
+[0;32mI (2294) mpu_example: ACCEL => X: 49128, Y: 920, Z: 1376[0m
+[0;32mI (2294) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2324) mpu_example: GYRO => X: 65526, Y: 14, Z: 65398[0m
+[0;32mI (2324) mpu_example: ACCEL => X: 49072, Y: 784, Z: 1528[0m
+[0;32mI (2324) mpu_example: TEMP: 27.277893[0m
+[0;32mI (2354) mpu_example: GYRO => X: 65511, Y: 33, Z: 65375[0m
+[0;32mI (2354) mpu_example: ACCEL => X: 49056, Y: 1264, Z: 1400[0m
+[0;32mI (2354) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2384) mpu_example: GYRO => X: 65373, Y: 65121, Z: 65460[0m
+[0;32mI (2384) mpu_example: ACCEL => X: 49072, Y: 1152, Z: 1560[0m
+[0;32mI (2384) mpu_example: TEMP: 28.092581[0m
+[0;32mI (2414) mpu_example: GYRO => X: 281, Y: 312, Z: 65339[0m
+[0;32mI (2414) mpu_example: ACCEL => X: 48912, Y: 592, Z: 1264[0m
+[0;32mI (2414) mpu_example: TEMP: 27.948812[0m
+[0;32mI (2444) mpu_example: GYRO => X: 62332, Y: 199, Z: 547[0m
+[0;32mI (2444) mpu_example: ACCEL => X: 49600, Y: 656, Z: 2480[0m
+[0;32mI (2444) mpu_example: TEMP: 27.948812[0m
+[0;32mI (2474) mpu_example: GYRO => X: 64326, Y: 994, Z: 155[0m
+[0;32mI (2474) mpu_example: ACCEL => X: 48544, Y: 920, Z: 1000[0m
+[0;32mI (2474) mpu_example: TEMP: 28.092581[0m
+[0;32mI (2504) mpu_example: GYRO => X: 62432, Y: 1421, Z: 569[0m
+[0;32mI (2504) mpu_example: ACCEL => X: 47824, Y: 1744, Z: 2712[0m
+[0;32mI (2504) mpu_example: TEMP: 28.140503[0m
+[0;32mI (2534) mpu_example: GYRO => X: 62356, Y: 64753, Z: 1007[0m
+[0;32mI (2534) mpu_example: ACCEL => X: 44104, Y: 3768, Z: 1568[0m
+[0;32mI (2534) mpu_example: TEMP: 27.948812[0m
+[0;32mI (2564) mpu_example: GYRO => X: 65482, Y: 64561, Z: 65466[0m
+[0;32mI (2564) mpu_example: ACCEL => X: 48864, Y: 1232, Z: 776[0m
+[0;32mI (2564) mpu_example: TEMP: 27.325815[0m
+[0;32mI (2594) mpu_example: GYRO => X: 326, Y: 64618, Z: 65333[0m
+[0;32mI (2594) mpu_example: ACCEL => X: 48688, Y: 888, Z: 2016[0m
+[0;32mI (2594) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2624) mpu_example: GYRO => X: 1401, Y: 1167, Z: 65148[0m
+[0;32mI (2624) mpu_example: ACCEL => X: 48784, Y: 1656, Z: 800[0m
+[0;32mI (2624) mpu_example: TEMP: 27.948812[0m
+[0;32mI (2654) mpu_example: GYRO => X: 2060, Y: 844, Z: 772[0m
+[0;32mI (2654) mpu_example: ACCEL => X: 52888, Y: 1024, Z: 2392[0m
+[0;32mI (2654) mpu_example: TEMP: 28.140503[0m
+[0;32mI (2684) mpu_example: GYRO => X: 1817, Y: 396, Z: 80[0m
+[0;32mI (2684) mpu_example: ACCEL => X: 41024, Y: 3920, Z: 1896[0m
+[0;32mI (2684) mpu_example: TEMP: 27.182047[0m
+[0;32mI (2714) mpu_example: GYRO => X: 61776, Y: 693, Z: 65046[0m
+[0;32mI (2714) mpu_example: ACCEL => X: 62840, Y: 62032, Z: 1528[0m
+[0;32mI (2714) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2744) mpu_example: GYRO => X: 61230, Y: 64403, Z: 68[0m
+[0;32mI (2744) mpu_example: ACCEL => X: 50088, Y: 2240, Z: 3544[0m
+[0;32mI (2744) mpu_example: TEMP: 27.900890[0m
+[0;32mI (2774) mpu_example: GYRO => X: 203, Y: 1217, Z: 64271[0m
+[0;32mI (2774) mpu_example: ACCEL => X: 50424, Y: 62504, Z: 672[0m
+[0;32mI (2774) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2804) mpu_example: GYRO => X: 65489, Y: 65448, Z: 65411[0m
+[0;32mI (2804) mpu_example: ACCEL => X: 49016, Y: 1096, Z: 1336[0m
+[0;32mI (2804) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2834) mpu_example: GYRO => X: 7839, Y: 58132, Z: 63125[0m
+[0;32mI (2834) mpu_example: ACCEL => X: 32936, Y: 11928, Z: 54512[0m
+[0;32mI (2834) mpu_example: TEMP: 28.140503[0m
+[0;32mI (2864) mpu_example: GYRO => X: 999, Y: 65334, Z: 168[0m
+[0;32mI (2864) mpu_example: ACCEL => X: 50704, Y: 7192, Z: 7424[0m
+[0;32mI (2864) mpu_example: TEMP: 27.948812[0m
+[0;32mI (2894) mpu_example: GYRO => X: 6147, Y: 5556, Z: 63469[0m
+[0;32mI (2894) mpu_example: ACCEL => X: 47904, Y: 1176, Z: 62672[0m
+[0;32mI (2894) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2924) mpu_example: GYRO => X: 3875, Y: 3758, Z: 5913[0m
+[0;32mI (2924) mpu_example: ACCEL => X: 47768, Y: 65032, Z: 3872[0m
+[0;32mI (2924) mpu_example: TEMP: 28.092581[0m
+[0;32mI (2954) mpu_example: GYRO => X: 2490, Y: 1846, Z: 64892[0m
+[0;32mI (2954) mpu_example: ACCEL => X: 48560, Y: 56, Z: 1712[0m
+[0;32mI (2954) mpu_example: TEMP: 28.044659[0m
+[0;32mI (2984) mpu_example: GYRO => X: 3126, Y: 65054, Z: 60675[0m
+[0;32mI (2984) mpu_example: ACCEL => X: 46472, Y: 2376, Z: 472[0m
+[0;32mI (2984) mpu_example: TEMP: 28.140503[0m
+[0;32mI (3014) mpu_example: GYRO => X: 63512, Y: 64347, Z: 60622[0m
+[0;32mI (3014) mpu_example: ACCEL => X: 45456, Y: 63952, Z: 3112[0m
+[0;32mI (3014) mpu_example: TEMP: 28.140503[0m
+[0;32mI (3044) mpu_example: GYRO => X: 64340, Y: 694, Z: 50861[0m
+[0;32mI (3044) mpu_example: ACCEL => X: 48800, Y: 64512, Z: 1288[0m
+[0;32mI (3044) mpu_example: TEMP: 27.948812[0m
+[0;32mI (3074) mpu_example: GYRO => X: 425, Y: 245, Z: 32779[0m
+[0;32mI (3074) mpu_example: ACCEL => X: 46976, Y: 64456, Z: 2120[0m
+[0;32mI (3074) mpu_example: TEMP: 28.092581[0m
+[0;32mI (3104) mpu_example: GYRO => X: 2962, Y: 64294, Z: 37513[0m
+[0;32mI (3104) mpu_example: ACCEL => X: 48696, Y: 63784, Z: 65048[0m
+[0;32mI (3104) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3134) mpu_example: GYRO => X: 8556, Y: 63137, Z: 39691[0m
+[0;32mI (3134) mpu_example: ACCEL => X: 50288, Y: 59352, Z: 720[0m
+[0;32mI (3134) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3164) mpu_example: GYRO => X: 14926, Y: 61005, Z: 53760[0m
+[0;32mI (3164) mpu_example: ACCEL => X: 52032, Y: 64680, Z: 16[0m
+[0;32mI (3164) mpu_example: TEMP: 28.092581[0m
+[0;32mI (3194) mpu_example: GYRO => X: 5831, Y: 60063, Z: 45879[0m
+[0;32mI (3194) mpu_example: ACCEL => X: 51520, Y: 57704, Z: 2144[0m
+[0;32mI (3194) mpu_example: TEMP: 28.092581[0m
+[0;32mI (3224) mpu_example: GYRO => X: 6777, Y: 58089, Z: 58138[0m
+[0;32mI (3224) mpu_example: ACCEL => X: 52760, Y: 59592, Z: 3032[0m
+[0;32mI (3224) mpu_example: TEMP: 27.325815[0m
+[0;32mI (3254) mpu_example: GYRO => X: 6578, Y: 59141, Z: 55379[0m
+[0;32mI (3254) mpu_example: ACCEL => X: 52576, Y: 56864, Z: 3152[0m
+[0;32mI (3254) mpu_example: TEMP: 27.948812[0m
+[0;32mI (3284) mpu_example: GYRO => X: 6668, Y: 58180, Z: 6781[0m
+[0;32mI (3284) mpu_example: ACCEL => X: 52648, Y: 58920, Z: 2864[0m
+[0;32mI (3284) mpu_example: TEMP: 27.948812[0m
+[0;32mI (3314) mpu_example: GYRO => X: 6331, Y: 57029, Z: 12398[0m
+[0;32mI (3314) mpu_example: ACCEL => X: 48240, Y: 57032, Z: 4336[0m
+[0;32mI (3314) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3344) mpu_example: GYRO => X: 13569, Y: 61157, Z: 340[0m
+[0;32mI (3344) mpu_example: ACCEL => X: 50920, Y: 61448, Z: 5000[0m
+[0;32mI (3344) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3374) mpu_example: GYRO => X: 18038, Y: 58874, Z: 49601[0m
+[0;32mI (3374) mpu_example: ACCEL => X: 55032, Y: 58424, Z: 5840[0m
+[0;32mI (3374) mpu_example: TEMP: 27.948812[0m
+[0;32mI (3404) mpu_example: GYRO => X: 16108, Y: 52780, Z: 48965[0m
+[0;32mI (3404) mpu_example: ACCEL => X: 56776, Y: 63136, Z: 9168[0m
+[0;32mI (3404) mpu_example: TEMP: 28.380117[0m
+[0;32mI (3434) mpu_example: GYRO => X: 6791, Y: 52272, Z: 2061[0m
+[0;32mI (3434) mpu_example: ACCEL => X: 53408, Y: 60928, Z: 8096[0m
+[0;32mI (3434) mpu_example: TEMP: 27.948812[0m
+[0;32mI (3464) mpu_example: GYRO => X: 4549, Y: 53514, Z: 14114[0m
+[0;32mI (3464) mpu_example: ACCEL => X: 52720, Y: 58048, Z: 8248[0m
+[0;32mI (3464) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3494) mpu_example: GYRO => X: 5827, Y: 56050, Z: 3719[0m
+[0;32mI (3494) mpu_example: ACCEL => X: 52760, Y: 58656, Z: 8224[0m
+[0;32mI (3494) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3524) mpu_example: GYRO => X: 4253, Y: 57481, Z: 60654[0m
+[0;32mI (3524) mpu_example: ACCEL => X: 55272, Y: 60816, Z: 10264[0m
+[0;32mI (3524) mpu_example: TEMP: 28.236349[0m
+[0;32mI (3554) mpu_example: GYRO => X: 63528, Y: 57297, Z: 53174[0m
+[0;32mI (3554) mpu_example: ACCEL => X: 57216, Y: 60344, Z: 9200[0m
+[0;32mI (3554) mpu_example: TEMP: 28.092581[0m
+[0;32mI (3584) mpu_example: GYRO => X: 3730, Y: 57438, Z: 64509[0m
+[0;32mI (3584) mpu_example: ACCEL => X: 57240, Y: 58480, Z: 9808[0m
+[0;32mI (3584) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3614) mpu_example: GYRO => X: 5758, Y: 57360, Z: 59428[0m
+[0;32mI (3614) mpu_example: ACCEL => X: 55992, Y: 57944, Z: 10864[0m
+[0;32mI (3614) mpu_example: TEMP: 27.948812[0m
+[0;32mI (3644) mpu_example: GYRO => X: 10186, Y: 60229, Z: 60561[0m
+[0;32mI (3644) mpu_example: ACCEL => X: 55560, Y: 63312, Z: 12728[0m
+[0;32mI (3644) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3674) mpu_example: GYRO => X: 3175, Y: 58097, Z: 83[0m
+[0;32mI (3674) mpu_example: ACCEL => X: 59304, Y: 64392, Z: 11064[0m
+[0;32mI (3674) mpu_example: TEMP: 28.619732[0m
+[0;32mI (3704) mpu_example: GYRO => X: 5767, Y: 58122, Z: 974[0m
+[0;32mI (3704) mpu_example: ACCEL => X: 57968, Y: 61496, Z: 10792[0m
+[0;32mI (3704) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3734) mpu_example: GYRO => X: 9186, Y: 59318, Z: 64894[0m
+[0;32mI (3734) mpu_example: ACCEL => X: 58976, Y: 58776, Z: 13144[0m
+[0;32mI (3734) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3764) mpu_example: GYRO => X: 6175, Y: 58859, Z: 61962[0m
+[0;32mI (3764) mpu_example: ACCEL => X: 58456, Y: 63712, Z: 13496[0m
+[0;32mI (3764) mpu_example: TEMP: 28.092581[0m
+[0;32mI (3794) mpu_example: GYRO => X: 1346, Y: 58026, Z: 3556[0m
+[0;32mI (3794) mpu_example: ACCEL => X: 55928, Y: 62744, Z: 12384[0m
+[0;32mI (3794) mpu_example: TEMP: 28.092581[0m
+[0;32mI (3824) mpu_example: GYRO => X: 2276, Y: 59949, Z: 5311[0m
+[0;32mI (3824) mpu_example: ACCEL => X: 57632, Y: 62528, Z: 13208[0m
+[0;32mI (3824) mpu_example: TEMP: 27.900890[0m
+[0;32mI (3854) mpu_example: GYRO => X: 4702, Y: 62465, Z: 64598[0m
+[0;32mI (3854) mpu_example: ACCEL => X: 59632, Y: 61656, Z: 13112[0m
+[0;32mI (3854) mpu_example: TEMP: 28.236349[0m
+[0;32mI (3884) mpu_example: GYRO => X: 1533, Y: 60871, Z: 1023[0m
+[0;32mI (3884) mpu_example: ACCEL => X: 59112, Y: 63768, Z: 14608[0m
+[0;32mI (3884) mpu_example: TEMP: 28.140503[0m
+[0;32mI (3914) mpu_example: GYRO => X: 65486, Y: 60314, Z: 3374[0m
+[0;32mI (3914) mpu_example: ACCEL => X: 57600, Y: 61176, Z: 10960[0m
+[0;32mI (3914) mpu_example: TEMP: 28.044659[0m
+[0;32mI (3944) mpu_example: GYRO => X: 104, Y: 63171, Z: 62255[0m
+[0;32mI (3944) mpu_example: ACCEL => X: 59560, Y: 62608, Z: 7824[0m
+[0;32mI (3944) mpu_example: TEMP: 28.092581[0m
+[0;32mI (3974) mpu_example: GYRO => X: 64830, Y: 64222, Z: 64572[0m
+[0;32mI (3974) mpu_example: ACCEL => X: 57760, Y: 62536, Z: 10368[0m
+[0;32mI (3974) mpu_example: TEMP: 27.948812[0m
+[0;32mI (4004) mpu_example: GYRO => X: 63231, Y: 63837, Z: 2172[0m
+[0;32mI (4004) mpu_example: ACCEL => X: 59624, Y: 59008, Z: 11680[0m
+[0;32mI (4004) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4034) mpu_example: GYRO => X: 984, Y: 64794, Z: 57712[0m
+[0;32mI (4034) mpu_example: ACCEL => X: 62640, Y: 63152, Z: 12008[0m
+[0;32mI (4034) mpu_example: TEMP: 28.236349[0m
+[0;32mI (4064) mpu_example: GYRO => X: 65279, Y: 62605, Z: 64900[0m
+[0;32mI (4064) mpu_example: ACCEL => X: 61624, Y: 63408, Z: 11872[0m
+[0;32mI (4064) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4094) mpu_example: GYRO => X: 1218, Y: 61371, Z: 2654[0m
+[0;32mI (4094) mpu_example: ACCEL => X: 61888, Y: 62184, Z: 12720[0m
+[0;32mI (4094) mpu_example: TEMP: 27.900890[0m
+[0;32mI (4124) mpu_example: GYRO => X: 1882, Y: 61736, Z: 63566[0m
+[0;32mI (4124) mpu_example: ACCEL => X: 61768, Y: 61208, Z: 12984[0m
+[0;32mI (4124) mpu_example: TEMP: 28.236349[0m
+[0;32mI (4154) mpu_example: GYRO => X: 1784, Y: 62167, Z: 59943[0m
+[0;32mI (4154) mpu_example: ACCEL => X: 60880, Y: 62120, Z: 13176[0m
+[0;32mI (4154) mpu_example: TEMP: 28.236349[0m
+[0;32mI (4184) mpu_example: GYRO => X: 2948, Y: 63850, Z: 58781[0m
+[0;32mI (4184) mpu_example: ACCEL => X: 62688, Y: 63600, Z: 12848[0m
+[0;32mI (4184) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4214) mpu_example: GYRO => X: 64819, Y: 509, Z: 63167[0m
+[0;32mI (4214) mpu_example: ACCEL => X: 63984, Y: 61800, Z: 14256[0m
+[0;32mI (4214) mpu_example: TEMP: 28.236349[0m
+[0;32mI (4244) mpu_example: GYRO => X: 1328, Y: 63322, Z: 64094[0m
+[0;32mI (4244) mpu_example: ACCEL => X: 63400, Y: 63696, Z: 13616[0m
+[0;32mI (4244) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4274) mpu_example: GYRO => X: 398, Y: 63509, Z: 64304[0m
+[0;32mI (4274) mpu_example: ACCEL => X: 61704, Y: 62496, Z: 14312[0m
+[0;32mI (4274) mpu_example: TEMP: 28.092581[0m
+[0;32mI (4304) mpu_example: GYRO => X: 1152, Y: 734, Z: 63652[0m
+[0;32mI (4304) mpu_example: ACCEL => X: 61808, Y: 62624, Z: 14784[0m
+[0;32mI (4304) mpu_example: TEMP: 28.236349[0m
+[0;32mI (4334) mpu_example: GYRO => X: 65245, Y: 64988, Z: 63009[0m
+[0;32mI (4334) mpu_example: ACCEL => X: 62776, Y: 63208, Z: 14760[0m
+[0;32mI (4334) mpu_example: TEMP: 28.092581[0m
+[0;32mI (4364) mpu_example: GYRO => X: 65214, Y: 170, Z: 65054[0m
+[0;32mI (4364) mpu_example: ACCEL => X: 61872, Y: 63144, Z: 13704[0m
+[0;32mI (4364) mpu_example: TEMP: 28.236349[0m
+[0;32mI (4394) mpu_example: GYRO => X: 63808, Y: 64742, Z: 65073[0m
+[0;32mI (4394) mpu_example: ACCEL => X: 61656, Y: 64144, Z: 14008[0m
+[0;32mI (4394) mpu_example: TEMP: 28.092581[0m
+[0;32mI (4424) mpu_example: GYRO => X: 62936, Y: 90, Z: 931[0m
+[0;32mI (4424) mpu_example: ACCEL => X: 62264, Y: 61568, Z: 14136[0m
+[0;32mI (4424) mpu_example: TEMP: 27.948812[0m
+[0;32mI (4454) mpu_example: GYRO => X: 2607, Y: 39, Z: 55159[0m
+[0;32mI (4454) mpu_example: ACCEL => X: 64848, Y: 60128, Z: 13640[0m
+[0;32mI (4454) mpu_example: TEMP: 28.092581[0m
+[0;32mI (4484) mpu_example: GYRO => X: 2419, Y: 549, Z: 55220[0m
+[0;32mI (4484) mpu_example: ACCEL => X: 62008, Y: 64016, Z: 14024[0m
+[0;32mI (4484) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4514) mpu_example: GYRO => X: 1349, Y: 1826, Z: 65442[0m
+[0;32mI (4514) mpu_example: ACCEL => X: 60224, Y: 64896, Z: 12616[0m
+[0;32mI (4514) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4544) mpu_example: GYRO => X: 65216, Y: 3941, Z: 2848[0m
+[0;32mI (4544) mpu_example: ACCEL => X: 62728, Y: 63424, Z: 14760[0m
+[0;32mI (4544) mpu_example: TEMP: 28.092581[0m
+[0;32mI (4574) mpu_example: GYRO => X: 324, Y: 1358, Z: 1270[0m
+[0;32mI (4574) mpu_example: ACCEL => X: 62976, Y: 63072, Z: 14144[0m
+[0;32mI (4574) mpu_example: TEMP: 28.092581[0m
+[0;32mI (4604) mpu_example: GYRO => X: 847, Y: 1460, Z: 62960[0m
+[0;32mI (4604) mpu_example: ACCEL => X: 62264, Y: 62248, Z: 13376[0m
+[0;32mI (4604) mpu_example: TEMP: 28.140503[0m
+[0;32mI (4634) mpu_example: GYRO => X: 64841, Y: 61915, Z: 64238[0m
+[0;32mI (4634) mpu_example: ACCEL => X: 62448, Y: 776, Z: 10488[0m
+[0;32mI (4634) mpu_example: TEMP: 28.236349[0m
+[0;32mI (4664) mpu_example: GYRO => X: 61427, Y: 59478, Z: 61471[0m
+[0;32mI (4664) mpu_example: ACCEL => X: 63008, Y: 60736, Z: 13552[0m
+[0;32mI (4664) mpu_example: TEMP: 28.092581[0m
+[0;32mI (4694) mpu_example: GYRO => X: 64508, Y: 64868, Z: 62023[0m
+[0;32mI (4694) mpu_example: ACCEL => X: 62344, Y: 62400, Z: 14040[0m
+[0;32mI (4694) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4724) mpu_example: GYRO => X: 347, Y: 65351, Z: 57409[0m
+[0;32mI (4724) mpu_example: ACCEL => X: 63624, Y: 61568, Z: 14832[0m
+[0;32mI (4724) mpu_example: TEMP: 27.900890[0m
+[0;32mI (4754) mpu_example: GYRO => X: 65158, Y: 869, Z: 56953[0m
+[0;32mI (4754) mpu_example: ACCEL => X: 62840, Y: 61264, Z: 13896[0m
+[0;32mI (4754) mpu_example: TEMP: 28.284273[0m
+[0;32mI (4784) mpu_example: GYRO => X: 1752, Y: 1370, Z: 55626[0m
+[0;32mI (4784) mpu_example: ACCEL => X: 62840, Y: 61544, Z: 13992[0m
+[0;32mI (4784) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4814) mpu_example: GYRO => X: 3021, Y: 1493, Z: 53855[0m
+[0;32mI (4814) mpu_example: ACCEL => X: 62952, Y: 61432, Z: 13728[0m
+[0;32mI (4814) mpu_example: TEMP: 28.092581[0m
+[0;32mI (4844) mpu_example: GYRO => X: 1555, Y: 1621, Z: 49593[0m
+[0;32mI (4844) mpu_example: ACCEL => X: 63496, Y: 62376, Z: 14352[0m
+[0;32mI (4844) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4874) mpu_example: GYRO => X: 63910, Y: 2077, Z: 44853[0m
+[0;32mI (4874) mpu_example: ACCEL => X: 64304, Y: 63240, Z: 14400[0m
+[0;32mI (4874) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4904) mpu_example: GYRO => X: 568, Y: 191, Z: 49576[0m
+[0;32mI (4904) mpu_example: ACCEL => X: 64056, Y: 63848, Z: 13232[0m
+[0;32mI (4904) mpu_example: TEMP: 28.236349[0m
+[0;32mI (4934) mpu_example: GYRO => X: 6120, Y: 64475, Z: 227[0m
+[0;32mI (4934) mpu_example: ACCEL => X: 65232, Y: 62944, Z: 13304[0m
+[0;32mI (4934) mpu_example: TEMP: 28.284273[0m
+[0;32mI (4964) mpu_example: GYRO => X: 6393, Y: 159, Z: 60846[0m
+[0;32mI (4964) mpu_example: ACCEL => X: 65472, Y: 62000, Z: 14064[0m
+[0;32mI (4964) mpu_example: TEMP: 28.044659[0m
+[0;32mI (4994) mpu_example: GYRO => X: 5529, Y: 64696, Z: 61407[0m
+[0;32mI (4994) mpu_example: ACCEL => X: 64880, Y: 62936, Z: 14832[0m
+[0;32mI (4994) mpu_example: TEMP: 28.044659[0m
+[0;32mI (5024) mpu_example: GYRO => X: 5357, Y: 4506, Z: 56860[0m
+[0;32mI (5024) mpu_example: ACCEL => X: 64088, Y: 62728, Z: 11400[0m
+[0;32mI (5024) mpu_example: TEMP: 28.140503[0m
+[0;32mI (5054) mpu_example: GYRO => X: 3620, Y: 4259, Z: 64679[0m
+[0;32mI (5054) mpu_example: ACCEL => X: 63288, Y: 62792, Z: 15248[0m
+[0;32mI (5054) mpu_example: TEMP: 27.325815[0m
+[0;32mI (5084) mpu_example: GYRO => X: 6943, Y: 2780, Z: 55398[0m
+[0;32mI (5084) mpu_example: ACCEL => X: 63408, Y: 65512, Z: 14576[0m
+[0;32mI (5084) mpu_example: TEMP: 28.044659[0m
+[0;32mI (5114) mpu_example: GYRO => X: 4337, Y: 59828, Z: 53471[0m
+[0;32mI (5114) mpu_example: ACCEL => X: 64768, Y: 1096, Z: 11912[0m
+[0;32mI (5114) mpu_example: TEMP: 27.948812[0m
+[0;32mI (5144) mpu_example: GYRO => X: 2520, Y: 52863, Z: 59093[0m
+[0;32mI (5144) mpu_example: ACCEL => X: 64864, Y: 1120, Z: 14448[0m
+[0;32mI (5144) mpu_example: TEMP: 28.140503[0m
+[0;32mI (5174) mpu_example: GYRO => X: 4453, Y: 62210, Z: 62304[0m
+[0;32mI (5174) mpu_example: ACCEL => X: 1840, Y: 62464, Z: 16120[0m
+[0;32mI (5174) mpu_example: TEMP: 28.140503[0m
+[0;32mI (5204) mpu_example: GYRO => X: 8084, Y: 3044, Z: 64875[0m
+[0;32mI (5204) mpu_example: ACCEL => X: 128, Y: 544, Z: 12832[0m
+[0;32mI (5204) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5234) mpu_example: GYRO => X: 1739, Y: 7609, Z: 9180[0m
+[0;32mI (5234) mpu_example: ACCEL => X: 63408, Y: 2968, Z: 16944[0m
+[0;32mI (5234) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5264) mpu_example: GYRO => X: 6278, Y: 4962, Z: 8354[0m
+[0;32mI (5264) mpu_example: ACCEL => X: 65464, Y: 64976, Z: 14600[0m
+[0;32mI (5264) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5294) mpu_example: GYRO => X: 5095, Y: 3685, Z: 4485[0m
+[0;32mI (5294) mpu_example: ACCEL => X: 65400, Y: 64696, Z: 15544[0m
+[0;32mI (5294) mpu_example: TEMP: 28.236349[0m
+[0;32mI (5324) mpu_example: GYRO => X: 5417, Y: 5504, Z: 5461[0m
+[0;32mI (5324) mpu_example: ACCEL => X: 64880, Y: 304, Z: 14344[0m
+[0;32mI (5324) mpu_example: TEMP: 27.948812[0m
+[0;32mI (5354) mpu_example: GYRO => X: 6795, Y: 60451, Z: 4880[0m
+[0;32mI (5354) mpu_example: ACCEL => X: 60072, Y: 4208, Z: 18440[0m
+[0;32mI (5354) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5384) mpu_example: GYRO => X: 61421, Y: 62222, Z: 59165[0m
+[0;32mI (5384) mpu_example: ACCEL => X: 32960, Y: 52344, Z: 13640[0m
+[0;32mI (5384) mpu_example: TEMP: 28.044659[0m
+[0;32mI (5414) mpu_example: GYRO => X: 3834, Y: 3103, Z: 64215[0m
+[0;32mI (5414) mpu_example: ACCEL => X: 59784, Y: 1648, Z: 15360[0m
+[0;32mI (5414) mpu_example: TEMP: 28.044659[0m
+[0;32mI (5444) mpu_example: GYRO => X: 64792, Y: 613, Z: 64127[0m
+[0;32mI (5444) mpu_example: ACCEL => X: 62520, Y: 1152, Z: 13352[0m
+[0;32mI (5444) mpu_example: TEMP: 28.044659[0m
+[0;32mI (5474) mpu_example: GYRO => X: 1437, Y: 3010, Z: 60534[0m
+[0;32mI (5474) mpu_example: ACCEL => X: 62328, Y: 2312, Z: 15112[0m
+[0;32mI (5474) mpu_example: TEMP: 27.277893[0m
+[0;32mI (5504) mpu_example: GYRO => X: 1259, Y: 262, Z: 64066[0m
+[0;32mI (5504) mpu_example: ACCEL => X: 53240, Y: 10760, Z: 16888[0m
+[0;32mI (5504) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5534) mpu_example: GYRO => X: 64604, Y: 64400, Z: 59197[0m
+[0;32mI (5534) mpu_example: ACCEL => X: 64296, Y: 312, Z: 12816[0m
+[0;32mI (5534) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5564) mpu_example: GYRO => X: 63603, Y: 62166, Z: 1131[0m
+[0;32mI (5564) mpu_example: ACCEL => X: 64152, Y: 2416, Z: 15432[0m
+[0;32mI (5564) mpu_example: TEMP: 28.140503[0m
+[0;32mI (5594) mpu_example: GYRO => X: 1934, Y: 1164, Z: 1725[0m
+[0;32mI (5594) mpu_example: ACCEL => X: 63280, Y: 848, Z: 14800[0m
+[0;32mI (5594) mpu_example: TEMP: 28.044659[0m
+[0;32mI (5624) mpu_example: GYRO => X: 1736, Y: 1936, Z: 64389[0m
+[0;32mI (5624) mpu_example: ACCEL => X: 62280, Y: 65392, Z: 14776[0m
+[0;32mI (5624) mpu_example: TEMP: 28.236349[0m
+[0;32mI (5654) mpu_example: GYRO => X: 2571, Y: 1845, Z: 64831[0m
+[0;32mI (5654) mpu_example: ACCEL => X: 62184, Y: 168, Z: 14680[0m
+[0;32mI (5654) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5684) mpu_example: GYRO => X: 4331, Y: 2017, Z: 64436[0m
+[0;32mI (5684) mpu_example: ACCEL => X: 62120, Y: 65160, Z: 14464[0m
+[0;32mI (5684) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5714) mpu_example: GYRO => X: 4698, Y: 458, Z: 62560[0m
+[0;32mI (5714) mpu_example: ACCEL => X: 61128, Y: 2104, Z: 14408[0m
+[0;32mI (5714) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5744) mpu_example: GYRO => X: 3649, Y: 417, Z: 63194[0m
+[0;32mI (5744) mpu_example: ACCEL => X: 62888, Y: 2064, Z: 14080[0m
+[0;32mI (5744) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5774) mpu_example: GYRO => X: 3482, Y: 64976, Z: 64641[0m
+[0;32mI (5774) mpu_example: ACCEL => X: 62312, Y: 1984, Z: 14568[0m
+[0;32mI (5774) mpu_example: TEMP: 28.044659[0m
+[0;32mI (5804) mpu_example: GYRO => X: 3109, Y: 65448, Z: 65141[0m
+[0;32mI (5804) mpu_example: ACCEL => X: 62816, Y: 2576, Z: 14568[0m
+[0;32mI (5804) mpu_example: TEMP: 28.044659[0m
+[0;32mI (5834) mpu_example: GYRO => X: 3558, Y: 65216, Z: 65515[0m
+[0;32mI (5834) mpu_example: ACCEL => X: 62656, Y: 2504, Z: 14488[0m
+[0;32mI (5834) mpu_example: TEMP: 28.380117[0m
+[0;32mI (5864) mpu_example: GYRO => X: 1880, Y: 65327, Z: 944[0m
+[0;32mI (5864) mpu_example: ACCEL => X: 62976, Y: 3680, Z: 13872[0m
+[0;32mI (5864) mpu_example: TEMP: 28.044659[0m
+[0;32mI (5894) mpu_example: GYRO => X: 1631, Y: 365, Z: 1660[0m
+[0;32mI (5894) mpu_example: ACCEL => X: 63032, Y: 2320, Z: 13656[0m
+[0;32mI (5894) mpu_example: TEMP: 27.277893[0m
+[0;32mI (5924) mpu_example: GYRO => X: 2482, Y: 926, Z: 2033[0m
+[0;32mI (5924) mpu_example: ACCEL => X: 62968, Y: 3016, Z: 14696[0m
+[0;32mI (5924) mpu_example: TEMP: 28.092581[0m
+[0;32mI (5954) mpu_example: GYRO => X: 2938, Y: 404, Z: 1789[0m
+[0;32mI (5954) mpu_example: ACCEL => X: 62328, Y: 2400, Z: 14616[0m
+[0;32mI (5954) mpu_example: TEMP: 28.044659[0m
+[0;32mI (5984) mpu_example: GYRO => X: 2616, Y: 64610, Z: 141[0m
+[0;32mI (5984) mpu_example: ACCEL => X: 62904, Y: 3312, Z: 14416[0m
+[0;32mI (5984) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6014) mpu_example: GYRO => X: 3162, Y: 64805, Z: 554[0m
+[0;32mI (6014) mpu_example: ACCEL => X: 62992, Y: 3752, Z: 14160[0m
+[0;32mI (6014) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6044) mpu_example: GYRO => X: 4230, Y: 161, Z: 715[0m
+[0;32mI (6044) mpu_example: ACCEL => X: 1360, Y: 2320, Z: 16456[0m
+[0;32mI (6044) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6074) mpu_example: GYRO => X: 2411, Y: 63346, Z: 65465[0m
+[0;32mI (6074) mpu_example: ACCEL => X: 55544, Y: 3640, Z: 17360[0m
+[0;32mI (6074) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6104) mpu_example: GYRO => X: 1192, Y: 63916, Z: 189[0m
+[0;32mI (6104) mpu_example: ACCEL => X: 64776, Y: 4296, Z: 12736[0m
+[0;32mI (6104) mpu_example: TEMP: 28.140503[0m
+[0;32mI (6134) mpu_example: GYRO => X: 767, Y: 1113, Z: 64868[0m
+[0;32mI (6134) mpu_example: ACCEL => X: 63072, Y: 4408, Z: 13824[0m
+[0;32mI (6134) mpu_example: TEMP: 27.948812[0m
+[0;32mI (6164) mpu_example: GYRO => X: 64948, Y: 1116, Z: 64657[0m
+[0;32mI (6164) mpu_example: ACCEL => X: 63128, Y: 3376, Z: 13592[0m
+[0;32mI (6164) mpu_example: TEMP: 28.140503[0m
+[0;32mI (6194) mpu_example: GYRO => X: 190, Y: 1110, Z: 64952[0m
+[0;32mI (6194) mpu_example: ACCEL => X: 62272, Y: 3776, Z: 14560[0m
+[0;32mI (6194) mpu_example: TEMP: 28.236349[0m
+[0;32mI (6224) mpu_example: GYRO => X: 65516, Y: 466, Z: 64480[0m
+[0;32mI (6224) mpu_example: ACCEL => X: 62272, Y: 4072, Z: 14144[0m
+[0;32mI (6224) mpu_example: TEMP: 27.325815[0m
+[0;32mI (6254) mpu_example: GYRO => X: 83, Y: 65193, Z: 550[0m
+[0;32mI (6254) mpu_example: ACCEL => X: 62096, Y: 4208, Z: 14784[0m
+[0;32mI (6254) mpu_example: TEMP: 28.284273[0m
+[0;32mI (6284) mpu_example: GYRO => X: 65342, Y: 369, Z: 152[0m
+[0;32mI (6284) mpu_example: ACCEL => X: 62808, Y: 3352, Z: 14040[0m
+[0;32mI (6284) mpu_example: TEMP: 28.140503[0m
+[0;32mI (6314) mpu_example: GYRO => X: 65386, Y: 500, Z: 64746[0m
+[0;32mI (6314) mpu_example: ACCEL => X: 63472, Y: 3584, Z: 13440[0m
+[0;32mI (6314) mpu_example: TEMP: 28.140503[0m
+[0;32mI (6344) mpu_example: GYRO => X: 71, Y: 1522, Z: 64[0m
+[0;32mI (6344) mpu_example: ACCEL => X: 62584, Y: 5248, Z: 14176[0m
+[0;32mI (6344) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6374) mpu_example: GYRO => X: 65206, Y: 1496, Z: 65246[0m
+[0;32mI (6374) mpu_example: ACCEL => X: 63424, Y: 3424, Z: 13608[0m
+[0;32mI (6374) mpu_example: TEMP: 28.092581[0m
+[0;32mI (6404) mpu_example: GYRO => X: 779, Y: 168, Z: 64902[0m
+[0;32mI (6404) mpu_example: ACCEL => X: 62064, Y: 3456, Z: 14040[0m
+[0;32mI (6404) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6434) mpu_example: GYRO => X: 1232, Y: 612, Z: 64813[0m
+[0;32mI (6434) mpu_example: ACCEL => X: 62016, Y: 3680, Z: 14016[0m
+[0;32mI (6434) mpu_example: TEMP: 28.140503[0m
+[0;32mI (6464) mpu_example: GYRO => X: 520, Y: 65296, Z: 64708[0m
+[0;32mI (6464) mpu_example: ACCEL => X: 61768, Y: 4520, Z: 14584[0m
+[0;32mI (6464) mpu_example: TEMP: 28.140503[0m
+[0;32mI (6494) mpu_example: GYRO => X: 65367, Y: 65344, Z: 64708[0m
+[0;32mI (6494) mpu_example: ACCEL => X: 61736, Y: 4432, Z: 14312[0m
+[0;32mI (6494) mpu_example: TEMP: 28.284273[0m
+[0;32mI (6524) mpu_example: GYRO => X: 778, Y: 116, Z: 65407[0m
+[0;32mI (6524) mpu_example: ACCEL => X: 62344, Y: 4552, Z: 14176[0m
+[0;32mI (6524) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6554) mpu_example: GYRO => X: 65413, Y: 371, Z: 65336[0m
+[0;32mI (6554) mpu_example: ACCEL => X: 62296, Y: 5024, Z: 13984[0m
+[0;32mI (6554) mpu_example: TEMP: 28.092581[0m
+[0;32mI (6584) mpu_example: GYRO => X: 64796, Y: 647, Z: 64562[0m
+[0;32mI (6584) mpu_example: ACCEL => X: 62296, Y: 4352, Z: 13896[0m
+[0;32mI (6584) mpu_example: TEMP: 27.948812[0m
+[0;32mI (6614) mpu_example: GYRO => X: 65166, Y: 1061, Z: 64471[0m
+[0;32mI (6614) mpu_example: ACCEL => X: 61616, Y: 4512, Z: 15016[0m
+[0;32mI (6614) mpu_example: TEMP: 28.092581[0m
+[0;32mI (6644) mpu_example: GYRO => X: 65088, Y: 65398, Z: 64682[0m
+[0;32mI (6644) mpu_example: ACCEL => X: 62144, Y: 4088, Z: 14216[0m
+[0;32mI (6644) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6674) mpu_example: GYRO => X: 65228, Y: 470, Z: 65057[0m
+[0;32mI (6674) mpu_example: ACCEL => X: 62600, Y: 3992, Z: 13176[0m
+[0;32mI (6674) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6704) mpu_example: GYRO => X: 64993, Y: 275, Z: 65092[0m
+[0;32mI (6704) mpu_example: ACCEL => X: 61992, Y: 3584, Z: 13824[0m
+[0;32mI (6704) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6734) mpu_example: GYRO => X: 64956, Y: 126, Z: 65111[0m
+[0;32mI (6734) mpu_example: ACCEL => X: 61504, Y: 5016, Z: 14936[0m
+[0;32mI (6734) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6764) mpu_example: GYRO => X: 236, Y: 462, Z: 28[0m
+[0;32mI (6764) mpu_example: ACCEL => X: 62160, Y: 3696, Z: 14216[0m
+[0;32mI (6764) mpu_example: TEMP: 28.619732[0m
+[0;32mI (6794) mpu_example: GYRO => X: 508, Y: 65338, Z: 302[0m
+[0;32mI (6794) mpu_example: ACCEL => X: 62016, Y: 3784, Z: 14192[0m
+[0;32mI (6794) mpu_example: TEMP: 28.236349[0m
+[0;32mI (6824) mpu_example: GYRO => X: 385, Y: 233, Z: 65288[0m
+[0;32mI (6824) mpu_example: ACCEL => X: 62368, Y: 3600, Z: 14032[0m
+[0;32mI (6824) mpu_example: TEMP: 28.140503[0m
+[0;32mI (6854) mpu_example: GYRO => X: 65501, Y: 65449, Z: 65084[0m
+[0;32mI (6854) mpu_example: ACCEL => X: 61728, Y: 4160, Z: 14392[0m
+[0;32mI (6854) mpu_example: TEMP: 28.092581[0m
+[0;32mI (6884) mpu_example: GYRO => X: 65184, Y: 159, Z: 64636[0m
+[0;32mI (6884) mpu_example: ACCEL => X: 62440, Y: 4208, Z: 14528[0m
+[0;32mI (6884) mpu_example: TEMP: 28.044659[0m
+[0;32mI (6914) mpu_example: GYRO => X: 64791, Y: 528, Z: 64408[0m
+[0;32mI (6914) mpu_example: ACCEL => X: 62072, Y: 5080, Z: 14160[0m
+[0;32mI (6914) mpu_example: TEMP: 28.140503[0m
+[0;32mI (6944) mpu_example: GYRO => X: 64200, Y: 462, Z: 64461[0m
+[0;32mI (6944) mpu_example: ACCEL => X: 61856, Y: 3856, Z: 13952[0m
+[0;32mI (6944) mpu_example: TEMP: 28.236349[0m
+[0;32mI (6974) mpu_example: GYRO => X: 65018, Y: 979, Z: 64684[0m
+[0;32mI (6974) mpu_example: ACCEL => X: 62160, Y: 3640, Z: 13928[0m
+[0;32mI (6974) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7004) mpu_example: GYRO => X: 65246, Y: 1113, Z: 64258[0m
+[0;32mI (7004) mpu_example: ACCEL => X: 61632, Y: 4072, Z: 14352[0m
+[0;32mI (7004) mpu_example: TEMP: 28.140503[0m
+[0;32mI (7034) mpu_example: GYRO => X: 65186, Y: 700, Z: 64445[0m
+[0;32mI (7034) mpu_example: ACCEL => X: 61368, Y: 3832, Z: 14112[0m
+[0;32mI (7034) mpu_example: TEMP: 28.140503[0m
+[0;32mI (7064) mpu_example: GYRO => X: 65163, Y: 213, Z: 64622[0m
+[0;32mI (7064) mpu_example: ACCEL => X: 61624, Y: 4488, Z: 13944[0m
+[0;32mI (7064) mpu_example: TEMP: 28.236349[0m
+[0;32mI (7094) mpu_example: GYRO => X: 64410, Y: 65386, Z: 64754[0m
+[0;32mI (7094) mpu_example: ACCEL => X: 60736, Y: 4224, Z: 14680[0m
+[0;32mI (7094) mpu_example: TEMP: 27.948812[0m
+[0;32mI (7124) mpu_example: GYRO => X: 64025, Y: 64784, Z: 65273[0m
+[0;32mI (7124) mpu_example: ACCEL => X: 61240, Y: 3216, Z: 14096[0m
+[0;32mI (7124) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7154) mpu_example: GYRO => X: 64840, Y: 65513, Z: 65343[0m
+[0;32mI (7154) mpu_example: ACCEL => X: 61864, Y: 3024, Z: 14224[0m
+[0;32mI (7154) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7184) mpu_example: GYRO => X: 65467, Y: 48, Z: 65259[0m
+[0;32mI (7184) mpu_example: ACCEL => X: 61600, Y: 2880, Z: 14232[0m
+[0;32mI (7184) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7214) mpu_example: GYRO => X: 578, Y: 24, Z: 65511[0m
+[0;32mI (7214) mpu_example: ACCEL => X: 61648, Y: 3392, Z: 14256[0m
+[0;32mI (7214) mpu_example: TEMP: 27.900890[0m
+[0;32mI (7244) mpu_example: GYRO => X: 585, Y: 146, Z: 138[0m
+[0;32mI (7244) mpu_example: ACCEL => X: 61480, Y: 3424, Z: 14112[0m
+[0;32mI (7244) mpu_example: TEMP: 28.092581[0m
+[0;32mI (7274) mpu_example: GYRO => X: 448, Y: 65523, Z: 65476[0m
+[0;32mI (7274) mpu_example: ACCEL => X: 61440, Y: 4056, Z: 14096[0m
+[0;32mI (7274) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7304) mpu_example: GYRO => X: 65455, Y: 65029, Z: 65363[0m
+[0;32mI (7304) mpu_example: ACCEL => X: 61440, Y: 3952, Z: 13976[0m
+[0;32mI (7304) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7334) mpu_example: GYRO => X: 65441, Y: 65199, Z: 65356[0m
+[0;32mI (7334) mpu_example: ACCEL => X: 61848, Y: 3392, Z: 14488[0m
+[0;32mI (7334) mpu_example: TEMP: 27.948812[0m
+[0;32mI (7364) mpu_example: GYRO => X: 254, Y: 65454, Z: 18[0m
+[0;32mI (7364) mpu_example: ACCEL => X: 61872, Y: 3752, Z: 13896[0m
+[0;32mI (7364) mpu_example: TEMP: 28.092581[0m
+[0;32mI (7394) mpu_example: GYRO => X: 118, Y: 98, Z: 212[0m
+[0;32mI (7394) mpu_example: ACCEL => X: 61312, Y: 3776, Z: 14264[0m
+[0;32mI (7394) mpu_example: TEMP: 28.236349[0m
+[0;32mI (7424) mpu_example: GYRO => X: 54, Y: 65026, Z: 288[0m
+[0;32mI (7424) mpu_example: ACCEL => X: 61616, Y: 3496, Z: 14088[0m
+[0;32mI (7424) mpu_example: TEMP: 27.948812[0m
+[0;32mI (7454) mpu_example: GYRO => X: 65314, Y: 64745, Z: 270[0m
+[0;32mI (7454) mpu_example: ACCEL => X: 61288, Y: 3936, Z: 14080[0m
+[0;32mI (7454) mpu_example: TEMP: 28.284273[0m
+[0;32mI (7484) mpu_example: GYRO => X: 52, Y: 65368, Z: 65202[0m
+[0;32mI (7484) mpu_example: ACCEL => X: 62320, Y: 4136, Z: 13880[0m
+[0;32mI (7484) mpu_example: TEMP: 28.092581[0m
+[0;32mI (7514) mpu_example: GYRO => X: 65264, Y: 196, Z: 64960[0m
+[0;32mI (7514) mpu_example: ACCEL => X: 61968, Y: 3984, Z: 13616[0m
+[0;32mI (7514) mpu_example: TEMP: 27.948812[0m
+[0;32mI (7544) mpu_example: GYRO => X: 65525, Y: 65440, Z: 65189[0m
+[0;32mI (7544) mpu_example: ACCEL => X: 61048, Y: 3192, Z: 14168[0m
+[0;32mI (7544) mpu_example: TEMP: 28.092581[0m
+[0;32mI (7574) mpu_example: GYRO => X: 64834, Y: 65314, Z: 280[0m
+[0;32mI (7574) mpu_example: ACCEL => X: 61472, Y: 4296, Z: 14568[0m
+[0;32mI (7574) mpu_example: TEMP: 28.092581[0m
+[0;32mI (7604) mpu_example: GYRO => X: 65105, Y: 65356, Z: 201[0m
+[0;32mI (7604) mpu_example: ACCEL => X: 61912, Y: 3400, Z: 14272[0m
+[0;32mI (7604) mpu_example: TEMP: 28.140503[0m
+[0;32mI (7634) mpu_example: GYRO => X: 65248, Y: 94, Z: 470[0m
+[0;32mI (7634) mpu_example: ACCEL => X: 61848, Y: 3360, Z: 13848[0m
+[0;32mI (7634) mpu_example: TEMP: 28.236349[0m
+[0;32mI (7664) mpu_example: GYRO => X: 146, Y: 181, Z: 163[0m
+[0;32mI (7664) mpu_example: ACCEL => X: 61808, Y: 3264, Z: 14344[0m
+[0;32mI (7664) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7694) mpu_example: GYRO => X: 421, Y: 509, Z: 10[0m
+[0;32mI (7694) mpu_example: ACCEL => X: 61928, Y: 3440, Z: 14112[0m
+[0;32mI (7694) mpu_example: TEMP: 28.140503[0m
+[0;32mI (7724) mpu_example: GYRO => X: 293, Y: 65526, Z: 175[0m
+[0;32mI (7724) mpu_example: ACCEL => X: 61800, Y: 4024, Z: 13992[0m
+[0;32mI (7724) mpu_example: TEMP: 27.948812[0m
+[0;32mI (7754) mpu_example: GYRO => X: 199, Y: 65430, Z: 100[0m
+[0;32mI (7754) mpu_example: ACCEL => X: 61456, Y: 3392, Z: 14192[0m
+[0;32mI (7754) mpu_example: TEMP: 28.380117[0m
+[0;32mI (7784) mpu_example: GYRO => X: 410, Y: 65509, Z: 65472[0m
+[0;32mI (7784) mpu_example: ACCEL => X: 61544, Y: 3504, Z: 14088[0m
+[0;32mI (7784) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7814) mpu_example: GYRO => X: 270, Y: 65500, Z: 102[0m
+[0;32mI (7814) mpu_example: ACCEL => X: 61456, Y: 3768, Z: 14320[0m
+[0;32mI (7814) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7844) mpu_example: GYRO => X: 149, Y: 65436, Z: 65390[0m
+[0;32mI (7844) mpu_example: ACCEL => X: 61592, Y: 3608, Z: 14216[0m
+[0;32mI (7844) mpu_example: TEMP: 28.140503[0m
+[0;32mI (7874) mpu_example: GYRO => X: 193, Y: 65511, Z: 65345[0m
+[0;32mI (7874) mpu_example: ACCEL => X: 61752, Y: 4088, Z: 14064[0m
+[0;32mI (7874) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7904) mpu_example: GYRO => X: 348, Y: 29, Z: 65311[0m
+[0;32mI (7904) mpu_example: ACCEL => X: 62184, Y: 3632, Z: 14112[0m
+[0;32mI (7904) mpu_example: TEMP: 28.140503[0m
+[0;32mI (7934) mpu_example: GYRO => X: 205, Y: 201, Z: 65442[0m
+[0;32mI (7934) mpu_example: ACCEL => X: 61904, Y: 3976, Z: 13848[0m
+[0;32mI (7934) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7964) mpu_example: GYRO => X: 65504, Y: 65465, Z: 65321[0m
+[0;32mI (7964) mpu_example: ACCEL => X: 61744, Y: 3624, Z: 14056[0m
+[0;32mI (7964) mpu_example: TEMP: 28.044659[0m
+[0;32mI (7994) mpu_example: GYRO => X: 65325, Y: 65167, Z: 65109[0m
+[0;32mI (7994) mpu_example: ACCEL => X: 61552, Y: 3384, Z: 14176[0m
+[0;32mI (7994) mpu_example: TEMP: 28.092581[0m
+[0;32mI (8024) mpu_example: GYRO => X: 341, Y: 65510, Z: 65189[0m
+[0;32mI (8024) mpu_example: ACCEL => X: 61912, Y: 3448, Z: 14152[0m
+[0;32mI (8024) mpu_example: TEMP: 27.948812[0m
+[0;32mI (8054) mpu_example: GYRO => X: 65460, Y: 65398, Z: 65033[0m
+[0;32mI (8054) mpu_example: ACCEL => X: 61368, Y: 3800, Z: 14488[0m
+[0;32mI (8054) mpu_example: TEMP: 28.140503[0m
+[0;32mI (8084) mpu_example: GYRO => X: 65343, Y: 65343, Z: 65483[0m
+[0;32mI (8084) mpu_example: ACCEL => X: 61648, Y: 3432, Z: 13960[0m
+[0;32mI (8084) mpu_example: TEMP: 28.092581[0m
+[0;32mI (8114) mpu_example: GYRO => X: 42, Y: 60, Z: 227[0m
+[0;32mI (8114) mpu_example: ACCEL => X: 61520, Y: 3744, Z: 14304[0m
+[0;32mI (8114) mpu_example: TEMP: 28.092581[0m
+[0;32mI (8144) mpu_example: GYRO => X: 295, Y: 65499, Z: 65025[0m
+[0;32mI (8144) mpu_example: ACCEL => X: 61736, Y: 3768, Z: 14288[0m
+[0;32mI (8144) mpu_example: TEMP: 28.092581[0m
+[0;32mI (8174) mpu_example: GYRO => X: 98, Y: 65426, Z: 6[0m
+[0;32mI (8174) mpu_example: ACCEL => X: 61872, Y: 3736, Z: 13856[0m
+[0;32mI (8174) mpu_example: TEMP: 28.236349[0m
+[0;32mI (8204) mpu_example: GYRO => X: 262, Y: 24, Z: 65469[0m
+[0;32mI (8204) mpu_example: ACCEL => X: 62048, Y: 3816, Z: 13616[0m
+[0;32mI (8204) mpu_example: TEMP: 28.044659[0m
+[0;32mI (8234) mpu_example: GYRO => X: 73, Y: 65456, Z: 254[0m
+[0;32mI (8234) mpu_example: ACCEL => X: 61904, Y: 3672, Z: 14312[0m
+[0;32mI (8234) mpu_example: TEMP: 28.140503[0m
+[0;32mI (8264) mpu_example: GYRO => X: 65452, Y: 65421, Z: 64945[0m
+[0;32mI (8264) mpu_example: ACCEL => X: 61576, Y: 3768, Z: 14096[0m
+[0;32mI (8264) mpu_example: TEMP: 28.140503[0m
+[0;32mI (8294) mpu_example: GYRO => X: 65509, Y: 53, Z: 65425[0m
+[0;32mI (8294) mpu_example: ACCEL => X: 61704, Y: 3784, Z: 14112[0m
+[0;32mI (8294) mpu_example: TEMP: 28.236349[0m
+[0;32mI (8324) mpu_example: GYRO => X: 235, Y: 29, Z: 65519[0m
+[0;32mI (8324) mpu_example: ACCEL => X: 61824, Y: 3552, Z: 13992[0m
+[0;32mI (8324) mpu_example: TEMP: 28.044659[0m
+[0;32mI (8354) mpu_example: GYRO => X: 3, Y: 41, Z: 65347[0m
+[0;32mI (8354) mpu_example: ACCEL => X: 61816, Y: 3976, Z: 14264[0m
+[0;32mI (8354) mpu_example: TEMP: 28.044659[0m
+[0;32mI (8384) mpu_example: GYRO => X: 204, Y: 152, Z: 65367[0m
+[0;32mI (8384) mpu_example: ACCEL => X: 61544, Y: 4000, Z: 14080[0m
+[0;32mI (8384) mpu_example: TEMP: 28.092581[0m
+[0;32mI (8414) mpu_example: GYRO => X: 111, Y: 9, Z: 65476[0m
+[0;32mI (8414) mpu_example: ACCEL => X: 62016, Y: 3640, Z: 13936[0m
+[0;32mI (8414) mpu_example: TEMP: 28.236349[0m
+[0;32mI (8444) mpu_example: GYRO => X: 358, Y: 65434, Z: 65434[0m
+[0;32mI (8444) mpu_example: ACCEL => X: 61872, Y: 3600, Z: 14296[0m
+[0;32mI (8444) mpu_example: TEMP: 28.092581[0m
+[0;32mI (8474) mpu_example: GYRO => X: 175, Y: 65415, Z: 64784[0m
+[0;32mI (8474) mpu_example: ACCEL => X: 61864, Y: 4216, Z: 14560[0m
+[0;32mI (8474) mpu_example: TEMP: 28.044659[0m
+[0;32mI (8504) mpu_example: GYRO => X: 75, Y: 37, Z: 65441[0m
+[0;32mI (8504) mpu_example: ACCEL => X: 61464, Y: 4136, Z: 13936[0m
+[0;32mI (8504) mpu_example: TEMP: 28.236349[0m
+[0;32mI (8534) mpu_example: GYRO => X: 65497, Y: 34, Z: 65389[0m
+[0;32mI (8534) mpu_example: ACCEL => X: 61896, Y: 3776, Z: 13832[0m
+[0;32mI (8534) mpu_example: TEMP: 28.044659[0m
+[0;32mI (8564) mpu_example: GYRO => X: 65489, Y: 65242, Z: 65276[0m
+[0;32mI (8564) mpu_example: ACCEL => X: 61640, Y: 3952, Z: 13784[0m
+[0;32mI (8564) mpu_example: TEMP: 28.140503[0m
+[0;32mI (8594) mpu_example: GYRO => X: 121, Y: 65429, Z: 65500[0m
+[0;32mI (8594) mpu_example: ACCEL => X: 61640, Y: 3648, Z: 13816[0m
+[0;32mI (8594) mpu_example: TEMP: 27.948812[0m
+[0;32mI (8624) mpu_example: GYRO => X: 152, Y: 252, Z: 65402[0m
+[0;32mI (8624) mpu_example: ACCEL => X: 61880, Y: 3984, Z: 14184[0m
+[0;32mI (8624) mpu_example: TEMP: 28.092581[0m
+[0;32mI (8654) mpu_example: GYRO => X: 84, Y: 65299, Z: 65407[0m
+[0;32mI (8654) mpu_example: ACCEL => X: 61912, Y: 3592, Z: 13920[0m
+[0;32mI (8654) mpu_example: TEMP: 28.140503[0m
+[0;32mI (8684) mpu_example: GYRO => X: 766, Y: 26, Z: 64991[0m
+[0;32mI (8684) mpu_example: ACCEL => X: 61368, Y: 3592, Z: 14304[0m
+[0;32mI (8684) mpu_example: TEMP: 28.380117[0m
+[0;32mI (8714) mpu_example: GYRO => X: 806, Y: 915, Z: 65266[0m
+[0;32mI (8714) mpu_example: ACCEL => X: 62320, Y: 3992, Z: 13720[0m
+[0;32mI (8714) mpu_example: TEMP: 28.140503[0m
+[0;32mI (8744) mpu_example: GYRO => X: 198, Y: 109, Z: 65052[0m
+[0;32mI (8744) mpu_example: ACCEL => X: 62048, Y: 4416, Z: 13896[0m
+[0;32mI (8744) mpu_example: TEMP: 28.044659[0m
+[0;32mI (8774) mpu_example: GYRO => X: 65284, Y: 65023, Z: 65512[0m
+[0;32mI (8774) mpu_example: ACCEL => X: 62016, Y: 4008, Z: 14320[0m
+[0;32mI (8774) mpu_example: TEMP: 28.236349[0m
+[0;32mI (8804) mpu_example: GYRO => X: 100, Y: 65180, Z: 456[0m
+[0;32mI (8804) mpu_example: ACCEL => X: 61944, Y: 3792, Z: 14280[0m
+[0;32mI (8804) mpu_example: TEMP: 28.044659[0m
+[0;32mI (8834) mpu_example: GYRO => X: 205, Y: 65088, Z: 107[0m
+[0;32mI (8834) mpu_example: ACCEL => X: 61784, Y: 3664, Z: 14728[0m
+[0;32mI (8834) mpu_example: TEMP: 28.044659[0m
+[0;32mI (8864) mpu_example: GYRO => X: 139, Y: 65229, Z: 65409[0m
+[0;32mI (8864) mpu_example: ACCEL => X: 62120, Y: 3856, Z: 14024[0m
+[0;32mI (8864) mpu_example: TEMP: 28.044659[0m
+[0;32mI (8894) mpu_example: GYRO => X: 208, Y: 65221, Z: 65376[0m
+[0;32mI (8894) mpu_example: ACCEL => X: 62008, Y: 4112, Z: 13976[0m
+[0;32mI (8894) mpu_example: TEMP: 28.236349[0m
+[0;32mI (8924) mpu_example: GYRO => X: 138, Y: 65211, Z: 65303[0m
+[0;32mI (8924) mpu_example: ACCEL => X: 62304, Y: 4088, Z: 14024[0m
+[0;32mI (8924) mpu_example: TEMP: 28.044659[0m
+[0;32mI (8954) mpu_example: GYRO => X: 92, Y: 26, Z: 65348[0m
+[0;32mI (8954) mpu_example: ACCEL => X: 62184, Y: 4600, Z: 14080[0m
+[0;32mI (8954) mpu_example: TEMP: 28.380117[0m
+[0;32mI (8984) mpu_example: GYRO => X: 65500, Y: 65482, Z: 65204[0m
+[0;32mI (8984) mpu_example: ACCEL => X: 61600, Y: 3960, Z: 13864[0m
+[0;32mI (8984) mpu_example: TEMP: 28.380117[0m
+[0;32mI (9014) mpu_example: GYRO => X: 65278, Y: 65369, Z: 65216[0m
+[0;32mI (9014) mpu_example: ACCEL => X: 61944, Y: 4336, Z: 13888[0m
+[0;32mI (9014) mpu_example: TEMP: 28.140503[0m
+[0;32mI (9044) mpu_example: GYRO => X: 23, Y: 86, Z: 65361[0m
+[0;32mI (9044) mpu_example: ACCEL => X: 62128, Y: 3944, Z: 14320[0m
+[0;32mI (9044) mpu_example: TEMP: 28.140503[0m
+[0;32mI (9074) mpu_example: GYRO => X: 65504, Y: 65479, Z: 65308[0m
+[0;32mI (9074) mpu_example: ACCEL => X: 61752, Y: 3960, Z: 14232[0m
+[0;32mI (9074) mpu_example: TEMP: 28.140503[0m
+[0;32mI (9104) mpu_example: GYRO => X: 65474, Y: 1, Z: 65253[0m
+[0;32mI (9104) mpu_example: ACCEL => X: 61768, Y: 3840, Z: 14144[0m
+[0;32mI (9104) mpu_example: TEMP: 28.284273[0m
+[0;32mI (9134) mpu_example: GYRO => X: 65488, Y: 204, Z: 65138[0m
+[0;32mI (9134) mpu_example: ACCEL => X: 61936, Y: 3904, Z: 13936[0m
+[0;32mI (9134) mpu_example: TEMP: 28.140503[0m
+[0;32mI (9164) mpu_example: GYRO => X: 291, Y: 116, Z: 64935[0m
+[0;32mI (9164) mpu_example: ACCEL => X: 61448, Y: 3896, Z: 14144[0m
+[0;32mI (9164) mpu_example: TEMP: 28.092581[0m
+[0;32mI (9194) mpu_example: GYRO => X: 65481, Y: 154, Z: 64875[0m
+[0;32mI (9194) mpu_example: ACCEL => X: 61912, Y: 4408, Z: 14064[0m
+[0;32mI (9194) mpu_example: TEMP: 28.044659[0m
+[0;32mI (9224) mpu_example: GYRO => X: 65336, Y: 87, Z: 65091[0m
+[0;32mI (9224) mpu_example: ACCEL => X: 62456, Y: 4272, Z: 13704[0m
+[0;32mI (9224) mpu_example: TEMP: 28.044659[0m
+[0;32mI (9254) mpu_example: GYRO => X: 65273, Y: 127, Z: 65136[0m
+[0;32mI (9254) mpu_example: ACCEL => X: 61864, Y: 4168, Z: 14216[0m
+[0;32mI (9254) mpu_example: TEMP: 28.092581[0m
+[0;32mI (9284) mpu_example: GYRO => X: 65367, Y: 126, Z: 65231[0m
+[0;32mI (9284) mpu_example: ACCEL => X: 61888, Y: 4256, Z: 14208[0m
+[0;32mI (9284) mpu_example: TEMP: 27.517508[0m
+[0;32mI (9314) mpu_example: GYRO => X: 65318, Y: 26, Z: 65245[0m
+[0;32mI (9314) mpu_example: ACCEL => X: 61864, Y: 3960, Z: 14168[0m
+[0;32mI (9314) mpu_example: TEMP: 28.284273[0m
+[0;32mI (9344) mpu_example: GYRO => X: 46, Y: 65338, Z: 65428[0m
+[0;32mI (9344) mpu_example: ACCEL => X: 61600, Y: 4064, Z: 14256[0m
+[0;32mI (9344) mpu_example: TEMP: 28.140503[0m
+[0;32mI (9374) mpu_example: GYRO => X: 149, Y: 30, Z: 65333[0m
+[0;32mI (9374) mpu_example: ACCEL => X: 61944, Y: 3936, Z: 14216[0m
+[0;32mI (9374) mpu_example: TEMP: 28.380117[0m
+[0;32mI (9404) mpu_example: GYRO => X: 65483, Y: 65464, Z: 65186[0m
+[0;32mI (9404) mpu_example: ACCEL => X: 61784, Y: 4304, Z: 14128[0m
+[0;32mI (9404) mpu_example: TEMP: 28.092581[0m
+[0;32mI (9434) mpu_example: GYRO => X: 113, Y: 254, Z: 17[0m
+[0;32mI (9434) mpu_example: ACCEL => X: 62192, Y: 4184, Z: 14184[0m
+[0;32mI (9434) mpu_example: TEMP: 28.140503[0m
+[0;32mI (9464) mpu_example: GYRO => X: 125, Y: 52, Z: 65319[0m
+[0;32mI (9464) mpu_example: ACCEL => X: 61880, Y: 4096, Z: 14136[0m
+[0;32mI (9464) mpu_example: TEMP: 28.380117[0m
+[0;32mI (9494) mpu_example: GYRO => X: 92, Y: 16, Z: 65419[0m
+[0;32mI (9494) mpu_example: ACCEL => X: 61704, Y: 4224, Z: 13944[0m
+[0;32mI (9494) mpu_example: TEMP: 28.044659[0m
+[0;32mI (9524) mpu_example: GYRO => X: 128, Y: 162, Z: 65530[0m
+[0;32mI (9524) mpu_example: ACCEL => X: 61832, Y: 4160, Z: 14040[0m
+[0;32mI (9524) mpu_example: TEMP: 28.092581[0m
+[0;32mI (9554) mpu_example: GYRO => X: 88, Y: 122, Z: 65397[0m
+[0;32mI (9554) mpu_example: ACCEL => X: 61736, Y: 4304, Z: 14424[0m
+[0;32mI (9554) mpu_example: TEMP: 28.140503[0m
+[0;32mI (9584) mpu_example: GYRO => X: 2, Y: 65527, Z: 65475[0m
+[0;32mI (9584) mpu_example: ACCEL => X: 61976, Y: 4104, Z: 13608[0m
+[0;32mI (9584) mpu_example: TEMP: 28.092581[0m
+[0;32mI (9614) mpu_example: GYRO => X: 65319, Y: 65293, Z: 65448[0m
+[0;32mI (9614) mpu_example: ACCEL => X: 61864, Y: 3944, Z: 13848[0m
+[0;32mI (9614) mpu_example: TEMP: 28.044659[0m
+[0;32mI (9644) mpu_example: GYRO => X: 32, Y: 65426, Z: 65447[0m
+[0;32mI (9644) mpu_example: ACCEL => X: 61888, Y: 3704, Z: 14304[0m
+[0;32mI (9644) mpu_example: TEMP: 28.380117[0m
+[0;32mI (9674) mpu_example: GYRO => X: 145, Y: 42, Z: 65372[0m
+[0;32mI (9674) mpu_example: ACCEL => X: 61784, Y: 4064, Z: 14008[0m
+[0;32mI (9674) mpu_example: TEMP: 28.236349[0m
+[0;32mI (9704) mpu_example: GYRO => X: 201, Y: 230, Z: 65534[0m
+[0;32mI (9704) mpu_example: ACCEL => X: 61880, Y: 4304, Z: 14280[0m
+[0;32mI (9704) mpu_example: TEMP: 27.948812[0m
+[0;32mI (9734) mpu_example: GYRO => X: 68, Y: 57, Z: 65426[0m
+[0;32mI (9734) mpu_example: ACCEL => X: 61832, Y: 4256, Z: 14208[0m
+[0;32mI (9734) mpu_example: TEMP: 28.044659[0m
+[0;32mI (9764) mpu_example: GYRO => X: 202, Y: 200, Z: 22[0m
+[0;32mI (9764) mpu_example: ACCEL => X: 61880, Y: 3880, Z: 13840[0m
+[0;32mI (9764) mpu_example: TEMP: 28.380117[0m
+[0;32mI (9794) mpu_example: GYRO => X: 44, Y: 178, Z: 65421[0m
+[0;32mI (9794) mpu_example: ACCEL => X: 61600, Y: 4272, Z: 14088[0m
+[0;32mI (9794) mpu_example: TEMP: 28.044659[0m
+[0;32mI (9824) mpu_example: GYRO => X: 217, Y: 200, Z: 65461[0m
+[0;32mI (9824) mpu_example: ACCEL => X: 62104, Y: 4040, Z: 14272[0m
+[0;32mI (9824) mpu_example: TEMP: 28.236349[0m
+[0;32mI (9854) mpu_example: GYRO => X: 138, Y: 140, Z: 65519[0m
+[0;32mI (9854) mpu_example: ACCEL => X: 61888, Y: 4160, Z: 14176[0m
+[0;32mI (9854) mpu_example: TEMP: 28.140503[0m
+[0;32mI (9884) mpu_example: GYRO => X: 122, Y: 65501, Z: 65469[0m
+[0;32mI (9884) mpu_example: ACCEL => X: 61504, Y: 4360, Z: 14016[0m
+[0;32mI (9884) mpu_example: TEMP: 28.140503[0m
+[0;32mI (9914) mpu_example: GYRO => X: 122, Y: 167, Z: 65354[0m
+[0;32mI (9914) mpu_example: ACCEL => X: 62064, Y: 3912, Z: 14200[0m
+[0;32mI (9914) mpu_example: TEMP: 28.044659[0m
+[0;32mI (9944) mpu_example: GYRO => X: 65466, Y: 70, Z: 65471[0m
+[0;32mI (9944) mpu_example: ACCEL => X: 61872, Y: 4312, Z: 14184[0m
+[0;32mI (9944) mpu_example: TEMP: 28.140503[0m
+[0;32mI (9974) mpu_example: GYRO => X: 65474, Y: 16, Z: 65347[0m
+[0;32mI (9974) mpu_example: ACCEL => X: 61456, Y: 4080, Z: 13904[0m
+[0;32mI (9974) mpu_example: TEMP: 28.140503[0m
+[0;32mI (10004) mpu_example: GYRO => X: 66, Y: 114, Z: 65313[0m
+[0;32mI (10004) mpu_example: ACCEL => X: 61832, Y: 4328, Z: 14272[0m
+[0;32mI (10004) mpu_example: TEMP: 28.236349[0m
+[0;32mI (10034) mpu_example: GYRO => X: 19, Y: 233, Z: 65273[0m
+[0;32mI (10034) mpu_example: ACCEL => X: 61752, Y: 4760, Z: 14048[0m
+[0;32mI (10034) mpu_example: TEMP: 28.284273[0m
+[0;32mI (10064) mpu_example: GYRO => X: 57810, Y: 63634, Z: 294[0m
+[0;32mI (10064) mpu_example: ACCEL => X: 60656, Y: 14864, Z: 16040[0m
+[0;32mI (10064) mpu_example: TEMP: 28.140503[0m
+[0;32mI (10094) mpu_example: GYRO => X: 35220, Y: 57086, Z: 5365[0m
+[0;32mI (10094) mpu_example: ACCEL => X: 62128, Y: 20360, Z: 11488[0m
+[0;32mI (10094) mpu_example: TEMP: 28.044659[0m
+[0;32mI (10124) mpu_example: GYRO => X: 33758, Y: 64046, Z: 6628[0m
+[0;32mI (10124) mpu_example: ACCEL => X: 64184, Y: 272, Z: 7608[0m
+[0;32mI (10124) mpu_example: TEMP: 28.140503[0m
+[0;32mI (10154) mpu_example: GYRO => X: 40160, Y: 973, Z: 7262[0m
+[0;32mI (10154) mpu_example: ACCEL => X: 58800, Y: 57624, Z: 13760[0m
+[0;32mI (10154) mpu_example: TEMP: 28.236349[0m
+[0;32mI (10184) mpu_example: GYRO => X: 47985, Y: 2586, Z: 6130[0m
+[0;32mI (10184) mpu_example: ACCEL => X: 61720, Y: 55408, Z: 11800[0m
+[0;32mI (10184) mpu_example: TEMP: 28.044659[0m
+[0;32mI (10214) mpu_example: GYRO => X: 57906, Y: 3137, Z: 4021[0m
+[0;32mI (10214) mpu_example: ACCEL => X: 60744, Y: 55008, Z: 13952[0m
+[0;32mI (10214) mpu_example: TEMP: 28.092581[0m
+[0;32mI (10244) mpu_example: GYRO => X: 64861, Y: 3481, Z: 2558[0m
+[0;32mI (10244) mpu_example: ACCEL => X: 61856, Y: 56104, Z: 13840[0m
+[0;32mI (10244) mpu_example: TEMP: 28.236349[0m
+[0;32mI (10274) mpu_example: GYRO => X: 1671, Y: 1872, Z: 1138[0m
+[0;32mI (10274) mpu_example: ACCEL => X: 60704, Y: 58472, Z: 15008[0m
+[0;32mI (10274) mpu_example: TEMP: 28.380117[0m
+[0;32mI (10304) mpu_example: GYRO => X: 2764, Y: 831, Z: 64895[0m
+[0;32mI (10304) mpu_example: ACCEL => X: 61304, Y: 61800, Z: 14152[0m
+[0;32mI (10304) mpu_example: TEMP: 28.044659[0m
+[0;32mI (10334) mpu_example: GYRO => X: 2425, Y: 179, Z: 64767[0m
+[0;32mI (10334) mpu_example: ACCEL => X: 61304, Y: 62776, Z: 13640[0m
+[0;32mI (10334) mpu_example: TEMP: 28.284273[0m
+[0;32mI (10364) mpu_example: GYRO => X: 2111, Y: 104, Z: 65241[0m
+[0;32mI (10364) mpu_example: ACCEL => X: 61576, Y: 63976, Z: 13328[0m
+[0;32mI (10364) mpu_example: TEMP: 28.140503[0m
+[0;32mI (10394) mpu_example: GYRO => X: 1502, Y: 379, Z: 685[0m
+[0;32mI (10394) mpu_example: ACCEL => X: 61928, Y: 64104, Z: 13536[0m
+[0;32mI (10394) mpu_example: TEMP: 28.092581[0m
+[0;32mI (10424) mpu_example: GYRO => X: 611, Y: 65347, Z: 683[0m
+[0;32mI (10424) mpu_example: ACCEL => X: 61736, Y: 64136, Z: 13544[0m
+[0;32mI (10424) mpu_example: TEMP: 28.236349[0m
+[0;32mI (10454) mpu_example: GYRO => X: 88, Y: 113, Z: 838[0m
+[0;32mI (10454) mpu_example: ACCEL => X: 61280, Y: 63736, Z: 13984[0m
+[0;32mI (10454) mpu_example: TEMP: 28.044659[0m
+[0;32mI (10484) mpu_example: GYRO => X: 65433, Y: 65472, Z: 778[0m
+[0;32mI (10484) mpu_example: ACCEL => X: 60944, Y: 62480, Z: 13632[0m
+[0;32mI (10484) mpu_example: TEMP: 28.044659[0m
+[0;32mI (10514) mpu_example: GYRO => X: 65503, Y: 65232, Z: 669[0m
+[0;32mI (10514) mpu_example: ACCEL => X: 60840, Y: 62680, Z: 13664[0m
+[0;32mI (10514) mpu_example: TEMP: 28.092581[0m
+[0;32mI (10544) mpu_example: GYRO => X: 65306, Y: 65433, Z: 238[0m
+[0;32mI (10544) mpu_example: ACCEL => X: 62048, Y: 61808, Z: 13512[0m
+[0;32mI (10544) mpu_example: TEMP: 28.140503[0m
+[0;32mI (10574) mpu_example: GYRO => X: 292, Y: 35, Z: 54[0m
+[0;32mI (10574) mpu_example: ACCEL => X: 61416, Y: 62592, Z: 13816[0m
+[0;32mI (10574) mpu_example: TEMP: 28.380117[0m
+[0;32mI (10604) mpu_example: GYRO => X: 893, Y: 6, Z: 206[0m
+[0;32mI (10604) mpu_example: ACCEL => X: 61152, Y: 62936, Z: 13576[0m
+[0;32mI (10604) mpu_example: TEMP: 28.140503[0m
+[0;32mI (10634) mpu_example: GYRO => X: 632, Y: 64847, Z: 65374[0m
+[0;32mI (10634) mpu_example: ACCEL => X: 61360, Y: 63064, Z: 13656[0m
+[0;32mI (10634) mpu_example: TEMP: 28.092581[0m
+[0;32mI (10664) mpu_example: GYRO => X: 652, Y: 65454, Z: 65382[0m
+[0;32mI (10664) mpu_example: ACCEL => X: 61688, Y: 63536, Z: 13624[0m
+[0;32mI (10664) mpu_example: TEMP: 28.236349[0m
+[0;32mI (10694) mpu_example: GYRO => X: 373, Y: 24, Z: 65496[0m
+[0;32mI (10694) mpu_example: ACCEL => X: 61424, Y: 63392, Z: 13976[0m
+[0;32mI (10694) mpu_example: TEMP: 28.092581[0m
+[0;32mI (10724) mpu_example: GYRO => X: 356, Y: 65316, Z: 289[0m
+[0;32mI (10724) mpu_example: ACCEL => X: 60928, Y: 63536, Z: 14080[0m
+[0;32mI (10724) mpu_example: TEMP: 28.044659[0m
+[0;32mI (10754) mpu_example: GYRO => X: 498, Y: 75, Z: 123[0m
+[0;32mI (10754) mpu_example: ACCEL => X: 61344, Y: 63432, Z: 13680[0m
+[0;32mI (10754) mpu_example: TEMP: 28.380117[0m
+[0;32mI (10784) mpu_example: GYRO => X: 608, Y: 177, Z: 445[0m
+[0;32mI (10784) mpu_example: ACCEL => X: 61688, Y: 63720, Z: 13744[0m
+[0;32mI (10784) mpu_example: TEMP: 28.140503[0m
+[0;32mI (10814) mpu_example: GYRO => X: 401, Y: 65402, Z: 114[0m
+[0;32mI (10814) mpu_example: ACCEL => X: 61296, Y: 63280, Z: 13944[0m
+[0;32mI (10814) mpu_example: TEMP: 28.380117[0m
+[0;32mI (10844) mpu_example: GYRO => X: 1021, Y: 65416, Z: 359[0m
+[0;32mI (10844) mpu_example: ACCEL => X: 61288, Y: 62976, Z: 13960[0m
+[0;32mI (10844) mpu_example: TEMP: 28.428041[0m
+[0;32mI (10874) mpu_example: GYRO => X: 814, Y: 429, Z: 64[0m
+[0;32mI (10874) mpu_example: ACCEL => X: 61888, Y: 63840, Z: 13656[0m
+[0;32mI (10874) mpu_example: TEMP: 28.092581[0m
+[0;32mI (10904) mpu_example: GYRO => X: 349, Y: 65437, Z: 34[0m
+[0;32mI (10904) mpu_example: ACCEL => X: 61096, Y: 63512, Z: 13920[0m
+[0;32mI (10904) mpu_example: TEMP: 28.236349[0m
+[0;32mI (10934) mpu_example: GYRO => X: 89, Y: 65113, Z: 65372[0m
+[0;32mI (10934) mpu_example: ACCEL => X: 61400, Y: 63624, Z: 13944[0m
+[0;32mI (10934) mpu_example: TEMP: 28.236349[0m
+[0;32mI (10964) mpu_example: GYRO => X: 65504, Y: 65378, Z: 65384[0m
+[0;32mI (10964) mpu_example: ACCEL => X: 61344, Y: 63936, Z: 14168[0m
+[0;32mI (10964) mpu_example: TEMP: 28.140503[0m
+[0;32mI (10994) mpu_example: GYRO => X: 65449, Y: 36, Z: 65382[0m
+[0;32mI (10994) mpu_example: ACCEL => X: 61200, Y: 63488, Z: 13696[0m
+[0;32mI (10994) mpu_example: TEMP: 28.284273[0m
+[0;32mI (11024) mpu_example: GYRO => X: 182, Y: 3, Z: 21[0m
+[0;32mI (11024) mpu_example: ACCEL => X: 61328, Y: 63608, Z: 13816[0m
+[0;32mI (11024) mpu_example: TEMP: 28.140503[0m
+[0;32mI (11054) mpu_example: GYRO => X: 155, Y: 151, Z: 65504[0m
+[0;32mI (11054) mpu_example: ACCEL => X: 61416, Y: 63976, Z: 14000[0m
+[0;32mI (11054) mpu_example: TEMP: 28.044659[0m
+[0;32mI (11084) mpu_example: GYRO => X: 65462, Y: 23, Z: 65469[0m
+[0;32mI (11084) mpu_example: ACCEL => X: 61272, Y: 63312, Z: 13824[0m
+[0;32mI (11084) mpu_example: TEMP: 28.380117[0m
+[0;32mI (11114) mpu_example: GYRO => X: 60, Y: 128, Z: 65496[0m
+[0;32mI (11114) mpu_example: ACCEL => X: 61088, Y: 63968, Z: 13592[0m
+[0;32mI (11114) mpu_example: TEMP: 28.380117[0m
+[0;32mI (11144) mpu_example: GYRO => X: 65520, Y: 65381, Z: 13[0m
+[0;32mI (11144) mpu_example: ACCEL => X: 61208, Y: 63328, Z: 13976[0m
+[0;32mI (11144) mpu_example: TEMP: 28.380117[0m
+[0;32mI (11174) mpu_example: GYRO => X: 53, Y: 17, Z: 65383[0m
+[0;32mI (11174) mpu_example: ACCEL => X: 61216, Y: 63624, Z: 13608[0m
+[0;32mI (11174) mpu_example: TEMP: 28.284273[0m
+[0;32mI (11204) mpu_example: GYRO => X: 65426, Y: 65342, Z: 65495[0m
+[0;32mI (11204) mpu_example: ACCEL => X: 61264, Y: 63608, Z: 13816[0m
+[0;32mI (11204) mpu_example: TEMP: 28.380117[0m
+[0;32mI (11234) mpu_example: GYRO => X: 65525, Y: 65439, Z: 65483[0m
+[0;32mI (11234) mpu_example: ACCEL => X: 61264, Y: 63416, Z: 13848[0m
+[0;32mI (11234) mpu_example: TEMP: 28.140503[0m
+[0;32mI (11264) mpu_example: GYRO => X: 105, Y: 59, Z: 65459[0m
+[0;32mI (11264) mpu_example: ACCEL => X: 61184, Y: 63688, Z: 13968[0m
+[0;32mI (11264) mpu_example: TEMP: 28.044659[0m
+[0;32mI (11294) mpu_example: GYRO => X: 367, Y: 55, Z: 76[0m
+[0;32mI (11294) mpu_example: ACCEL => X: 60736, Y: 63224, Z: 14256[0m
+[0;32mI (11294) mpu_example: TEMP: 28.284273[0m
+[0;32mI (11324) mpu_example: GYRO => X: 4443, Y: 65323, Z: 64397[0m
+[0;32mI (11324) mpu_example: ACCEL => X: 59832, Y: 57248, Z: 14984[0m
+[0;32mI (11324) mpu_example: TEMP: 28.044659[0m
+[0;32mI (11354) mpu_example: GYRO => X: 17841, Y: 57760, Z: 61517[0m
+[0;32mI (11354) mpu_example: ACCEL => X: 51904, Y: 48752, Z: 17080[0m
+[0;32mI (11354) mpu_example: TEMP: 28.092581[0m
+[0;32mI (11384) mpu_example: GYRO => X: 32767, Y: 3310, Z: 52822[0m
+[0;32mI (11384) mpu_example: ACCEL => X: 59328, Y: 51736, Z: 7592[0m
+[0;32mI (11384) mpu_example: TEMP: 28.236349[0m
+[0;32mI (11414) mpu_example: GYRO => X: 32767, Y: 65397, Z: 49785[0m
+[0;32mI (11414) mpu_example: ACCEL => X: 55112, Y: 3648, Z: 13664[0m
+[0;32mI (11414) mpu_example: TEMP: 28.140503[0m
+[0;32mI (11444) mpu_example: GYRO => X: 27306, Y: 60923, Z: 58014[0m
+[0;32mI (11444) mpu_example: ACCEL => X: 62824, Y: 18304, Z: 10456[0m
+[0;32mI (11444) mpu_example: TEMP: 28.236349[0m
+[0;32mI (11474) mpu_example: GYRO => X: 10018, Y: 61388, Z: 59088[0m
+[0;32mI (11474) mpu_example: ACCEL => X: 3824, Y: 21984, Z: 9096[0m
+[0;32mI (11474) mpu_example: TEMP: 28.140503[0m
+[0;32mI (11504) mpu_example: GYRO => X: 1454, Y: 63283, Z: 63241[0m
+[0;32mI (11504) mpu_example: ACCEL => X: 62616, Y: 11424, Z: 10624[0m
+[0;32mI (11504) mpu_example: TEMP: 28.284273[0m
+[0;32mI (11534) mpu_example: GYRO => X: 64981, Y: 64261, Z: 64466[0m
+[0;32mI (11534) mpu_example: ACCEL => X: 63928, Y: 11280, Z: 10792[0m
+[0;32mI (11534) mpu_example: TEMP: 28.092581[0m
+[0;32mI (11564) mpu_example: GYRO => X: 64599, Y: 65134, Z: 1655[0m
+[0;32mI (11564) mpu_example: ACCEL => X: 62624, Y: 8728, Z: 13328[0m
+[0;32mI (11564) mpu_example: TEMP: 28.044659[0m
+[0;32mI (11594) mpu_example: GYRO => X: 62158, Y: 332, Z: 1716[0m
+[0;32mI (11594) mpu_example: ACCEL => X: 61528, Y: 8304, Z: 15264[0m
+[0;32mI (11594) mpu_example: TEMP: 28.380117[0m
+[0;32mI (11624) mpu_example: GYRO => X: 63267, Y: 39, Z: 1910[0m
+[0;32mI (11624) mpu_example: ACCEL => X: 61184, Y: 3800, Z: 14216[0m
+[0;32mI (11624) mpu_example: TEMP: 28.284273[0m
+[0;32mI (11654) mpu_example: GYRO => X: 64185, Y: 168, Z: 254[0m
+[0;32mI (11654) mpu_example: ACCEL => X: 61920, Y: 3944, Z: 13568[0m
+[0;32mI (11654) mpu_example: TEMP: 27.948812[0m
+[0;32mI (11684) mpu_example: GYRO => X: 488, Y: 164, Z: 159[0m
+[0;32mI (11684) mpu_example: ACCEL => X: 61528, Y: 4048, Z: 13856[0m
+[0;32mI (11684) mpu_example: TEMP: 28.092581[0m
+[0;32mI (11714) mpu_example: GYRO => X: 254, Y: 64705, Z: 64293[0m
+[0;32mI (11714) mpu_example: ACCEL => X: 61200, Y: 4992, Z: 13968[0m
+[0;32mI (11714) mpu_example: TEMP: 28.236349[0m
+[0;32mI (11744) mpu_example: GYRO => X: 1766, Y: 64961, Z: 64301[0m
+[0;32mI (11744) mpu_example: ACCEL => X: 62584, Y: 4728, Z: 12720[0m
+[0;32mI (11744) mpu_example: TEMP: 28.092581[0m
+[0;32mI (11774) mpu_example: GYRO => X: 63930, Y: 64902, Z: 64344[0m
+[0;32mI (11774) mpu_example: ACCEL => X: 62984, Y: 7592, Z: 13152[0m
+[0;32mI (11774) mpu_example: TEMP: 28.236349[0m
+[0;32mI (11804) mpu_example: GYRO => X: 57844, Y: 64953, Z: 62376[0m
+[0;32mI (11804) mpu_example: ACCEL => X: 62256, Y: 9664, Z: 13712[0m
+[0;32mI (11804) mpu_example: TEMP: 28.284273[0m
+[0;32mI (11834) mpu_example: GYRO => X: 50489, Y: 519, Z: 58018[0m
+[0;32mI (11834) mpu_example: ACCEL => X: 62832, Y: 8216, Z: 13664[0m
+[0;32mI (11834) mpu_example: TEMP: 28.092581[0m
+[0;32mI (11864) mpu_example: GYRO => X: 46814, Y: 976, Z: 57147[0m
+[0;32mI (11864) mpu_example: ACCEL => X: 64704, Y: 6640, Z: 9768[0m
+[0;32mI (11864) mpu_example: TEMP: 28.140503[0m
+[0;32mI (11894) mpu_example: GYRO => X: 41996, Y: 417, Z: 57864[0m
+[0;32mI (11894) mpu_example: ACCEL => X: 62280, Y: 5128, Z: 13336[0m
+[0;32mI (11894) mpu_example: TEMP: 28.284273[0m
+[0;32mI (11924) mpu_example: GYRO => X: 44631, Y: 1619, Z: 64784[0m
+[0;32mI (11924) mpu_example: ACCEL => X: 63672, Y: 62760, Z: 13576[0m
+[0;32mI (11924) mpu_example: TEMP: 28.140503[0m
+[0;32mI (11954) mpu_example: GYRO => X: 50432, Y: 64466, Z: 61477[0m
+[0;32mI (11954) mpu_example: ACCEL => X: 61728, Y: 58416, Z: 13648[0m
+[0;32mI (11954) mpu_example: TEMP: 28.140503[0m
+[0;32mI (11984) mpu_example: GYRO => X: 63410, Y: 876, Z: 57102[0m
+[0;32mI (11984) mpu_example: ACCEL => X: 64248, Y: 58168, Z: 12312[0m
+[0;32mI (11984) mpu_example: TEMP: 28.284273[0m
+[0;32mI (12014) mpu_example: GYRO => X: 63302, Y: 123, Z: 53200[0m
+[0;32mI (12014) mpu_example: ACCEL => X: 62672, Y: 63600, Z: 13136[0m
+[0;32mI (12014) mpu_example: TEMP: 28.140503[0m
+[0;32mI (12044) mpu_example: GYRO => X: 712, Y: 1301, Z: 55285[0m
+[0;32mI (12044) mpu_example: ACCEL => X: 63072, Y: 61176, Z: 12624[0m
+[0;32mI (12044) mpu_example: TEMP: 28.236349[0m
+[0;32mI (12074) mpu_example: GYRO => X: 5757, Y: 3035, Z: 362[0m
+[0;32mI (12074) mpu_example: ACCEL => X: 60976, Y: 63952, Z: 13408[0m
+[0;32mI (12074) mpu_example: TEMP: 28.236349[0m
+[0;32mI (12104) mpu_example: GYRO => X: 7324, Y: 2846, Z: 278[0m
+[0;32mI (12104) mpu_example: ACCEL => X: 61024, Y: 63240, Z: 14320[0m
+[0;32mI (12104) mpu_example: TEMP: 28.284273[0m
+[0;32mI (12134) mpu_example: GYRO => X: 4682, Y: 64430, Z: 65500[0m
+[0;32mI (12134) mpu_example: ACCEL => X: 59920, Y: 64616, Z: 12992[0m
+[0;32mI (12134) mpu_example: TEMP: 28.140503[0m
+[0;32mI (12164) mpu_example: GYRO => X: 389, Y: 64553, Z: 3444[0m
+[0;32mI (12164) mpu_example: ACCEL => X: 53984, Y: 56904, Z: 13480[0m
+[0;32mI (12164) mpu_example: TEMP: 28.092581[0m
+[0;32mI (12194) mpu_example: GYRO => X: 52369, Y: 11432, Z: 26544[0m
+[0;32mI (12194) mpu_example: ACCEL => X: 53944, Y: 60784, Z: 15432[0m
+[0;32mI (12194) mpu_example: TEMP: 28.092581[0m
+[0;32mI (12224) mpu_example: GYRO => X: 63720, Y: 4057, Z: 65520[0m
+[0;32mI (12224) mpu_example: ACCEL => X: 59976, Y: 63776, Z: 14256[0m
+[0;32mI (12224) mpu_example: TEMP: 28.140503[0m
+[0;32mI (12254) mpu_example: GYRO => X: 60670, Y: 3379, Z: 62846[0m
+[0;32mI (12254) mpu_example: ACCEL => X: 60248, Y: 65464, Z: 13232[0m
+[0;32mI (12254) mpu_example: TEMP: 28.236349[0m
+[0;32mI (12284) mpu_example: GYRO => X: 61302, Y: 3291, Z: 63586[0m
+[0;32mI (12284) mpu_example: ACCEL => X: 59504, Y: 62632, Z: 15568[0m
+[0;32mI (12284) mpu_example: TEMP: 28.380117[0m
+[0;32mI (12314) mpu_example: GYRO => X: 60911, Y: 987, Z: 63457[0m
+[0;32mI (12314) mpu_example: ACCEL => X: 59840, Y: 64496, Z: 11464[0m
+[0;32mI (12314) mpu_example: TEMP: 28.428041[0m
+[0;32mI (12344) mpu_example: GYRO => X: 63822, Y: 19866, Z: 4031[0m
+[0;32mI (12344) mpu_example: ACCEL => X: 60616, Y: 62808, Z: 13816[0m
+[0;32mI (12344) mpu_example: TEMP: 28.284273[0m
+[0;32mI (12374) mpu_example: GYRO => X: 3537, Y: 16640, Z: 924[0m
+[0;32mI (12374) mpu_example: ACCEL => X: 56192, Y: 1368, Z: 12952[0m
+[0;32mI (12374) mpu_example: TEMP: 28.284273[0m
+[0;32mI (12404) mpu_example: GYRO => X: 2274, Y: 3976, Z: 474[0m
+[0;32mI (12404) mpu_example: ACCEL => X: 56208, Y: 65096, Z: 13448[0m
+[0;32mI (12404) mpu_example: TEMP: 28.428041[0m
+[0;32mI (12434) mpu_example: GYRO => X: 3179, Y: 55764, Z: 63697[0m
+[0;32mI (12434) mpu_example: ACCEL => X: 55800, Y: 63240, Z: 13560[0m
+[0;32mI (12434) mpu_example: TEMP: 28.284273[0m
+[0;32mI (12464) mpu_example: GYRO => X: 5539, Y: 48408, Z: 65487[0m
+[0;32mI (12464) mpu_example: ACCEL => X: 61680, Y: 57736, Z: 10544[0m
+[0;32mI (12464) mpu_example: TEMP: 28.380117[0m
+[0;32mI (12494) mpu_example: GYRO => X: 4771, Y: 41070, Z: 35979[0m
+[0;32mI (12494) mpu_example: ACCEL => X: 62192, Y: 5952, Z: 14736[0m
+[0;32mI (12494) mpu_example: TEMP: 28.284273[0m
+[0;32mI (12524) mpu_example: GYRO => X: 4261, Y: 8508, Z: 6134[0m
+[0;32mI (12524) mpu_example: ACCEL => X: 3472, Y: 704, Z: 13080[0m
+[0;32mI (12524) mpu_example: TEMP: 28.140503[0m
+[0;32mI (12554) mpu_example: GYRO => X: 3503, Y: 1710, Z: 63557[0m
+[0;32mI (12554) mpu_example: ACCEL => X: 54312, Y: 64912, Z: 14232[0m
+[0;32mI (12554) mpu_example: TEMP: 28.044659[0m
+[0;32mI (12584) mpu_example: GYRO => X: 2979, Y: 3523, Z: 61283[0m
+[0;32mI (12584) mpu_example: ACCEL => X: 62992, Y: 936, Z: 15752[0m
+[0;32mI (12584) mpu_example: TEMP: 28.236349[0m
+[0;32mI (12614) mpu_example: GYRO => X: 2880, Y: 5880, Z: 62350[0m
+[0;32mI (12614) mpu_example: ACCEL => X: 59304, Y: 528, Z: 14192[0m
+[0;32mI (12614) mpu_example: TEMP: 28.284273[0m
+[0;32mI (12644) mpu_example: GYRO => X: 2424, Y: 3468, Z: 57783[0m
+[0;32mI (12644) mpu_example: ACCEL => X: 57512, Y: 64776, Z: 13488[0m
+[0;32mI (12644) mpu_example: TEMP: 28.380117[0m
+[0;32mI (12674) mpu_example: GYRO => X: 2537, Y: 5283, Z: 56793[0m
+[0;32mI (12674) mpu_example: ACCEL => X: 60696, Y: 63536, Z: 13472[0m
+[0;32mI (12674) mpu_example: TEMP: 28.140503[0m
+[0;32mI (12704) mpu_example: GYRO => X: 4765, Y: 5877, Z: 59711[0m
+[0;32mI (12704) mpu_example: ACCEL => X: 57864, Y: 63432, Z: 13328[0m
+[0;32mI (12704) mpu_example: TEMP: 28.236349[0m
+[0;32mI (12734) mpu_example: GYRO => X: 7683, Y: 6597, Z: 63149[0m
+[0;32mI (12734) mpu_example: ACCEL => X: 58968, Y: 424, Z: 12744[0m
+[0;32mI (12734) mpu_example: TEMP: 28.236349[0m
+[0;32mI (12764) mpu_example: GYRO => X: 9552, Y: 2212, Z: 63838[0m
+[0;32mI (12764) mpu_example: ACCEL => X: 56776, Y: 64768, Z: 11680[0m
+[0;32mI (12764) mpu_example: TEMP: 28.140503[0m
+[0;32mI (12794) mpu_example: GYRO => X: 2008, Y: 4733, Z: 4790[0m
+[0;32mI (12794) mpu_example: ACCEL => X: 57664, Y: 2192, Z: 11824[0m
+[0;32mI (12794) mpu_example: TEMP: 28.044659[0m
+[0;32mI (12824) mpu_example: GYRO => X: 5502, Y: 2216, Z: 58119[0m
+[0;32mI (12824) mpu_example: ACCEL => X: 56616, Y: 2432, Z: 14040[0m
+[0;32mI (12824) mpu_example: TEMP: 27.948812[0m
+[0;32mI (12854) mpu_example: GYRO => X: 2622, Y: 1344, Z: 58196[0m
+[0;32mI (12854) mpu_example: ACCEL => X: 58480, Y: 1288, Z: 13488[0m
+[0;32mI (12854) mpu_example: TEMP: 28.284273[0m
+[0;32mI (12884) mpu_example: GYRO => X: 2532, Y: 2050, Z: 61627[0m
+[0;32mI (12884) mpu_example: ACCEL => X: 58560, Y: 1584, Z: 13080[0m
+[0;32mI (12884) mpu_example: TEMP: 28.284273[0m
+[0;32mI (12914) mpu_example: GYRO => X: 2910, Y: 1930, Z: 60240[0m
+[0;32mI (12914) mpu_example: ACCEL => X: 56848, Y: 1384, Z: 12960[0m
+[0;32mI (12914) mpu_example: TEMP: 28.044659[0m
+[0;32mI (12944) mpu_example: GYRO => X: 2671, Y: 131, Z: 60454[0m
+[0;32mI (12944) mpu_example: ACCEL => X: 58080, Y: 1696, Z: 12808[0m
+[0;32mI (12944) mpu_example: TEMP: 28.140503[0m
+[0;32mI (12974) mpu_example: GYRO => X: 1208, Y: 2683, Z: 64517[0m
+[0;32mI (12974) mpu_example: ACCEL => X: 57376, Y: 1464, Z: 13344[0m
+[0;32mI (12974) mpu_example: TEMP: 28.044659[0m
+[0;32mI (13004) mpu_example: GYRO => X: 921, Y: 65118, Z: 63135[0m
+[0;32mI (13004) mpu_example: ACCEL => X: 56824, Y: 880, Z: 12464[0m
+[0;32mI (13004) mpu_example: TEMP: 28.140503[0m
+[0;32mI (13034) mpu_example: GYRO => X: 773, Y: 65105, Z: 62786[0m
+[0;32mI (13034) mpu_example: ACCEL => X: 57272, Y: 544, Z: 12344[0m
+[0;32mI (13034) mpu_example: TEMP: 28.284273[0m
+[0;32mI (13064) mpu_example: GYRO => X: 999, Y: 63481, Z: 58554[0m
+[0;32mI (13064) mpu_example: ACCEL => X: 56496, Y: 984, Z: 12120[0m
+[0;32mI (13064) mpu_example: TEMP: 28.236349[0m
+[0;32mI (13094) mpu_example: GYRO => X: 850, Y: 63207, Z: 60152[0m
+[0;32mI (13094) mpu_example: ACCEL => X: 58144, Y: 704, Z: 12296[0m
+[0;32mI (13094) mpu_example: TEMP: 28.380117[0m
+[0;32mI (13124) mpu_example: GYRO => X: 356, Y: 61829, Z: 650[0m
+[0;32mI (13124) mpu_example: ACCEL => X: 59032, Y: 1384, Z: 12648[0m
+[0;32mI (13124) mpu_example: TEMP: 28.284273[0m
+[0;32mI (13154) mpu_example: GYRO => X: 326, Y: 1015, Z: 2228[0m
+[0;32mI (13154) mpu_example: ACCEL => X: 58360, Y: 1184, Z: 13232[0m
+[0;32mI (13154) mpu_example: TEMP: 28.044659[0m
+[0;32mI (13184) mpu_example: GYRO => X: 65293, Y: 63245, Z: 65289[0m
+[0;32mI (13184) mpu_example: ACCEL => X: 57784, Y: 1096, Z: 13048[0m
+[0;32mI (13184) mpu_example: TEMP: 28.140503[0m
+[0;32mI (13214) mpu_example: GYRO => X: 64976, Y: 1011, Z: 1073[0m
+[0;32mI (13214) mpu_example: ACCEL => X: 58232, Y: 448, Z: 13208[0m
+[0;32mI (13214) mpu_example: TEMP: 28.284273[0m
+[0;32mI (13244) mpu_example: GYRO => X: 36, Y: 65178, Z: 599[0m
+[0;32mI (13244) mpu_example: ACCEL => X: 57808, Y: 304, Z: 12320[0m
+[0;32mI (13244) mpu_example: TEMP: 28.380117[0m
+[0;32mI (13274) mpu_example: GYRO => X: 65441, Y: 726, Z: 760[0m
+[0;32mI (13274) mpu_example: ACCEL => X: 58144, Y: 1144, Z: 13256[0m
+[0;32mI (13274) mpu_example: TEMP: 28.380117[0m
+[0;32mI (13304) mpu_example: GYRO => X: 65029, Y: 65530, Z: 65195[0m
+[0;32mI (13304) mpu_example: ACCEL => X: 57224, Y: 728, Z: 13144[0m
+[0;32mI (13304) mpu_example: TEMP: 28.092581[0m
+[0;32mI (13334) mpu_example: GYRO => X: 65427, Y: 756, Z: 64915[0m
+[0;32mI (13334) mpu_example: ACCEL => X: 58104, Y: 552, Z: 13048[0m
+[0;32mI (13334) mpu_example: TEMP: 28.428041[0m
+[0;32mI (13364) mpu_example: GYRO => X: 65451, Y: 828, Z: 608[0m
+[0;32mI (13364) mpu_example: ACCEL => X: 57704, Y: 1208, Z: 13552[0m
+[0;32mI (13364) mpu_example: TEMP: 28.380117[0m
+[0;32mI (13394) mpu_example: GYRO => X: 65353, Y: 65175, Z: 65190[0m
+[0;32mI (13394) mpu_example: ACCEL => X: 56832, Y: 1048, Z: 13256[0m
+[0;32mI (13394) mpu_example: TEMP: 28.380117[0m
+[0;32mI (13424) mpu_example: GYRO => X: 65462, Y: 232, Z: 612[0m
+[0;32mI (13424) mpu_example: ACCEL => X: 57816, Y: 552, Z: 13496[0m
+[0;32mI (13424) mpu_example: TEMP: 28.044659[0m
+[0;32mI (13454) mpu_example: GYRO => X: 65484, Y: 65252, Z: 738[0m
+[0;32mI (13454) mpu_example: ACCEL => X: 57992, Y: 904, Z: 12976[0m
+[0;32mI (13454) mpu_example: TEMP: 28.380117[0m
+[0;32mI (13484) mpu_example: GYRO => X: 65285, Y: 490, Z: 733[0m
+[0;32mI (13484) mpu_example: ACCEL => X: 58608, Y: 1352, Z: 13296[0m
+[0;32mI (13484) mpu_example: TEMP: 28.380117[0m
+[0;32mI (13514) mpu_example: GYRO => X: 65441, Y: 65027, Z: 870[0m
+[0;32mI (13514) mpu_example: ACCEL => X: 57768, Y: 1224, Z: 12768[0m
+[0;32mI (13514) mpu_example: TEMP: 28.236349[0m
+[0;32mI (13544) mpu_example: GYRO => X: 179, Y: 272, Z: 1487[0m
+[0;32mI (13544) mpu_example: ACCEL => X: 58256, Y: 712, Z: 12464[0m
+[0;32mI (13544) mpu_example: TEMP: 28.475964[0m
+[0;32mI (13574) mpu_example: GYRO => X: 65507, Y: 154, Z: 1372[0m
+[0;32mI (13574) mpu_example: ACCEL => X: 57656, Y: 896, Z: 12544[0m
+[0;32mI (13574) mpu_example: TEMP: 28.044659[0m
+[0;32mI (13604) mpu_example: GYRO => X: 65360, Y: 64954, Z: 245[0m
+[0;32mI (13604) mpu_example: ACCEL => X: 57768, Y: 904, Z: 12920[0m
+[0;32mI (13604) mpu_example: TEMP: 28.140503[0m
+[0;32mI (13634) mpu_example: GYRO => X: 65427, Y: 44, Z: 602[0m
+[0;32mI (13634) mpu_example: ACCEL => X: 56832, Y: 1376, Z: 13088[0m
+[0;32mI (13634) mpu_example: TEMP: 28.284273[0m
+[0;32mI (13664) mpu_example: GYRO => X: 44, Y: 65388, Z: 55[0m
+[0;32mI (13664) mpu_example: ACCEL => X: 58040, Y: 1168, Z: 13192[0m
+[0;32mI (13664) mpu_example: TEMP: 28.140503[0m
+[0;32mI (13694) mpu_example: GYRO => X: 13, Y: 64925, Z: 64545[0m
+[0;32mI (13694) mpu_example: ACCEL => X: 57352, Y: 960, Z: 13176[0m
+[0;32mI (13694) mpu_example: TEMP: 28.140503[0m
+[0;32mI (13724) mpu_example: GYRO => X: 65504, Y: 329, Z: 65443[0m
+[0;32mI (13724) mpu_example: ACCEL => X: 57976, Y: 1256, Z: 12824[0m
+[0;32mI (13724) mpu_example: TEMP: 28.236349[0m
+[0;32mI (13754) mpu_example: GYRO => X: 73, Y: 64670, Z: 64268[0m
+[0;32mI (13754) mpu_example: ACCEL => X: 57432, Y: 1232, Z: 12984[0m
+[0;32mI (13754) mpu_example: TEMP: 28.284273[0m
+[0;32mI (13784) mpu_example: GYRO => X: 23, Y: 65124, Z: 303[0m
+[0;32mI (13784) mpu_example: ACCEL => X: 58352, Y: 1056, Z: 12904[0m
+[0;32mI (13784) mpu_example: TEMP: 28.140503[0m
+[0;32mI (13814) mpu_example: GYRO => X: 102, Y: 64439, Z: 65132[0m
+[0;32mI (13814) mpu_example: ACCEL => X: 58080, Y: 1688, Z: 13272[0m
+[0;32mI (13814) mpu_example: TEMP: 28.380117[0m
+[0;32mI (13844) mpu_example: GYRO => X: 65482, Y: 288, Z: 654[0m
+[0;32mI (13844) mpu_example: ACCEL => X: 58040, Y: 1176, Z: 12992[0m
+[0;32mI (13844) mpu_example: TEMP: 28.380117[0m
+[0;32mI (13874) mpu_example: GYRO => X: 46, Y: 65222, Z: 65072[0m
+[0;32mI (13874) mpu_example: ACCEL => X: 58152, Y: 944, Z: 12872[0m
+[0;32mI (13874) mpu_example: TEMP: 28.092581[0m
+[0;32mI (13904) mpu_example: GYRO => X: 49, Y: 65074, Z: 687[0m
+[0;32mI (13904) mpu_example: ACCEL => X: 57480, Y: 1968, Z: 13184[0m
+[0;32mI (13904) mpu_example: TEMP: 28.284273[0m
+[0;32mI (13934) mpu_example: GYRO => X: 229, Y: 64484, Z: 64395[0m
+[0;32mI (13934) mpu_example: ACCEL => X: 57752, Y: 1072, Z: 12952[0m
+[0;32mI (13934) mpu_example: TEMP: 28.284273[0m
+[0;32mI (13964) mpu_example: GYRO => X: 13, Y: 65230, Z: 65457[0m
+[0;32mI (13964) mpu_example: ACCEL => X: 57992, Y: 1328, Z: 12864[0m
+[0;32mI (13964) mpu_example: TEMP: 28.284273[0m
+[0;32mI (13994) mpu_example: GYRO => X: 360, Y: 63983, Z: 64927[0m
+[0;32mI (13994) mpu_example: ACCEL => X: 58896, Y: 744, Z: 13360[0m
+[0;32mI (13994) mpu_example: TEMP: 28.236349[0m
+[0;32mI (14024) mpu_example: GYRO => X: 380, Y: 65377, Z: 385[0m
+[0;32mI (14024) mpu_example: ACCEL => X: 58896, Y: 552, Z: 13912[0m
+[0;32mI (14024) mpu_example: TEMP: 28.044659[0m
+[0;32mI (14054) mpu_example: GYRO => X: 65, Y: 674, Z: 412[0m
+[0;32mI (14054) mpu_example: ACCEL => X: 57752, Y: 1232, Z: 13472[0m
+[0;32mI (14054) mpu_example: TEMP: 28.140503[0m
+[0;32mI (14084) mpu_example: GYRO => X: 61, Y: 390, Z: 361[0m
+[0;32mI (14084) mpu_example: ACCEL => X: 58032, Y: 808, Z: 13264[0m
+[0;32mI (14084) mpu_example: TEMP: 28.140503[0m
+[0;32mI (14114) mpu_example: GYRO => X: 79, Y: 571, Z: 809[0m
+[0;32mI (14114) mpu_example: ACCEL => X: 57824, Y: 968, Z: 12776[0m
+[0;32mI (14114) mpu_example: TEMP: 28.092581[0m
+[0;32mI (14144) mpu_example: GYRO => X: 167, Y: 65297, Z: 149[0m
+[0;32mI (14144) mpu_example: ACCEL => X: 57760, Y: 1120, Z: 13040[0m
+[0;32mI (14144) mpu_example: TEMP: 28.428041[0m
+[0;32mI (14174) mpu_example: GYRO => X: 14, Y: 64951, Z: 65277[0m
+[0;32mI (14174) mpu_example: ACCEL => X: 57736, Y: 896, Z: 13072[0m
+[0;32mI (14174) mpu_example: TEMP: 28.044659[0m
+[0;32mI (14204) mpu_example: GYRO => X: 111, Y: 65464, Z: 65520[0m
+[0;32mI (14204) mpu_example: ACCEL => X: 58232, Y: 1080, Z: 12808[0m
+[0;32mI (14204) mpu_example: TEMP: 28.380117[0m
+[0;32mI (14234) mpu_example: GYRO => X: 42, Y: 64828, Z: 64503[0m
+[0;32mI (14234) mpu_example: ACCEL => X: 58288, Y: 1104, Z: 13408[0m
+[0;32mI (14234) mpu_example: TEMP: 28.236349[0m
+[0;32mI (14264) mpu_example: GYRO => X: 65507, Y: 65395, Z: 65306[0m
+[0;32mI (14264) mpu_example: ACCEL => X: 57952, Y: 800, Z: 13008[0m
+[0;32mI (14264) mpu_example: TEMP: 28.428041[0m
+[0;32mI (14294) mpu_example: GYRO => X: 72, Y: 65437, Z: 65232[0m
+[0;32mI (14294) mpu_example: ACCEL => X: 58432, Y: 1024, Z: 13032[0m
+[0;32mI (14294) mpu_example: TEMP: 28.428041[0m
+[0;32mI (14324) mpu_example: GYRO => X: 111, Y: 65202, Z: 64953[0m
+[0;32mI (14324) mpu_example: ACCEL => X: 57664, Y: 1432, Z: 13128[0m
+[0;32mI (14324) mpu_example: TEMP: 28.140503[0m
+[0;32mI (14354) mpu_example: GYRO => X: 65431, Y: 537, Z: 666[0m
+[0;32mI (14354) mpu_example: ACCEL => X: 58616, Y: 1248, Z: 13040[0m
+[0;32mI (14354) mpu_example: TEMP: 28.380117[0m
+[0;32mI (14384) mpu_example: GYRO => X: 65526, Y: 65310, Z: 65349[0m
+[0;32mI (14384) mpu_example: ACCEL => X: 57920, Y: 1224, Z: 12984[0m
+[0;32mI (14384) mpu_example: TEMP: 28.140503[0m
+[0;32mI (14414) mpu_example: GYRO => X: 23, Y: 175, Z: 506[0m
+[0;32mI (14414) mpu_example: ACCEL => X: 57696, Y: 992, Z: 13424[0m
+[0;32mI (14414) mpu_example: TEMP: 28.284273[0m
+[0;32mI (14444) mpu_example: GYRO => X: 65468, Y: 65468, Z: 65414[0m
+[0;32mI (14444) mpu_example: ACCEL => X: 58280, Y: 1112, Z: 13072[0m
+[0;32mI (14444) mpu_example: TEMP: 28.428041[0m
+[0;32mI (14474) mpu_example: GYRO => X: 32, Y: 65492, Z: 14[0m
+[0;32mI (14474) mpu_example: ACCEL => X: 58104, Y: 936, Z: 12936[0m
+[0;32mI (14474) mpu_example: TEMP: 28.380117[0m
+[0;32mI (14504) mpu_example: GYRO => X: 65508, Y: 65223, Z: 65147[0m
+[0;32mI (14504) mpu_example: ACCEL => X: 58112, Y: 1160, Z: 13152[0m
+[0;32mI (14504) mpu_example: TEMP: 28.284273[0m
+[0;32mI (14534) mpu_example: GYRO => X: 179, Y: 65486, Z: 86[0m
+[0;32mI (14534) mpu_example: ACCEL => X: 57816, Y: 816, Z: 13008[0m
+[0;32mI (14534) mpu_example: TEMP: 28.140503[0m
+[0;32mI (14564) mpu_example: GYRO => X: 121, Y: 64758, Z: 64889[0m
+[0;32mI (14564) mpu_example: ACCEL => X: 58128, Y: 1032, Z: 13224[0m
+[0;32mI (14564) mpu_example: TEMP: 28.284273[0m
+[0;32mI (14594) mpu_example: GYRO => X: 65497, Y: 65275, Z: 65530[0m
+[0;32mI (14594) mpu_example: ACCEL => X: 58184, Y: 912, Z: 12888[0m
+[0;32mI (14594) mpu_example: TEMP: 28.284273[0m
+[0;32mI (14624) mpu_example: GYRO => X: 65532, Y: 165, Z: 276[0m
+[0;32mI (14624) mpu_example: ACCEL => X: 58544, Y: 848, Z: 13040[0m
+[0;32mI (14624) mpu_example: TEMP: 28.140503[0m
+[0;32mI (14654) mpu_example: GYRO => X: 65504, Y: 243, Z: 222[0m
+[0;32mI (14654) mpu_example: ACCEL => X: 58256, Y: 1160, Z: 13176[0m
+[0;32mI (14654) mpu_example: TEMP: 28.380117[0m
+[0;32mI (14684) mpu_example: GYRO => X: 65500, Y: 65470, Z: 65465[0m
+[0;32mI (14684) mpu_example: ACCEL => X: 58120, Y: 792, Z: 13128[0m
+[0;32mI (14684) mpu_example: TEMP: 28.140503[0m
+[0;32mI (14714) mpu_example: GYRO => X: 82, Y: 65409, Z: 65406[0m
+[0;32mI (14714) mpu_example: ACCEL => X: 58304, Y: 784, Z: 13264[0m
+[0;32mI (14714) mpu_example: TEMP: 28.236349[0m
+[0;32mI (14744) mpu_example: GYRO => X: 37, Y: 65308, Z: 65117[0m
+[0;32mI (14744) mpu_example: ACCEL => X: 57880, Y: 1192, Z: 13400[0m
+[0;32mI (14744) mpu_example: TEMP: 28.380117[0m
+[0;32mI (14774) mpu_example: GYRO => X: 65504, Y: 65086, Z: 65110[0m
+[0;32mI (14774) mpu_example: ACCEL => X: 58200, Y: 896, Z: 13152[0m
+[0;32mI (14774) mpu_example: TEMP: 28.236349[0m
+[0;32mI (14804) mpu_example: GYRO => X: 120, Y: 65513, Z: 65377[0m
+[0;32mI (14804) mpu_example: ACCEL => X: 58696, Y: 1248, Z: 12952[0m
+[0;32mI (14804) mpu_example: TEMP: 28.380117[0m
+[0;32mI (14834) mpu_example: GYRO => X: 65483, Y: 289, Z: 221[0m
+[0;32mI (14834) mpu_example: ACCEL => X: 57992, Y: 1120, Z: 13120[0m
+[0;32mI (14834) mpu_example: TEMP: 28.475964[0m
+[0;32mI (14864) mpu_example: GYRO => X: 65524, Y: 67, Z: 12[0m
+[0;32mI (14864) mpu_example: ACCEL => X: 58048, Y: 848, Z: 13048[0m
+[0;32mI (14864) mpu_example: TEMP: 28.428041[0m
+[0;32mI (14894) mpu_example: GYRO => X: 57, Y: 65429, Z: 227[0m
+[0;32mI (14894) mpu_example: ACCEL => X: 58152, Y: 1280, Z: 12968[0m
+[0;32mI (14894) mpu_example: TEMP: 28.140503[0m
+[0;32mI (14924) mpu_example: GYRO => X: 65528, Y: 65347, Z: 65206[0m
+[0;32mI (14924) mpu_example: ACCEL => X: 58096, Y: 1168, Z: 13056[0m
+[0;32mI (14924) mpu_example: TEMP: 28.380117[0m
+[0;32mI (14954) mpu_example: GYRO => X: 65483, Y: 113, Z: 66[0m
+[0;32mI (14954) mpu_example: ACCEL => X: 58048, Y: 1368, Z: 13480[0m
+[0;32mI (14954) mpu_example: TEMP: 28.140503[0m
+[0;32mI (14984) mpu_example: GYRO => X: 65413, Y: 133, Z: 95[0m
+[0;32mI (14984) mpu_example: ACCEL => X: 57944, Y: 1088, Z: 13120[0m
+[0;32mI (14984) mpu_example: TEMP: 28.284273[0m
+[0;32mI (15014) mpu_example: GYRO => X: 85, Y: 64819, Z: 64432[0m
+[0;32mI (15014) mpu_example: ACCEL => X: 57632, Y: 760, Z: 12976[0m
+[0;32mI (15014) mpu_example: TEMP: 28.428041[0m
+[0;32mI (15044) mpu_example: GYRO => X: 103, Y: 64629, Z: 64727[0m
+[0;32mI (15044) mpu_example: ACCEL => X: 57960, Y: 736, Z: 12848[0m
+[0;32mI (15044) mpu_example: TEMP: 28.236349[0m
+[0;32mI (15074) mpu_example: GYRO => X: 20, Y: 64935, Z: 65014[0m
+[0;32mI (15074) mpu_example: ACCEL => X: 58504, Y: 1224, Z: 13448[0m
+[0;32mI (15074) mpu_example: TEMP: 28.380117[0m
+[0;32mI (15104) mpu_example: GYRO => X: 7, Y: 65162, Z: 64893[0m
+[0;32mI (15104) mpu_example: ACCEL => X: 58616, Y: 1072, Z: 12896[0m
+[0;32mI (15104) mpu_example: TEMP: 28.092581[0m
+[0;32mI (15134) mpu_example: GYRO => X: 58, Y: 64811, Z: 65005[0m
+[0;32mI (15134) mpu_example: ACCEL => X: 58400, Y: 800, Z: 13144[0m
+[0;32mI (15134) mpu_example: TEMP: 28.284273[0m
+[0;32mI (15164) mpu_example: GYRO => X: 254, Y: 65482, Z: 64973[0m
+[0;32mI (15164) mpu_example: ACCEL => X: 58704, Y: 1048, Z: 13560[0m
+[0;32mI (15164) mpu_example: TEMP: 28.284273[0m
+[0;32mI (15194) mpu_example: GYRO => X: 65410, Y: 202, Z: 65481[0m
+[0;32mI (15194) mpu_example: ACCEL => X: 58160, Y: 1368, Z: 13072[0m
+[0;32mI (15194) mpu_example: TEMP: 28.236349[0m
+[0;32mI (15224) mpu_example: GYRO => X: 65494, Y: 42, Z: 65439[0m
+[0;32mI (15224) mpu_example: ACCEL => X: 58480, Y: 1256, Z: 13200[0m
+[0;32mI (15224) mpu_example: TEMP: 28.380117[0m
+[0;32mI (15254) mpu_example: GYRO => X: 65373, Y: 535, Z: 303[0m
+[0;32mI (15254) mpu_example: ACCEL => X: 58200, Y: 1088, Z: 13168[0m
+[0;32mI (15254) mpu_example: TEMP: 28.236349[0m
+[0;32mI (15284) mpu_example: GYRO => X: 65363, Y: 240, Z: 362[0m
+[0;32mI (15284) mpu_example: ACCEL => X: 58040, Y: 1072, Z: 13216[0m
+[0;32mI (15284) mpu_example: TEMP: 28.140503[0m
+[0;32mI (15314) mpu_example: GYRO => X: 65519, Y: 65533, Z: 65497[0m
+[0;32mI (15314) mpu_example: ACCEL => X: 58008, Y: 864, Z: 13184[0m
+[0;32mI (15314) mpu_example: TEMP: 28.380117[0m
+[0;32mI (15344) mpu_example: GYRO => X: 11, Y: 65231, Z: 65162[0m
+[0;32mI (15344) mpu_example: ACCEL => X: 58432, Y: 816, Z: 13072[0m
+[0;32mI (15344) mpu_example: TEMP: 28.428041[0m
+[0;32mI (15374) mpu_example: GYRO => X: 26, Y: 65189, Z: 65218[0m
+[0;32mI (15374) mpu_example: ACCEL => X: 58688, Y: 824, Z: 13240[0m
+[0;32mI (15374) mpu_example: TEMP: 28.044659[0m
+[0;32mI (15404) mpu_example: GYRO => X: 65486, Y: 65452, Z: 65445[0m
+[0;32mI (15404) mpu_example: ACCEL => X: 58120, Y: 856, Z: 13016[0m
+[0;32mI (15404) mpu_example: TEMP: 28.380117[0m
+[0;32mI (15434) mpu_example: GYRO => X: 65464, Y: 65039, Z: 64706[0m
+[0;32mI (15434) mpu_example: ACCEL => X: 58592, Y: 816, Z: 12960[0m
+[0;32mI (15434) mpu_example: TEMP: 28.284273[0m
+[0;32mI (15464) mpu_example: GYRO => X: 65467, Y: 65409, Z: 65227[0m
+[0;32mI (15464) mpu_example: ACCEL => X: 58488, Y: 904, Z: 13096[0m
+[0;32mI (15464) mpu_example: TEMP: 28.428041[0m
+[0;32mI (15494) mpu_example: GYRO => X: 237, Y: 253, Z: 64867[0m
+[0;32mI (15494) mpu_example: ACCEL => X: 58664, Y: 848, Z: 13120[0m
+[0;32mI (15494) mpu_example: TEMP: 28.380117[0m
+[0;32mI (15524) mpu_example: GYRO => X: 495, Y: 65385, Z: 64098[0m
+[0;32mI (15524) mpu_example: ACCEL => X: 58784, Y: 592, Z: 13744[0m
+[0;32mI (15524) mpu_example: TEMP: 28.380117[0m
+[0;32mI (15554) mpu_example: GYRO => X: 65511, Y: 65310, Z: 65317[0m
+[0;32mI (15554) mpu_example: ACCEL => X: 58184, Y: 1520, Z: 13432[0m
+[0;32mI (15554) mpu_example: TEMP: 28.236349[0m
+[0;32mI (15584) mpu_example: GYRO => X: 32, Y: 6, Z: 65176[0m
+[0;32mI (15584) mpu_example: ACCEL => X: 58400, Y: 1264, Z: 13464[0m
+[0;32mI (15584) mpu_example: TEMP: 28.140503[0m
+[0;32mI (15614) mpu_example: GYRO => X: 65498, Y: 138, Z: 16[0m
+[0;32mI (15614) mpu_example: ACCEL => X: 59112, Y: 1168, Z: 13192[0m
+[0;32mI (15614) mpu_example: TEMP: 28.428041[0m
+[0;32mI (15644) mpu_example: GYRO => X: 32, Y: 238, Z: 96[0m
+[0;32mI (15644) mpu_example: ACCEL => X: 58144, Y: 800, Z: 13480[0m
+[0;32mI (15644) mpu_example: TEMP: 28.428041[0m
+[0;32mI (15674) mpu_example: GYRO => X: 24, Y: 874, Z: 343[0m
+[0;32mI (15674) mpu_example: ACCEL => X: 58656, Y: 800, Z: 13296[0m
+[0;32mI (15674) mpu_example: TEMP: 28.092581[0m
+[0;32mI (15704) mpu_example: GYRO => X: 112, Y: 404, Z: 65016[0m
+[0;32mI (15704) mpu_example: ACCEL => X: 58224, Y: 856, Z: 12576[0m
+[0;32mI (15704) mpu_example: TEMP: 28.140503[0m
+[0;32mI (15734) mpu_example: GYRO => X: 239, Y: 838, Z: 64274[0m
+[0;32mI (15734) mpu_example: ACCEL => X: 58648, Y: 832, Z: 13216[0m
+[0;32mI (15734) mpu_example: TEMP: 28.092581[0m
+[0;32mI (15764) mpu_example: GYRO => X: 355, Y: 2005, Z: 279[0m
+[0;32mI (15764) mpu_example: ACCEL => X: 58536, Y: 1768, Z: 13608[0m
+[0;32mI (15764) mpu_example: TEMP: 28.140503[0m
+[0;32mI (15794) mpu_example: GYRO => X: 998, Y: 941, Z: 65267[0m
+[0;32mI (15794) mpu_example: ACCEL => X: 59160, Y: 576, Z: 13080[0m
+[0;32mI (15794) mpu_example: TEMP: 28.428041[0m
+[0;32mI (15824) mpu_example: GYRO => X: 159, Y: 988, Z: 65461[0m
+[0;32mI (15824) mpu_example: ACCEL => X: 58064, Y: 1064, Z: 13368[0m
+[0;32mI (15824) mpu_example: TEMP: 28.284273[0m
+[0;32mI (15854) mpu_example: GYRO => X: 65476, Y: 1876, Z: 1036[0m
+[0;32mI (15854) mpu_example: ACCEL => X: 58024, Y: 584, Z: 12872[0m
+[0;32mI (15854) mpu_example: TEMP: 28.140503[0m
+[0;32mI (15884) mpu_example: GYRO => X: 65491, Y: 726, Z: 767[0m
+[0;32mI (15884) mpu_example: ACCEL => X: 57848, Y: 752, Z: 12840[0m
+[0;32mI (15884) mpu_example: TEMP: 28.236349[0m
+[0;32mI (15914) mpu_example: GYRO => X: 126, Y: 329, Z: 428[0m
+[0;32mI (15914) mpu_example: ACCEL => X: 58128, Y: 1064, Z: 13032[0m
+[0;32mI (15914) mpu_example: TEMP: 28.044659[0m
+[0;32mI (15944) mpu_example: GYRO => X: 105, Y: 650, Z: 996[0m
+[0;32mI (15944) mpu_example: ACCEL => X: 57560, Y: 1264, Z: 13088[0m
+[0;32mI (15944) mpu_example: TEMP: 28.284273[0m
+[0;32mI (15974) mpu_example: GYRO => X: 136, Y: 550, Z: 81[0m
+[0;32mI (15974) mpu_example: ACCEL => X: 56992, Y: 1264, Z: 12592[0m
+[0;32mI (15974) mpu_example: TEMP: 28.428041[0m
+[0;32mI (16004) mpu_example: GYRO => X: 189, Y: 64628, Z: 64257[0m
+[0;32mI (16004) mpu_example: ACCEL => X: 56696, Y: 1144, Z: 12832[0m
+[0;32mI (16004) mpu_example: TEMP: 28.236349[0m
+[0;32mI (16034) mpu_example: GYRO => X: 167, Y: 64433, Z: 64541[0m
+[0;32mI (16034) mpu_example: ACCEL => X: 57904, Y: 1464, Z: 12912[0m
+[0;32mI (16034) mpu_example: TEMP: 28.284273[0m
+[0;32mI (16064) mpu_example: GYRO => X: 108, Y: 64274, Z: 64431[0m
+[0;32mI (16064) mpu_example: ACCEL => X: 58328, Y: 1192, Z: 12880[0m
+[0;32mI (16064) mpu_example: TEMP: 28.571810[0m
+[0;32mI (16094) mpu_example: GYRO => X: 419, Y: 64395, Z: 64261[0m
+[0;32mI (16094) mpu_example: ACCEL => X: 58816, Y: 1000, Z: 13208[0m
+[0;32mI (16094) mpu_example: TEMP: 28.092581[0m
+[0;32mI (16124) mpu_example: GYRO => X: 517, Y: 64966, Z: 64150[0m
+[0;32mI (16124) mpu_example: ACCEL => X: 58392, Y: 1080, Z: 13736[0m
+[0;32mI (16124) mpu_example: TEMP: 28.380117[0m
+[0;32mI (16154) mpu_example: GYRO => X: 566, Y: 474, Z: 64817[0m
+[0;32mI (16154) mpu_example: ACCEL => X: 58824, Y: 784, Z: 13392[0m
+[0;32mI (16154) mpu_example: TEMP: 28.380117[0m
+[0;32mI (16184) mpu_example: GYRO => X: 838, Y: 408, Z: 64076[0m
+[0;32mI (16184) mpu_example: ACCEL => X: 58256, Y: 888, Z: 12616[0m
+[0;32mI (16184) mpu_example: TEMP: 28.428041[0m
+[0;32mI (16214) mpu_example: GYRO => X: 2303, Y: 1072, Z: 64798[0m
+[0;32mI (16214) mpu_example: ACCEL => X: 58264, Y: 3160, Z: 13728[0m
+[0;32mI (16214) mpu_example: TEMP: 28.380117[0m
+[0;32mI (16244) mpu_example: GYRO => X: 2502, Y: 1434, Z: 63818[0m
+[0;32mI (16244) mpu_example: ACCEL => X: 58624, Y: 1808, Z: 13184[0m
+[0;32mI (16244) mpu_example: TEMP: 28.044659[0m
+[0;32mI (16274) mpu_example: GYRO => X: 2192, Y: 1745, Z: 628[0m
+[0;32mI (16274) mpu_example: ACCEL => X: 57120, Y: 1840, Z: 13168[0m
+[0;32mI (16274) mpu_example: TEMP: 28.236349[0m
+[0;32mI (16304) mpu_example: GYRO => X: 2914, Y: 1255, Z: 65345[0m
+[0;32mI (16304) mpu_example: ACCEL => X: 56768, Y: 1048, Z: 12280[0m
+[0;32mI (16304) mpu_example: TEMP: 28.284273[0m
+[0;32mI (16334) mpu_example: GYRO => X: 5261, Y: 2771, Z: 489[0m
+[0;32mI (16334) mpu_example: ACCEL => X: 57608, Y: 2896, Z: 12784[0m
+[0;32mI (16334) mpu_example: TEMP: 28.236349[0m
+[0;32mI (16364) mpu_example: GYRO => X: 3753, Y: 921, Z: 1687[0m
+[0;32mI (16364) mpu_example: ACCEL => X: 58160, Y: 2560, Z: 13000[0m
+[0;32mI (16364) mpu_example: TEMP: 28.284273[0m
+[0;32mI (16394) mpu_example: GYRO => X: 3409, Y: 1416, Z: 3428[0m
+[0;32mI (16394) mpu_example: ACCEL => X: 57480, Y: 3016, Z: 13504[0m
+[0;32mI (16394) mpu_example: TEMP: 28.475964[0m
+[0;32mI (16424) mpu_example: GYRO => X: 4563, Y: 228, Z: 3228[0m
+[0;32mI (16424) mpu_example: ACCEL => X: 56232, Y: 2232, Z: 12424[0m
+[0;32mI (16424) mpu_example: TEMP: 28.380117[0m
+[0;32mI (16454) mpu_example: GYRO => X: 4345, Y: 61942, Z: 3824[0m
+[0;32mI (16454) mpu_example: ACCEL => X: 57704, Y: 3536, Z: 12256[0m
+[0;32mI (16454) mpu_example: TEMP: 28.284273[0m
+[0;32mI (16484) mpu_example: GYRO => X: 3992, Y: 59922, Z: 5567[0m
+[0;32mI (16484) mpu_example: ACCEL => X: 58928, Y: 3112, Z: 11936[0m
+[0;32mI (16484) mpu_example: TEMP: 28.428041[0m
+[0;32mI (16514) mpu_example: GYRO => X: 2574, Y: 61199, Z: 6248[0m
+[0;32mI (16514) mpu_example: ACCEL => X: 59480, Y: 3816, Z: 13200[0m
+[0;32mI (16514) mpu_example: TEMP: 28.380117[0m
+[0;32mI (16544) mpu_example: GYRO => X: 950, Y: 61356, Z: 3094[0m
+[0;32mI (16544) mpu_example: ACCEL => X: 57928, Y: 4480, Z: 14240[0m
+[0;32mI (16544) mpu_example: TEMP: 28.284273[0m
+[0;32mI (16574) mpu_example: GYRO => X: 65508, Y: 63285, Z: 1187[0m
+[0;32mI (16574) mpu_example: ACCEL => X: 59432, Y: 4848, Z: 13464[0m
+[0;32mI (16574) mpu_example: TEMP: 28.380117[0m
+[0;32mI (16604) mpu_example: GYRO => X: 63797, Y: 62292, Z: 64632[0m
+[0;32mI (16604) mpu_example: ACCEL => X: 58504, Y: 3600, Z: 13488[0m
+[0;32mI (16604) mpu_example: TEMP: 28.284273[0m
+[0;32mI (16634) mpu_example: GYRO => X: 62096, Y: 59442, Z: 63241[0m
+[0;32mI (16634) mpu_example: ACCEL => X: 59376, Y: 4472, Z: 12344[0m
+[0;32mI (16634) mpu_example: TEMP: 28.380117[0m
+[0;32mI (16664) mpu_example: GYRO => X: 64091, Y: 59234, Z: 61522[0m
+[0;32mI (16664) mpu_example: ACCEL => X: 59664, Y: 2712, Z: 12264[0m
+[0;32mI (16664) mpu_example: TEMP: 28.140503[0m
+[0;32mI (16694) mpu_example: GYRO => X: 64562, Y: 62956, Z: 132[0m
+[0;32mI (16694) mpu_example: ACCEL => X: 60568, Y: 3864, Z: 13608[0m
+[0;32mI (16694) mpu_example: TEMP: 28.428041[0m
+[0;32mI (16724) mpu_example: GYRO => X: 64290, Y: 63227, Z: 64544[0m
+[0;32mI (16724) mpu_example: ACCEL => X: 59376, Y: 3744, Z: 13168[0m
+[0;32mI (16724) mpu_example: TEMP: 28.428041[0m
+[0;32mI (16754) mpu_example: GYRO => X: 65163, Y: 64320, Z: 904[0m
+[0;32mI (16754) mpu_example: ACCEL => X: 59152, Y: 2584, Z: 12848[0m
+[0;32mI (16754) mpu_example: TEMP: 28.140503[0m
+[0;32mI (16784) mpu_example: GYRO => X: 782, Y: 64748, Z: 1236[0m
+[0;32mI (16784) mpu_example: ACCEL => X: 60984, Y: 3296, Z: 12584[0m
+[0;32mI (16784) mpu_example: TEMP: 28.428041[0m
+[0;32mI (16814) mpu_example: GYRO => X: 744, Y: 64807, Z: 813[0m
+[0;32mI (16814) mpu_example: ACCEL => X: 59736, Y: 3840, Z: 13776[0m
+[0;32mI (16814) mpu_example: TEMP: 28.284273[0m
+[0;32mI (16844) mpu_example: GYRO => X: 45, Y: 2210, Z: 1820[0m
+[0;32mI (16844) mpu_example: ACCEL => X: 59944, Y: 4160, Z: 14320[0m
+[0;32mI (16844) mpu_example: TEMP: 28.284273[0m
+[0;32mI (16874) mpu_example: GYRO => X: 24, Y: 2988, Z: 1932[0m
+[0;32mI (16874) mpu_example: ACCEL => X: 60032, Y: 3688, Z: 13736[0m
+[0;32mI (16874) mpu_example: TEMP: 28.236349[0m
+[0;32mI (16904) mpu_example: GYRO => X: 121, Y: 3499, Z: 2085[0m
+[0;32mI (16904) mpu_example: ACCEL => X: 59624, Y: 3584, Z: 13712[0m
+[0;32mI (16904) mpu_example: TEMP: 28.044659[0m
+[0;32mI (16934) mpu_example: GYRO => X: 65321, Y: 1584, Z: 65401[0m
+[0;32mI (16934) mpu_example: ACCEL => X: 59376, Y: 3888, Z: 13776[0m
+[0;32mI (16934) mpu_example: TEMP: 28.475964[0m
+[0;32mI (16964) mpu_example: GYRO => X: 65300, Y: 769, Z: 65061[0m
+[0;32mI (16964) mpu_example: ACCEL => X: 60024, Y: 3928, Z: 13088[0m
+[0;32mI (16964) mpu_example: TEMP: 28.380117[0m
+[0;32mI (16994) mpu_example: GYRO => X: 64994, Y: 65393, Z: 64643[0m
+[0;32mI (16994) mpu_example: ACCEL => X: 58984, Y: 4248, Z: 13648[0m
+[0;32mI (16994) mpu_example: TEMP: 28.428041[0m
+[0;32mI (17024) mpu_example: GYRO => X: 64623, Y: 64583, Z: 64765[0m
+[0;32mI (17024) mpu_example: ACCEL => X: 58928, Y: 3584, Z: 13784[0m
+[0;32mI (17024) mpu_example: TEMP: 28.380117[0m
+[0;32mI (17054) mpu_example: GYRO => X: 64372, Y: 63159, Z: 64936[0m
+[0;32mI (17054) mpu_example: ACCEL => X: 59488, Y: 3760, Z: 13416[0m
+[0;32mI (17054) mpu_example: TEMP: 28.380117[0m
+[0;32mI (17084) mpu_example: GYRO => X: 64907, Y: 64070, Z: 64976[0m
+[0;32mI (17084) mpu_example: ACCEL => X: 59352, Y: 3232, Z: 13120[0m
+[0;32mI (17084) mpu_example: TEMP: 28.284273[0m
+[0;32mI (17114) mpu_example: GYRO => X: 64544, Y: 63536, Z: 64508[0m
+[0;32mI (17114) mpu_example: ACCEL => X: 60056, Y: 2776, Z: 13504[0m
+[0;32mI (17114) mpu_example: TEMP: 28.044659[0m
+[0;32mI (17144) mpu_example: GYRO => X: 64540, Y: 64075, Z: 57[0m
+[0;32mI (17144) mpu_example: ACCEL => X: 59432, Y: 3448, Z: 13696[0m
+[0;32mI (17144) mpu_example: TEMP: 28.284273[0m
+[0;32mI (17174) mpu_example: GYRO => X: 64755, Y: 64244, Z: 65499[0m
+[0;32mI (17174) mpu_example: ACCEL => X: 61144, Y: 3360, Z: 13560[0m
+[0;32mI (17174) mpu_example: TEMP: 28.380117[0m
+[0;32mI (17204) mpu_example: GYRO => X: 64800, Y: 64772, Z: 65123[0m
+[0;32mI (17204) mpu_example: ACCEL => X: 60144, Y: 3560, Z: 14040[0m
+[0;32mI (17204) mpu_example: TEMP: 28.428041[0m
+[0;32mI (17234) mpu_example: GYRO => X: 64722, Y: 286, Z: 448[0m
+[0;32mI (17234) mpu_example: ACCEL => X: 59768, Y: 4056, Z: 14312[0m
+[0;32mI (17234) mpu_example: TEMP: 28.428041[0m
+[0;32mI (17264) mpu_example: GYRO => X: 64973, Y: 65143, Z: 65487[0m
+[0;32mI (17264) mpu_example: ACCEL => X: 60256, Y: 2960, Z: 13432[0m
+[0;32mI (17264) mpu_example: TEMP: 28.284273[0m
+[0;32mI (17294) mpu_example: GYRO => X: 65431, Y: 65310, Z: 65055[0m
+[0;32mI (17294) mpu_example: ACCEL => X: 60592, Y: 3416, Z: 13432[0m
+[0;32mI (17294) mpu_example: TEMP: 28.236349[0m
+[0;32mI (17324) mpu_example: GYRO => X: 65502, Y: 64944, Z: 65213[0m
+[0;32mI (17324) mpu_example: ACCEL => X: 59856, Y: 3568, Z: 14152[0m
+[0;32mI (17324) mpu_example: TEMP: 28.140503[0m
+[0;32mI (17354) mpu_example: GYRO => X: 65286, Y: 65305, Z: 65337[0m
+[0;32mI (17354) mpu_example: ACCEL => X: 60280, Y: 3536, Z: 14048[0m
+[0;32mI (17354) mpu_example: TEMP: 28.571810[0m
+[0;32mI (17384) mpu_example: GYRO => X: 65401, Y: 65335, Z: 65151[0m
+[0;32mI (17384) mpu_example: ACCEL => X: 60496, Y: 2928, Z: 13560[0m
+[0;32mI (17384) mpu_example: TEMP: 28.284273[0m
+[0;32mI (17414) mpu_example: GYRO => X: 171, Y: 55, Z: 65484[0m
+[0;32mI (17414) mpu_example: ACCEL => X: 60136, Y: 3104, Z: 13784[0m
+[0;32mI (17414) mpu_example: TEMP: 28.092581[0m
+[0;32mI (17444) mpu_example: GYRO => X: 217, Y: 277, Z: 65302[0m
+[0;32mI (17444) mpu_example: ACCEL => X: 60624, Y: 3296, Z: 13976[0m
+[0;32mI (17444) mpu_example: TEMP: 28.236349[0m
+[0;32mI (17474) mpu_example: GYRO => X: 65328, Y: 64906, Z: 65383[0m
+[0;32mI (17474) mpu_example: ACCEL => X: 59872, Y: 3504, Z: 14048[0m
+[0;32mI (17474) mpu_example: TEMP: 28.140503[0m
+[0;32mI (17504) mpu_example: GYRO => X: 65373, Y: 64959, Z: 166[0m
+[0;32mI (17504) mpu_example: ACCEL => X: 59792, Y: 3176, Z: 13592[0m
+[0;32mI (17504) mpu_example: TEMP: 28.428041[0m
+[0;32mI (17534) mpu_example: GYRO => X: 65507, Y: 64552, Z: 65463[0m
+[0;32mI (17534) mpu_example: ACCEL => X: 60488, Y: 2928, Z: 13464[0m
+[0;32mI (17534) mpu_example: TEMP: 28.380117[0m
+[0;32mI (17564) mpu_example: GYRO => X: 65069, Y: 64318, Z: 65286[0m
+[0;32mI (17564) mpu_example: ACCEL => X: 59720, Y: 3664, Z: 14096[0m
+[0;32mI (17564) mpu_example: TEMP: 28.475964[0m
+[0;32mI (17594) mpu_example: GYRO => X: 65042, Y: 64930, Z: 65473[0m
+[0;32mI (17594) mpu_example: ACCEL => X: 60776, Y: 3488, Z: 13824[0m
+[0;32mI (17594) mpu_example: TEMP: 28.284273[0m
+[0;32mI (17624) mpu_example: GYRO => X: 65152, Y: 64846, Z: 64978[0m
+[0;32mI (17624) mpu_example: ACCEL => X: 60096, Y: 2920, Z: 13704[0m
+[0;32mI (17624) mpu_example: TEMP: 28.428041[0m
+[0;32mI (17654) mpu_example: GYRO => X: 65522, Y: 65290, Z: 65019[0m
+[0;32mI (17654) mpu_example: ACCEL => X: 60496, Y: 3144, Z: 13824[0m
+[0;32mI (17654) mpu_example: TEMP: 28.236349[0m
+[0;32mI (17684) mpu_example: GYRO => X: 65427, Y: 65234, Z: 65340[0m
+[0;32mI (17684) mpu_example: ACCEL => X: 60672, Y: 3352, Z: 14056[0m
+[0;32mI (17684) mpu_example: TEMP: 28.236349[0m
+[0;32mI (17714) mpu_example: GYRO => X: 65457, Y: 68, Z: 54[0m
+[0;32mI (17714) mpu_example: ACCEL => X: 60168, Y: 3280, Z: 14176[0m
+[0;32mI (17714) mpu_example: TEMP: 28.284273[0m
+[0;32mI (17744) mpu_example: GYRO => X: 65535, Y: 65387, Z: 65333[0m
+[0;32mI (17744) mpu_example: ACCEL => X: 60112, Y: 3072, Z: 13640[0m
+[0;32mI (17744) mpu_example: TEMP: 28.236349[0m
+[0;32mI (17774) mpu_example: GYRO => X: 65532, Y: 65467, Z: 65202[0m
+[0;32mI (17774) mpu_example: ACCEL => X: 60728, Y: 2816, Z: 13656[0m
+[0;32mI (17774) mpu_example: TEMP: 28.092581[0m
+[0;32mI (17804) mpu_example: GYRO => X: 36, Y: 65135, Z: 65199[0m
+[0;32mI (17804) mpu_example: ACCEL => X: 60648, Y: 3472, Z: 14000[0m
+[0;32mI (17804) mpu_example: TEMP: 28.092581[0m
+[0;32mI (17834) mpu_example: GYRO => X: 65400, Y: 64771, Z: 65328[0m
+[0;32mI (17834) mpu_example: ACCEL => X: 60176, Y: 3496, Z: 14120[0m
+[0;32mI (17834) mpu_example: TEMP: 28.475964[0m
+[0;32mI (17864) mpu_example: GYRO => X: 65455, Y: 65289, Z: 386[0m
+[0;32mI (17864) mpu_example: ACCEL => X: 60880, Y: 2984, Z: 13872[0m
+[0;32mI (17864) mpu_example: TEMP: 28.380117[0m
+[0;32mI (17894) mpu_example: GYRO => X: 65458, Y: 65388, Z: 22[0m
+[0;32mI (17894) mpu_example: ACCEL => X: 60736, Y: 3096, Z: 13952[0m
+[0;32mI (17894) mpu_example: TEMP: 28.284273[0m
+[0;32mI (17924) mpu_example: GYRO => X: 65527, Y: 65331, Z: 65231[0m
+[0;32mI (17924) mpu_example: ACCEL => X: 60440, Y: 2968, Z: 13800[0m
+[0;32mI (17924) mpu_example: TEMP: 28.236349[0m
+[0;32mI (17954) mpu_example: GYRO => X: 50, Y: 65000, Z: 65084[0m
+[0;32mI (17954) mpu_example: ACCEL => X: 60416, Y: 3024, Z: 13880[0m
+[0;32mI (17954) mpu_example: TEMP: 28.092581[0m
+[0;32mI (17984) mpu_example: GYRO => X: 65530, Y: 53, Z: 65137[0m
+[0;32mI (17984) mpu_example: ACCEL => X: 60888, Y: 3088, Z: 13872[0m
+[0;32mI (17984) mpu_example: TEMP: 28.428041[0m
+[0;32mI (18014) mpu_example: GYRO => X: 110, Y: 65447, Z: 64939[0m
+[0;32mI (18014) mpu_example: ACCEL => X: 60224, Y: 2984, Z: 14016[0m
+[0;32mI (18014) mpu_example: TEMP: 28.428041[0m
+[0;32mI (18044) mpu_example: GYRO => X: 328, Y: 453, Z: 155[0m
+[0;32mI (18044) mpu_example: ACCEL => X: 60584, Y: 3312, Z: 13912[0m
+[0;32mI (18044) mpu_example: TEMP: 28.475964[0m
+[0;32mI (18074) mpu_example: GYRO => X: 64, Y: 65141, Z: 64891[0m
+[0;32mI (18074) mpu_example: ACCEL => X: 60752, Y: 3152, Z: 13896[0m
+[0;32mI (18074) mpu_example: TEMP: 28.380117[0m
+[0;32mI (18104) mpu_example: GYRO => X: 119, Y: 134, Z: 65311[0m
+[0;32mI (18104) mpu_example: ACCEL => X: 60712, Y: 3264, Z: 13672[0m
+[0;32mI (18104) mpu_example: TEMP: 28.140503[0m
+[0;32mI (18134) mpu_example: GYRO => X: 42, Y: 190, Z: 65240[0m
+[0;32mI (18134) mpu_example: ACCEL => X: 60920, Y: 3424, Z: 14144[0m
+[0;32mI (18134) mpu_example: TEMP: 28.284273[0m
+[0;32mI (18164) mpu_example: GYRO => X: 65404, Y: 359, Z: 141[0m
+[0;32mI (18164) mpu_example: ACCEL => X: 60800, Y: 3368, Z: 13920[0m
+[0;32mI (18164) mpu_example: TEMP: 28.284273[0m
+[0;32mI (18194) mpu_example: GYRO => X: 20, Y: 105, Z: 65430[0m
+[0;32mI (18194) mpu_example: ACCEL => X: 61016, Y: 3192, Z: 13408[0m
+[0;32mI (18194) mpu_example: TEMP: 28.428041[0m
+[0;32mI (18224) mpu_example: GYRO => X: 65427, Y: 288, Z: 65293[0m
+[0;32mI (18224) mpu_example: ACCEL => X: 60152, Y: 3264, Z: 13744[0m
+[0;32mI (18224) mpu_example: TEMP: 28.140503[0m
+[0;32mI (18254) mpu_example: GYRO => X: 84, Y: 283, Z: 65522[0m
+[0;32mI (18254) mpu_example: ACCEL => X: 60472, Y: 2968, Z: 13664[0m
+[0;32mI (18254) mpu_example: TEMP: 28.284273[0m
+[0;32mI (18284) mpu_example: GYRO => X: 50, Y: 65292, Z: 65411[0m
+[0;32mI (18284) mpu_example: ACCEL => X: 60480, Y: 3160, Z: 14304[0m
+[0;32mI (18284) mpu_example: TEMP: 28.092581[0m
+[0;32mI (18314) mpu_example: GYRO => X: 65367, Y: 65366, Z: 65217[0m
+[0;32mI (18314) mpu_example: ACCEL => X: 60680, Y: 3128, Z: 14256[0m
+[0;32mI (18314) mpu_example: TEMP: 28.284273[0m
+[0;32mI (18344) mpu_example: GYRO => X: 65280, Y: 65158, Z: 65255[0m
+[0;32mI (18344) mpu_example: ACCEL => X: 60640, Y: 3048, Z: 13800[0m
+[0;32mI (18344) mpu_example: TEMP: 28.092581[0m
+[0;32mI (18374) mpu_example: GYRO => X: 161, Y: 64929, Z: 65193[0m
+[0;32mI (18374) mpu_example: ACCEL => X: 60592, Y: 2824, Z: 13872[0m
+[0;32mI (18374) mpu_example: TEMP: 28.428041[0m
+[0;32mI (18404) mpu_example: GYRO => X: 199, Y: 113, Z: 229[0m
+[0;32mI (18404) mpu_example: ACCEL => X: 60552, Y: 3344, Z: 14040[0m
+[0;32mI (18404) mpu_example: TEMP: 28.380117[0m
+[0;32mI (18434) mpu_example: GYRO => X: 65492, Y: 64837, Z: 197[0m
+[0;32mI (18434) mpu_example: ACCEL => X: 60488, Y: 3176, Z: 14320[0m
+[0;32mI (18434) mpu_example: TEMP: 28.284273[0m
+[0;32mI (18464) mpu_example: GYRO => X: 65505, Y: 64985, Z: 65488[0m
+[0;32mI (18464) mpu_example: ACCEL => X: 60432, Y: 3216, Z: 13920[0m
+[0;32mI (18464) mpu_example: TEMP: 28.236349[0m
+[0;32mI (18494) mpu_example: GYRO => X: 116, Y: 147, Z: 46[0m
+[0;32mI (18494) mpu_example: ACCEL => X: 60896, Y: 3168, Z: 13656[0m
+[0;32mI (18494) mpu_example: TEMP: 28.428041[0m
+[0;32mI (18524) mpu_example: GYRO => X: 65382, Y: 65307, Z: 65070[0m
+[0;32mI (18524) mpu_example: ACCEL => X: 61104, Y: 3272, Z: 13960[0m
+[0;32mI (18524) mpu_example: TEMP: 28.380117[0m
+[0;32mI (18554) mpu_example: GYRO => X: 13, Y: 723, Z: 65373[0m
+[0;32mI (18554) mpu_example: ACCEL => X: 61536, Y: 2816, Z: 13968[0m
+[0;32mI (18554) mpu_example: TEMP: 28.140503[0m
+[0;32mI (18584) mpu_example: GYRO => X: 254, Y: 370, Z: 65396[0m
+[0;32mI (18584) mpu_example: ACCEL => X: 60912, Y: 3368, Z: 13864[0m
+[0;32mI (18584) mpu_example: TEMP: 28.044659[0m
+[0;32mI (18614) mpu_example: GYRO => X: 65431, Y: 177, Z: 65376[0m
+[0;32mI (18614) mpu_example: ACCEL => X: 60264, Y: 3280, Z: 13800[0m
+[0;32mI (18614) mpu_example: TEMP: 28.571810[0m
+[0;32mI (18644) mpu_example: GYRO => X: 41, Y: 115, Z: 65380[0m
+[0;32mI (18644) mpu_example: ACCEL => X: 60176, Y: 3160, Z: 13640[0m
+[0;32mI (18644) mpu_example: TEMP: 28.380117[0m
+[0;32mI (18674) mpu_example: GYRO => X: 65466, Y: 65379, Z: 33[0m
+[0;32mI (18674) mpu_example: ACCEL => X: 60472, Y: 3208, Z: 13888[0m
+[0;32mI (18674) mpu_example: TEMP: 28.475964[0m
+[0;32mI (18704) mpu_example: GYRO => X: 65351, Y: 65422, Z: 65470[0m
+[0;32mI (18704) mpu_example: ACCEL => X: 61104, Y: 3440, Z: 13416[0m
+[0;32mI (18704) mpu_example: TEMP: 28.380117[0m
+[0;32mI (18734) mpu_example: GYRO => X: 65499, Y: 332, Z: 65510[0m
+[0;32mI (18734) mpu_example: ACCEL => X: 61104, Y: 3080, Z: 13704[0m
+[0;32mI (18734) mpu_example: TEMP: 28.236349[0m
+[0;32mI (18764) mpu_example: GYRO => X: 67, Y: 745, Z: 397[0m
+[0;32mI (18764) mpu_example: ACCEL => X: 60912, Y: 3296, Z: 14072[0m
+[0;32mI (18764) mpu_example: TEMP: 28.284273[0m
+[0;32mI (18794) mpu_example: GYRO => X: 65319, Y: 195, Z: 65292[0m
+[0;32mI (18794) mpu_example: ACCEL => X: 60512, Y: 3272, Z: 14008[0m
+[0;32mI (18794) mpu_example: TEMP: 28.236349[0m
+[0;32mI (18824) mpu_example: GYRO => X: 65259, Y: 465, Z: 480[0m
+[0;32mI (18824) mpu_example: ACCEL => X: 60344, Y: 3376, Z: 13840[0m
+[0;32mI (18824) mpu_example: TEMP: 28.284273[0m
+[0;32mI (18854) mpu_example: GYRO => X: 130, Y: 151, Z: 65029[0m
+[0;32mI (18854) mpu_example: ACCEL => X: 60208, Y: 3184, Z: 13824[0m
+[0;32mI (18854) mpu_example: TEMP: 28.236349[0m
+[0;32mI (18884) mpu_example: GYRO => X: 164, Y: 92, Z: 65486[0m
+[0;32mI (18884) mpu_example: ACCEL => X: 60008, Y: 3248, Z: 13720[0m
+[0;32mI (18884) mpu_example: TEMP: 28.236349[0m
+[0;32mI (18914) mpu_example: GYRO => X: 196, Y: 319, Z: 252[0m
+[0;32mI (18914) mpu_example: ACCEL => X: 60592, Y: 3360, Z: 13736[0m
+[0;32mI (18914) mpu_example: TEMP: 28.236349[0m
+[0;32mI (18944) mpu_example: GYRO => X: 195, Y: 65285, Z: 65357[0m
+[0;32mI (18944) mpu_example: ACCEL => X: 60728, Y: 3576, Z: 13944[0m
+[0;32mI (18944) mpu_example: TEMP: 28.428041[0m
+[0;32mI (18974) mpu_example: GYRO => X: 65478, Y: 39, Z: 62[0m
+[0;32mI (18974) mpu_example: ACCEL => X: 60488, Y: 3488, Z: 13896[0m
+[0;32mI (18974) mpu_example: TEMP: 28.284273[0m
+[0;32mI (19004) mpu_example: GYRO => X: 65426, Y: 230, Z: 65491[0m
+[0;32mI (19004) mpu_example: ACCEL => X: 60312, Y: 3400, Z: 14008[0m
+[0;32mI (19004) mpu_example: TEMP: 28.092581[0m
+[0;32mI (19034) mpu_example: GYRO => X: 55, Y: 503, Z: 78[0m
+[0;32mI (19034) mpu_example: ACCEL => X: 60480, Y: 2624, Z: 13552[0m
+[0;32mI (19034) mpu_example: TEMP: 28.284273[0m
+[0;32mI (19064) mpu_example: GYRO => X: 46, Y: 5, Z: 65191[0m
+[0;32mI (19064) mpu_example: ACCEL => X: 60336, Y: 3184, Z: 13504[0m
+[0;32mI (19064) mpu_example: TEMP: 28.236349[0m
+[0;32mI (19094) mpu_example: GYRO => X: 138, Y: 71, Z: 65150[0m
+[0;32mI (19094) mpu_example: ACCEL => X: 60480, Y: 3152, Z: 13776[0m
+[0;32mI (19094) mpu_example: TEMP: 28.380117[0m
+[0;32mI (19124) mpu_example: GYRO => X: 276, Y: 417, Z: 764[0m
+[0;32mI (19124) mpu_example: ACCEL => X: 60440, Y: 3624, Z: 13864[0m
+[0;32mI (19124) mpu_example: TEMP: 28.284273[0m
+[0;32mI (19154) mpu_example: GYRO => X: 2, Y: 234, Z: 65319[0m
+[0;32mI (19154) mpu_example: ACCEL => X: 60832, Y: 3576, Z: 14016[0m
+[0;32mI (19154) mpu_example: TEMP: 28.380117[0m
+[0;32mI (19184) mpu_example: GYRO => X: 65384, Y: 288, Z: 65475[0m
+[0;32mI (19184) mpu_example: ACCEL => X: 60720, Y: 3464, Z: 13848[0m
+[0;32mI (19184) mpu_example: TEMP: 28.236349[0m
+[0;32mI (19214) mpu_example: GYRO => X: 65224, Y: 0, Z: 65394[0m
+[0;32mI (19214) mpu_example: ACCEL => X: 60320, Y: 3528, Z: 13840[0m
+[0;32mI (19214) mpu_example: TEMP: 28.236349[0m
+[0;32mI (19244) mpu_example: GYRO => X: 65367, Y: 740, Z: 181[0m
+[0;32mI (19244) mpu_example: ACCEL => X: 59904, Y: 3240, Z: 13864[0m
+[0;32mI (19244) mpu_example: TEMP: 28.284273[0m
+[0;32mI (19274) mpu_example: GYRO => X: 65486, Y: 440, Z: 338[0m
+[0;32mI (19274) mpu_example: ACCEL => X: 60344, Y: 3128, Z: 13744[0m
+[0;32mI (19274) mpu_example: TEMP: 28.284273[0m
+[0;32mI (19304) mpu_example: GYRO => X: 65254, Y: 65086, Z: 9[0m
+[0;32mI (19304) mpu_example: ACCEL => X: 60216, Y: 3080, Z: 13368[0m
+[0;32mI (19304) mpu_example: TEMP: 28.236349[0m
+[0;32mI (19334) mpu_example: GYRO => X: 65414, Y: 65296, Z: 65337[0m
+[0;32mI (19334) mpu_example: ACCEL => X: 60328, Y: 2984, Z: 13568[0m
+[0;32mI (19334) mpu_example: TEMP: 28.236349[0m
+[0;32mI (19364) mpu_example: GYRO => X: 79, Y: 65524, Z: 65497[0m
+[0;32mI (19364) mpu_example: ACCEL => X: 60664, Y: 3536, Z: 13704[0m
+[0;32mI (19364) mpu_example: TEMP: 28.380117[0m
+[0;32mI (19394) mpu_example: GYRO => X: 69, Y: 345, Z: 65424[0m
+[0;32mI (19394) mpu_example: ACCEL => X: 60464, Y: 3576, Z: 13824[0m
+[0;32mI (19394) mpu_example: TEMP: 28.571810[0m
+[0;32mI (19424) mpu_example: GYRO => X: 248, Y: 65491, Z: 65398[0m
+[0;32mI (19424) mpu_example: ACCEL => X: 60384, Y: 3520, Z: 13960[0m
+[0;32mI (19424) mpu_example: TEMP: 28.428041[0m
+[0;32mI (19454) mpu_example: GYRO => X: 65395, Y: 65213, Z: 65107[0m
+[0;32mI (19454) mpu_example: ACCEL => X: 59784, Y: 3544, Z: 14040[0m
+[0;32mI (19454) mpu_example: TEMP: 28.284273[0m
+[0;32mI (19484) mpu_example: GYRO => X: 31, Y: 120, Z: 128[0m
+[0;32mI (19484) mpu_example: ACCEL => X: 60072, Y: 3320, Z: 14008[0m
+[0;32mI (19484) mpu_example: TEMP: 28.428041[0m
+[0;32mI (19514) mpu_example: GYRO => X: 55, Y: 65495, Z: 65520[0m
+[0;32mI (19514) mpu_example: ACCEL => X: 60520, Y: 3208, Z: 13592[0m
+[0;32mI (19514) mpu_example: TEMP: 28.380117[0m
+[0;32mI (19544) mpu_example: GYRO => X: 59, Y: 65364, Z: 190[0m
+[0;32mI (19544) mpu_example: ACCEL => X: 59904, Y: 3384, Z: 13584[0m
+[0;32mI (19544) mpu_example: TEMP: 28.140503[0m
+[0;32mI (19574) mpu_example: GYRO => X: 18, Y: 56, Z: 136[0m
+[0;32mI (19574) mpu_example: ACCEL => X: 60656, Y: 3216, Z: 13648[0m
+[0;32mI (19574) mpu_example: TEMP: 28.380117[0m
+[0;32mI (19604) mpu_example: GYRO => X: 65451, Y: 44, Z: 135[0m
+[0;32mI (19604) mpu_example: ACCEL => X: 60520, Y: 3720, Z: 14072[0m
+[0;32mI (19604) mpu_example: TEMP: 28.236349[0m
+[0;32mI (19634) mpu_example: GYRO => X: 65511, Y: 65445, Z: 313[0m
+[0;32mI (19634) mpu_example: ACCEL => X: 60024, Y: 3152, Z: 13840[0m
+[0;32mI (19634) mpu_example: TEMP: 28.284273[0m
+[0;32mI (19664) mpu_example: GYRO => X: 254, Y: 65419, Z: 137[0m
+[0;32mI (19664) mpu_example: ACCEL => X: 60600, Y: 3376, Z: 13832[0m
+[0;32mI (19664) mpu_example: TEMP: 28.428041[0m
+[0;32mI (19694) mpu_example: GYRO => X: 65371, Y: 65516, Z: 110[0m
+[0;32mI (19694) mpu_example: ACCEL => X: 60464, Y: 3352, Z: 13736[0m
+[0;32mI (19694) mpu_example: TEMP: 28.092581[0m
+[0;32mI (19724) mpu_example: GYRO => X: 143, Y: 65361, Z: 236[0m
+[0;32mI (19724) mpu_example: ACCEL => X: 59904, Y: 3104, Z: 14120[0m
+[0;32mI (19724) mpu_example: TEMP: 28.428041[0m
+[0;32mI (19754) mpu_example: GYRO => X: 65246, Y: 65377, Z: 65346[0m
+[0;32mI (19754) mpu_example: ACCEL => X: 60248, Y: 3496, Z: 13664[0m
+[0;32mI (19754) mpu_example: TEMP: 28.284273[0m
+[0;32mI (19784) mpu_example: GYRO => X: 33, Y: 64943, Z: 64792[0m
+[0;32mI (19784) mpu_example: ACCEL => X: 60232, Y: 3472, Z: 14016[0m
+[0;32mI (19784) mpu_example: TEMP: 28.284273[0m
+[0;32mI (19814) mpu_example: GYRO => X: 65389, Y: 65116, Z: 65045[0m
+[0;32mI (19814) mpu_example: ACCEL => X: 60208, Y: 3368, Z: 14016[0m
+[0;32mI (19814) mpu_example: TEMP: 28.140503[0m
+[0;32mI (19844) mpu_example: GYRO => X: 65505, Y: 65470, Z: 65487[0m
+[0;32mI (19844) mpu_example: ACCEL => X: 60352, Y: 3520, Z: 13816[0m
+[0;32mI (19844) mpu_example: TEMP: 28.092581[0m
+[0;32mI (19874) mpu_example: GYRO => X: 150, Y: 23, Z: 204[0m
+[0;32mI (19874) mpu_example: ACCEL => X: 60416, Y: 3144, Z: 13800[0m
+[0;32mI (19874) mpu_example: TEMP: 28.236349[0m
+[0;32mI (19904) mpu_example: GYRO => X: 126, Y: 64962, Z: 65312[0m
+[0;32mI (19904) mpu_example: ACCEL => X: 60320, Y: 3080, Z: 14040[0m
+[0;32mI (19904) mpu_example: TEMP: 28.236349[0m
+[0;32mI (19934) mpu_example: GYRO => X: 119, Y: 65357, Z: 84[0m
+[0;32mI (19934) mpu_example: ACCEL => X: 60352, Y: 2912, Z: 13808[0m
+[0;32mI (19934) mpu_example: TEMP: 28.140503[0m
+[0;32mI (19964) mpu_example: GYRO => X: 24, Y: 65126, Z: 65340[0m
+[0;32mI (19964) mpu_example: ACCEL => X: 60808, Y: 3280, Z: 13384[0m
+[0;32mI (19964) mpu_example: TEMP: 28.092581[0m
+[0;32mI (19994) mpu_example: GYRO => X: 65511, Y: 65471, Z: 65389[0m
+[0;32mI (19994) mpu_example: ACCEL => X: 60632, Y: 3336, Z: 13704[0m
+[0;32mI (19994) mpu_example: TEMP: 28.140503[0m
+[0;32mI (20024) mpu_example: GYRO => X: 129, Y: 65270, Z: 44[0m
+[0;32mI (20024) mpu_example: ACCEL => X: 60440, Y: 3168, Z: 13592[0m
+[0;32mI (20024) mpu_example: TEMP: 28.140503[0m
+[0;32mI (20054) mpu_example: GYRO => X: 85, Y: 65138, Z: 65213[0m
+[0;32mI (20054) mpu_example: ACCEL => X: 60624, Y: 3144, Z: 14024[0m
+[0;32mI (20054) mpu_example: TEMP: 28.284273[0m
+[0;32mI (20084) mpu_example: GYRO => X: 20, Y: 65361, Z: 8[0m
+[0;32mI (20084) mpu_example: ACCEL => X: 60600, Y: 3328, Z: 13848[0m
+[0;32mI (20084) mpu_example: TEMP: 28.380117[0m
+[0;32mI (20114) mpu_example: GYRO => X: 65425, Y: 65205, Z: 65223[0m
+[0;32mI (20114) mpu_example: ACCEL => X: 60744, Y: 3272, Z: 13584[0m
+[0;32mI (20114) mpu_example: TEMP: 28.092581[0m
+[0;32mI (20144) mpu_example: GYRO => X: 65317, Y: 65232, Z: 65454[0m
+[0;32mI (20144) mpu_example: ACCEL => X: 60232, Y: 3480, Z: 13664[0m
+[0;32mI (20144) mpu_example: TEMP: 28.092581[0m
+[0;32mI (20174) mpu_example: GYRO => X: 65047, Y: 65202, Z: 63774[0m
+[0;32mI (20174) mpu_example: ACCEL => X: 60624, Y: 2104, Z: 13304[0m
+[0;32mI (20174) mpu_example: TEMP: 28.284273[0m
+[0;32mI (20204) mpu_example: GYRO => X: 65304, Y: 64745, Z: 65202[0m
+[0;32mI (20204) mpu_example: ACCEL => X: 60392, Y: 3392, Z: 14072[0m
+[0;32mI (20204) mpu_example: TEMP: 28.428041[0m
+[0;32mI (20234) mpu_example: GYRO => X: 65357, Y: 65278, Z: 65410[0m
+[0;32mI (20234) mpu_example: ACCEL => X: 60704, Y: 3376, Z: 14048[0m
+[0;32mI (20234) mpu_example: TEMP: 28.475964[0m
+[0;32mI (20264) mpu_example: GYRO => X: 65503, Y: 65444, Z: 65487[0m
+[0;32mI (20264) mpu_example: ACCEL => X: 60744, Y: 3504, Z: 13936[0m
+[0;32mI (20264) mpu_example: TEMP: 28.236349[0m
+[0;32mI (20294) mpu_example: GYRO => X: 65502, Y: 65439, Z: 65534[0m
+[0;32mI (20294) mpu_example: ACCEL => X: 60384, Y: 3536, Z: 13880[0m
+[0;32mI (20294) mpu_example: TEMP: 28.140503[0m
+[0;32mI (20324) mpu_example: GYRO => X: 65457, Y: 65512, Z: 65336[0m
+[0;32mI (20324) mpu_example: ACCEL => X: 60712, Y: 3272, Z: 13752[0m
+[0;32mI (20324) mpu_example: TEMP: 28.236349[0m
+[0;32mI (20354) mpu_example: GYRO => X: 65281, Y: 65386, Z: 65139[0m
+[0;32mI (20354) mpu_example: ACCEL => X: 60576, Y: 3528, Z: 14104[0m
+[0;32mI (20354) mpu_example: TEMP: 28.380117[0m
+[0;32mI (20384) mpu_example: GYRO => X: 65488, Y: 65084, Z: 65050[0m
+[0;32mI (20384) mpu_example: ACCEL => X: 60520, Y: 3536, Z: 13464[0m
+[0;32mI (20384) mpu_example: TEMP: 28.380117[0m
+[0;32mI (20414) mpu_example: GYRO => X: 65497, Y: 65481, Z: 59[0m
+[0;32mI (20414) mpu_example: ACCEL => X: 60848, Y: 3568, Z: 13648[0m
+[0;32mI (20414) mpu_example: TEMP: 28.236349[0m
+[0;32mI (20444) mpu_example: GYRO => X: 65419, Y: 156, Z: 65316[0m
+[0;32mI (20444) mpu_example: ACCEL => X: 60584, Y: 3504, Z: 14208[0m
+[0;32mI (20444) mpu_example: TEMP: 28.475964[0m
+[0;32mI (20474) mpu_example: GYRO => X: 65499, Y: 65307, Z: 65360[0m
+[0;32mI (20474) mpu_example: ACCEL => X: 60568, Y: 3208, Z: 13736[0m
+[0;32mI (20474) mpu_example: TEMP: 28.428041[0m
+[0;32mI (20504) mpu_example: GYRO => X: 28, Y: 166, Z: 6[0m
+[0;32mI (20504) mpu_example: ACCEL => X: 60520, Y: 3136, Z: 13952[0m
+[0;32mI (20504) mpu_example: TEMP: 28.380117[0m
+[0;32mI (20534) mpu_example: GYRO => X: 65486, Y: 65450, Z: 65417[0m
+[0;32mI (20534) mpu_example: ACCEL => X: 60800, Y: 3456, Z: 13960[0m
+[0;32mI (20534) mpu_example: TEMP: 28.475964[0m
+[0;32mI (20564) mpu_example: GYRO => X: 93, Y: 65491, Z: 65418[0m
+[0;32mI (20564) mpu_example: ACCEL => X: 60488, Y: 3112, Z: 14056[0m
+[0;32mI (20564) mpu_example: TEMP: 28.284273[0m
+[0;32mI (20594) mpu_example: GYRO => X: 33, Y: 177, Z: 54[0m
+[0;32mI (20594) mpu_example: ACCEL => X: 60864, Y: 3176, Z: 13656[0m
+[0;32mI (20594) mpu_example: TEMP: 28.380117[0m
+[0;32mI (20624) mpu_example: GYRO => X: 65478, Y: 89, Z: 65341[0m
+[0;32mI (20624) mpu_example: ACCEL => X: 60856, Y: 3256, Z: 13704[0m
+[0;32mI (20624) mpu_example: TEMP: 28.140503[0m
+[0;32mI (20654) mpu_example: GYRO => X: 90, Y: 161, Z: 65289[0m
+[0;32mI (20654) mpu_example: ACCEL => X: 60560, Y: 3128, Z: 13960[0m
+[0;32mI (20654) mpu_example: TEMP: 28.140503[0m
+[0;32mI (20684) mpu_example: GYRO => X: 42, Y: 150, Z: 65531[0m
+[0;32mI (20684) mpu_example: ACCEL => X: 60744, Y: 3280, Z: 13784[0m
+[0;32mI (20684) mpu_example: TEMP: 28.619732[0m
+[0;32mI (20714) mpu_example: GYRO => X: 11, Y: 131, Z: 65332[0m
+[0;32mI (20714) mpu_example: ACCEL => X: 60656, Y: 3392, Z: 14304[0m
+[0;32mI (20714) mpu_example: TEMP: 28.380117[0m
+[0;32mI (20744) mpu_example: GYRO => X: 65379, Y: 69, Z: 65505[0m
+[0;32mI (20744) mpu_example: ACCEL => X: 60536, Y: 3192, Z: 13680[0m
+[0;32mI (20744) mpu_example: TEMP: 28.140503[0m
+[0;32mI (20774) mpu_example: GYRO => X: 4, Y: 65419, Z: 65374[0m
+[0;32mI (20774) mpu_example: ACCEL => X: 60584, Y: 3224, Z: 13760[0m
+[0;32mI (20774) mpu_example: TEMP: 28.380117[0m
+[0;32mI (20804) mpu_example: GYRO => X: 65491, Y: 65533, Z: 133[0m
+[0;32mI (20804) mpu_example: ACCEL => X: 60784, Y: 3232, Z: 13864[0m
+[0;32mI (20804) mpu_example: TEMP: 28.284273[0m
+[0;32mI (20834) mpu_example: GYRO => X: 65436, Y: 65219, Z: 65377[0m
+[0;32mI (20834) mpu_example: ACCEL => X: 60816, Y: 3080, Z: 13784[0m
+[0;32mI (20834) mpu_example: TEMP: 28.428041[0m
+[0;32mI (20864) mpu_example: GYRO => X: 54, Y: 65316, Z: 4[0m
+[0;32mI (20864) mpu_example: ACCEL => X: 60912, Y: 3144, Z: 14048[0m
+[0;32mI (20864) mpu_example: TEMP: 28.140503[0m
+[0;32mI (20894) mpu_example: GYRO => X: 166, Y: 65515, Z: 346[0m
+[0;32mI (20894) mpu_example: ACCEL => X: 60464, Y: 3520, Z: 13728[0m
+[0;32mI (20894) mpu_example: TEMP: 28.140503[0m
+[0;32mI (20924) mpu_example: GYRO => X: 65505, Y: 65142, Z: 80[0m
+[0;32mI (20924) mpu_example: ACCEL => X: 60488, Y: 3464, Z: 13968[0m
+[0;32mI (20924) mpu_example: TEMP: 28.380117[0m
+[0;32mI (20954) mpu_example: GYRO => X: 65524, Y: 65379, Z: 67[0m
+[0;32mI (20954) mpu_example: ACCEL => X: 60952, Y: 3112, Z: 13824[0m
+[0;32mI (20954) mpu_example: TEMP: 28.380117[0m
+[0;32mI (20984) mpu_example: GYRO => X: 65516, Y: 69, Z: 209[0m
+[0;32mI (20984) mpu_example: ACCEL => X: 60680, Y: 3008, Z: 13904[0m
+[0;32mI (20984) mpu_example: TEMP: 28.284273[0m
+[0;32mI (21014) mpu_example: GYRO => X: 14, Y: 65467, Z: 227[0m
+[0;32mI (21014) mpu_example: ACCEL => X: 60920, Y: 3104, Z: 14048[0m
+[0;32mI (21014) mpu_example: TEMP: 28.428041[0m
+[0;32mI (21044) mpu_example: GYRO => X: 65434, Y: 65155, Z: 330[0m
+[0;32mI (21044) mpu_example: ACCEL => X: 60752, Y: 3440, Z: 13760[0m
+[0;32mI (21044) mpu_example: TEMP: 28.475964[0m
+[0;32mI (21074) mpu_example: GYRO => X: 65480, Y: 65518, Z: 303[0m
+[0;32mI (21074) mpu_example: ACCEL => X: 60792, Y: 3112, Z: 14024[0m
+[0;32mI (21074) mpu_example: TEMP: 28.428041[0m
+[0;32mI (21104) mpu_example: GYRO => X: 65526, Y: 65512, Z: 281[0m
+[0;32mI (21104) mpu_example: ACCEL => X: 61000, Y: 3144, Z: 13848[0m
+[0;32mI (21104) mpu_example: TEMP: 28.092581[0m
+[0;32mI (21134) mpu_example: GYRO => X: 65231, Y: 64657, Z: 65341[0m
+[0;32mI (21134) mpu_example: ACCEL => X: 60528, Y: 3440, Z: 13992[0m
+[0;32mI (21134) mpu_example: TEMP: 28.428041[0m
+[0;32mI (21164) mpu_example: GYRO => X: 65115, Y: 64676, Z: 440[0m
+[0;32mI (21164) mpu_example: ACCEL => X: 60800, Y: 3392, Z: 14232[0m
+[0;32mI (21164) mpu_example: TEMP: 28.236349[0m
+[0;32mI (21194) mpu_example: GYRO => X: 65220, Y: 65061, Z: 545[0m
+[0;32mI (21194) mpu_example: ACCEL => X: 60784, Y: 3776, Z: 14496[0m
+[0;32mI (21194) mpu_example: TEMP: 28.284273[0m
+[0;32mI (21224) mpu_example: GYRO => X: 65174, Y: 64950, Z: 65393[0m
+[0;32mI (21224) mpu_example: ACCEL => X: 60792, Y: 3272, Z: 13888[0m
+[0;32mI (21224) mpu_example: TEMP: 28.284273[0m
+[0;32mI (21254) mpu_example: GYRO => X: 65175, Y: 65037, Z: 495[0m
+[0;32mI (21254) mpu_example: ACCEL => X: 61120, Y: 3072, Z: 13784[0m
+[0;32mI (21254) mpu_example: TEMP: 28.380117[0m
+[0;32mI (21284) mpu_example: GYRO => X: 65290, Y: 64861, Z: 301[0m
+[0;32mI (21284) mpu_example: ACCEL => X: 61000, Y: 3176, Z: 13992[0m
+[0;32mI (21284) mpu_example: TEMP: 28.475964[0m
+[0;32mI (21314) mpu_example: GYRO => X: 9, Y: 64888, Z: 614[0m
+[0;32mI (21314) mpu_example: ACCEL => X: 60776, Y: 3176, Z: 13984[0m
+[0;32mI (21314) mpu_example: TEMP: 28.284273[0m
+[0;32mI (21344) mpu_example: GYRO => X: 65445, Y: 64575, Z: 1698[0m
+[0;32mI (21344) mpu_example: ACCEL => X: 60960, Y: 3320, Z: 14120[0m
+[0;32mI (21344) mpu_example: TEMP: 28.475964[0m
+[0;32mI (21374) mpu_example: GYRO => X: 65003, Y: 63226, Z: 1509[0m
+[0;32mI (21374) mpu_example: ACCEL => X: 60976, Y: 3416, Z: 13872[0m
+[0;32mI (21374) mpu_example: TEMP: 28.428041[0m
+[0;32mI (21404) mpu_example: GYRO => X: 65120, Y: 64346, Z: 1292[0m
+[0;32mI (21404) mpu_example: ACCEL => X: 60688, Y: 3344, Z: 14192[0m
+[0;32mI (21404) mpu_example: TEMP: 28.140503[0m
+[0;32mI (21434) mpu_example: GYRO => X: 64997, Y: 64251, Z: 41[0m
+[0;32mI (21434) mpu_example: ACCEL => X: 61864, Y: 3440, Z: 13952[0m
+[0;32mI (21434) mpu_example: TEMP: 28.380117[0m
+[0;32mI (21464) mpu_example: GYRO => X: 64717, Y: 64264, Z: 1203[0m
+[0;32mI (21464) mpu_example: ACCEL => X: 61696, Y: 3528, Z: 14288[0m
+[0;32mI (21464) mpu_example: TEMP: 28.236349[0m
+[0;32mI (21494) mpu_example: GYRO => X: 63753, Y: 64540, Z: 1719[0m
+[0;32mI (21494) mpu_example: ACCEL => X: 61392, Y: 3472, Z: 14568[0m
+[0;32mI (21494) mpu_example: TEMP: 28.236349[0m
+[0;32mI (21524) mpu_example: GYRO => X: 62730, Y: 64009, Z: 2234[0m
+[0;32mI (21524) mpu_example: ACCEL => X: 61864, Y: 3288, Z: 14280[0m
+[0;32mI (21524) mpu_example: TEMP: 28.284273[0m
+[0;32mI (21554) mpu_example: GYRO => X: 62004, Y: 64021, Z: 4638[0m
+[0;32mI (21554) mpu_example: ACCEL => X: 62144, Y: 2952, Z: 14176[0m
+[0;32mI (21554) mpu_example: TEMP: 28.428041[0m
+[0;32mI (21584) mpu_example: GYRO => X: 61290, Y: 63359, Z: 5320[0m
+[0;32mI (21584) mpu_example: ACCEL => X: 61832, Y: 2992, Z: 14344[0m
+[0;32mI (21584) mpu_example: TEMP: 28.236349[0m
+[0;32mI (21614) mpu_example: GYRO => X: 62409, Y: 62261, Z: 4696[0m
+[0;32mI (21614) mpu_example: ACCEL => X: 61400, Y: 2704, Z: 13184[0m
+[0;32mI (21614) mpu_example: TEMP: 28.571810[0m
+[0;32mI (21644) mpu_example: GYRO => X: 3367, Y: 59898, Z: 785[0m
+[0;32mI (21644) mpu_example: ACCEL => X: 63216, Y: 1096, Z: 14304[0m
+[0;32mI (21644) mpu_example: TEMP: 28.380117[0m
+[0;32mI (21674) mpu_example: GYRO => X: 3726, Y: 61967, Z: 6408[0m
+[0;32mI (21674) mpu_example: ACCEL => X: 63432, Y: 3024, Z: 14744[0m
+[0;32mI (21674) mpu_example: TEMP: 28.428041[0m
+[0;32mI (21704) mpu_example: GYRO => X: 2222, Y: 61321, Z: 3866[0m
+[0;32mI (21704) mpu_example: ACCEL => X: 62928, Y: 3312, Z: 14704[0m
+[0;32mI (21704) mpu_example: TEMP: 28.284273[0m
+[0;32mI (21734) mpu_example: GYRO => X: 2649, Y: 61614, Z: 6507[0m
+[0;32mI (21734) mpu_example: ACCEL => X: 64048, Y: 4048, Z: 14672[0m
+[0;32mI (21734) mpu_example: TEMP: 28.380117[0m
+[0;32mI (21764) mpu_example: GYRO => X: 1624, Y: 62246, Z: 5307[0m
+[0;32mI (21764) mpu_example: ACCEL => X: 62632, Y: 4032, Z: 14040[0m
+[0;32mI (21764) mpu_example: TEMP: 28.140503[0m
+[0;32mI (21794) mpu_example: GYRO => X: 1806, Y: 60989, Z: 2135[0m
+[0;32mI (21794) mpu_example: ACCEL => X: 63344, Y: 4552, Z: 14496[0m
+[0;32mI (21794) mpu_example: TEMP: 28.380117[0m
+[0;32mI (21824) mpu_example: GYRO => X: 2273, Y: 61353, Z: 2860[0m
+[0;32mI (21824) mpu_example: ACCEL => X: 63920, Y: 3336, Z: 13712[0m
+[0;32mI (21824) mpu_example: TEMP: 28.380117[0m
+[0;32mI (21854) mpu_example: GYRO => X: 2437, Y: 60680, Z: 3173[0m
+[0;32mI (21854) mpu_example: ACCEL => X: 64000, Y: 3600, Z: 14240[0m
+[0;32mI (21854) mpu_example: TEMP: 28.236349[0m
+[0;32mI (21884) mpu_example: GYRO => X: 2300, Y: 59749, Z: 5114[0m
+[0;32mI (21884) mpu_example: ACCEL => X: 64120, Y: 4504, Z: 14840[0m
+[0;32mI (21884) mpu_example: TEMP: 28.380117[0m
+[0;32mI (21914) mpu_example: GYRO => X: 2262, Y: 58405, Z: 4949[0m
+[0;32mI (21914) mpu_example: ACCEL => X: 65040, Y: 4792, Z: 14264[0m
+[0;32mI (21914) mpu_example: TEMP: 28.428041[0m
+[0;32mI (21944) mpu_example: GYRO => X: 2214, Y: 57280, Z: 4461[0m
+[0;32mI (21944) mpu_example: ACCEL => X: 65096, Y: 3944, Z: 14152[0m
+[0;32mI (21944) mpu_example: TEMP: 28.380117[0m
+[0;32mI (21974) mpu_example: GYRO => X: 2154, Y: 58464, Z: 4914[0m
+[0;32mI (21974) mpu_example: ACCEL => X: 1136, Y: 4568, Z: 14160[0m
+[0;32mI (21974) mpu_example: TEMP: 28.428041[0m
+[0;32mI (22004) mpu_example: GYRO => X: 2511, Y: 56026, Z: 5092[0m
+[0;32mI (22004) mpu_example: ACCEL => X: 256, Y: 4808, Z: 14048[0m
+[0;32mI (22004) mpu_example: TEMP: 28.284273[0m
+[0;32mI (22034) mpu_example: GYRO => X: 1357, Y: 57249, Z: 5410[0m
+[0;32mI (22034) mpu_example: ACCEL => X: 1792, Y: 5368, Z: 14032[0m
+[0;32mI (22034) mpu_example: TEMP: 28.284273[0m
+[0;32mI (22064) mpu_example: GYRO => X: 1197, Y: 55628, Z: 5270[0m
+[0;32mI (22064) mpu_example: ACCEL => X: 2232, Y: 4600, Z: 14464[0m
+[0;32mI (22064) mpu_example: TEMP: 28.380117[0m
+[0;32mI (22094) mpu_example: GYRO => X: 1267, Y: 54410, Z: 5857[0m
+[0;32mI (22094) mpu_example: ACCEL => X: 2376, Y: 4392, Z: 13272[0m
+[0;32mI (22094) mpu_example: TEMP: 28.236349[0m
+[0;32mI (22124) mpu_example: GYRO => X: 64026, Y: 54320, Z: 7596[0m
+[0;32mI (22124) mpu_example: ACCEL => X: 4600, Y: 4784, Z: 12840[0m
+[0;32mI (22124) mpu_example: TEMP: 28.284273[0m
+[0;32mI (22154) mpu_example: GYRO => X: 65084, Y: 57504, Z: 7131[0m
+[0;32mI (22154) mpu_example: ACCEL => X: 6304, Y: 5368, Z: 13464[0m
+[0;32mI (22154) mpu_example: TEMP: 28.428041[0m
+[0;32mI (22184) mpu_example: GYRO => X: 63071, Y: 56803, Z: 6258[0m
+[0;32mI (22184) mpu_example: ACCEL => X: 4680, Y: 4776, Z: 13624[0m
+[0;32mI (22184) mpu_example: TEMP: 28.428041[0m
+[0;32mI (22214) mpu_example: GYRO => X: 61472, Y: 58247, Z: 4716[0m
+[0;32mI (22214) mpu_example: ACCEL => X: 6616, Y: 3640, Z: 13352[0m
+[0;32mI (22214) mpu_example: TEMP: 28.140503[0m
+[0;32mI (22244) mpu_example: GYRO => X: 59423, Y: 54819, Z: 5432[0m
+[0;32mI (22244) mpu_example: ACCEL => X: 5928, Y: 3920, Z: 12800[0m
+[0;32mI (22244) mpu_example: TEMP: 28.284273[0m
+[0;32mI (22274) mpu_example: GYRO => X: 57210, Y: 55351, Z: 3583[0m
+[0;32mI (22274) mpu_example: ACCEL => X: 6496, Y: 2280, Z: 12552[0m
+[0;32mI (22274) mpu_example: TEMP: 28.428041[0m
+[0;32mI (22304) mpu_example: GYRO => X: 62260, Y: 59025, Z: 3613[0m
+[0;32mI (22304) mpu_example: ACCEL => X: 7048, Y: 3928, Z: 13696[0m
+[0;32mI (22304) mpu_example: TEMP: 28.475964[0m
+[0;32mI (22334) mpu_example: GYRO => X: 62484, Y: 58497, Z: 3195[0m
+[0;32mI (22334) mpu_example: ACCEL => X: 8520, Y: 2832, Z: 11864[0m
+[0;32mI (22334) mpu_example: TEMP: 28.428041[0m
+[0;32mI (22364) mpu_example: GYRO => X: 62073, Y: 57356, Z: 1697[0m
+[0;32mI (22364) mpu_example: ACCEL => X: 8832, Y: 1920, Z: 11984[0m
+[0;32mI (22364) mpu_example: TEMP: 28.140503[0m
+[0;32mI (22394) mpu_example: GYRO => X: 62177, Y: 58414, Z: 2509[0m
+[0;32mI (22394) mpu_example: ACCEL => X: 8864, Y: 1952, Z: 11960[0m
+[0;32mI (22394) mpu_example: TEMP: 28.380117[0m
+[0;32mI (22424) mpu_example: GYRO => X: 61952, Y: 59309, Z: 1035[0m
+[0;32mI (22424) mpu_example: ACCEL => X: 10072, Y: 1024, Z: 11304[0m
+[0;32mI (22424) mpu_example: TEMP: 28.380117[0m
+[0;32mI (22454) mpu_example: GYRO => X: 63078, Y: 60893, Z: 65343[0m
+[0;32mI (22454) mpu_example: ACCEL => X: 9952, Y: 1112, Z: 11336[0m
+[0;32mI (22454) mpu_example: TEMP: 28.380117[0m
+[0;32mI (22484) mpu_example: GYRO => X: 63711, Y: 61078, Z: 65164[0m
+[0;32mI (22484) mpu_example: ACCEL => X: 10304, Y: 656, Z: 10184[0m
+[0;32mI (22484) mpu_example: TEMP: 28.284273[0m
+[0;32mI (22514) mpu_example: GYRO => X: 64646, Y: 62505, Z: 713[0m
+[0;32mI (22514) mpu_example: ACCEL => X: 9856, Y: 1248, Z: 11160[0m
+[0;32mI (22514) mpu_example: TEMP: 28.380117[0m
+[0;32mI (22544) mpu_example: GYRO => X: 64185, Y: 62677, Z: 587[0m
+[0;32mI (22544) mpu_example: ACCEL => X: 9568, Y: 1912, Z: 11160[0m
+[0;32mI (22544) mpu_example: TEMP: 28.428041[0m
+[0;32mI (22574) mpu_example: GYRO => X: 63851, Y: 60716, Z: 64461[0m
+[0;32mI (22574) mpu_example: ACCEL => X: 10768, Y: 920, Z: 10192[0m
+[0;32mI (22574) mpu_example: TEMP: 28.380117[0m
+[0;32mI (22604) mpu_example: GYRO => X: 63985, Y: 61563, Z: 64610[0m
+[0;32mI (22604) mpu_example: ACCEL => X: 10584, Y: 912, Z: 10200[0m
+[0;32mI (22604) mpu_example: TEMP: 28.236349[0m
+[0;32mI (22634) mpu_example: GYRO => X: 63748, Y: 61581, Z: 64027[0m
+[0;32mI (22634) mpu_example: ACCEL => X: 11024, Y: 928, Z: 10336[0m
+[0;32mI (22634) mpu_example: TEMP: 28.284273[0m
+[0;32mI (22664) mpu_example: GYRO => X: 63425, Y: 60070, Z: 62820[0m
+[0;32mI (22664) mpu_example: ACCEL => X: 11304, Y: 768, Z: 10136[0m
+[0;32mI (22664) mpu_example: TEMP: 28.284273[0m
+[0;32mI (22694) mpu_example: GYRO => X: 63232, Y: 61347, Z: 63938[0m
+[0;32mI (22694) mpu_example: ACCEL => X: 12312, Y: 584, Z: 9776[0m
+[0;32mI (22694) mpu_example: TEMP: 28.140503[0m
+[0;32mI (22724) mpu_example: GYRO => X: 64100, Y: 62515, Z: 64963[0m
+[0;32mI (22724) mpu_example: ACCEL => X: 11000, Y: 328, Z: 9088[0m
+[0;32mI (22724) mpu_example: TEMP: 28.428041[0m
+[0;32mI (22754) mpu_example: GYRO => X: 65128, Y: 63463, Z: 233[0m
+[0;32mI (22754) mpu_example: ACCEL => X: 11912, Y: 288, Z: 9032[0m
+[0;32mI (22754) mpu_example: TEMP: 28.475964[0m
+[0;32mI (22784) mpu_example: GYRO => X: 65115, Y: 63166, Z: 65209[0m
+[0;32mI (22784) mpu_example: ACCEL => X: 11624, Y: 1016, Z: 9296[0m
+[0;32mI (22784) mpu_example: TEMP: 28.284273[0m
+[0;32mI (22814) mpu_example: GYRO => X: 65035, Y: 63104, Z: 65132[0m
+[0;32mI (22814) mpu_example: ACCEL => X: 11744, Y: 840, Z: 9320[0m
+[0;32mI (22814) mpu_example: TEMP: 28.428041[0m
+[0;32mI (22844) mpu_example: GYRO => X: 65307, Y: 65241, Z: 603[0m
+[0;32mI (22844) mpu_example: ACCEL => X: 12048, Y: 1216, Z: 9136[0m
+[0;32mI (22844) mpu_example: TEMP: 28.092581[0m
+[0;32mI (22874) mpu_example: GYRO => X: 65050, Y: 63573, Z: 65109[0m
+[0;32mI (22874) mpu_example: ACCEL => X: 11352, Y: 984, Z: 8544[0m
+[0;32mI (22874) mpu_example: TEMP: 28.380117[0m
+[0;32mI (22904) mpu_example: GYRO => X: 64970, Y: 62791, Z: 64612[0m
+[0;32mI (22904) mpu_example: ACCEL => X: 12008, Y: 1232, Z: 9208[0m
+[0;32mI (22904) mpu_example: TEMP: 28.284273[0m
+[0;32mI (22934) mpu_example: GYRO => X: 64993, Y: 62833, Z: 65185[0m
+[0;32mI (22934) mpu_example: ACCEL => X: 11936, Y: 1696, Z: 9272[0m
+[0;32mI (22934) mpu_example: TEMP: 28.428041[0m
+[0;32mI (22964) mpu_example: GYRO => X: 64481, Y: 63185, Z: 64434[0m
+[0;32mI (22964) mpu_example: ACCEL => X: 13144, Y: 960, Z: 8560[0m
+[0;32mI (22964) mpu_example: TEMP: 28.428041[0m
+[0;32mI (22994) mpu_example: GYRO => X: 64378, Y: 62429, Z: 63364[0m
+[0;32mI (22994) mpu_example: ACCEL => X: 11352, Y: 1280, Z: 8712[0m
+[0;32mI (22994) mpu_example: TEMP: 28.380117[0m
+[0;32mI (23024) mpu_example: GYRO => X: 63844, Y: 61227, Z: 61879[0m
+[0;32mI (23024) mpu_example: ACCEL => X: 12792, Y: 816, Z: 8296[0m
+[0;32mI (23024) mpu_example: TEMP: 28.380117[0m
+[0;32mI (23054) mpu_example: GYRO => X: 64323, Y: 63209, Z: 61023[0m
+[0;32mI (23054) mpu_example: ACCEL => X: 12808, Y: 896, Z: 8376[0m
+[0;32mI (23054) mpu_example: TEMP: 28.428041[0m
+[0;32mI (23084) mpu_example: GYRO => X: 64499, Y: 63378, Z: 61075[0m
+[0;32mI (23084) mpu_example: ACCEL => X: 12792, Y: 1184, Z: 8224[0m
+[0;32mI (23084) mpu_example: TEMP: 28.428041[0m
+[0;32mI (23114) mpu_example: GYRO => X: 65108, Y: 64629, Z: 62675[0m
+[0;32mI (23114) mpu_example: ACCEL => X: 12944, Y: 1048, Z: 7536[0m
+[0;32mI (23114) mpu_example: TEMP: 28.140503[0m
+[0;32mI (23144) mpu_example: GYRO => X: 64920, Y: 62792, Z: 63516[0m
+[0;32mI (23144) mpu_example: ACCEL => X: 12608, Y: 1688, Z: 8232[0m
+[0;32mI (23144) mpu_example: TEMP: 28.380117[0m
+[0;32mI (23174) mpu_example: GYRO => X: 65238, Y: 64443, Z: 92[0m
+[0;32mI (23174) mpu_example: ACCEL => X: 13464, Y: 1760, Z: 8480[0m
+[0;32mI (23174) mpu_example: TEMP: 28.092581[0m
+[0;32mI (23204) mpu_example: GYRO => X: 409, Y: 63889, Z: 979[0m
+[0;32mI (23204) mpu_example: ACCEL => X: 12296, Y: 1520, Z: 7464[0m
+[0;32mI (23204) mpu_example: TEMP: 28.619732[0m
+[0;32mI (23234) mpu_example: GYRO => X: 65402, Y: 63624, Z: 2244[0m
+[0;32mI (23234) mpu_example: ACCEL => X: 13136, Y: 1688, Z: 7952[0m
+[0;32mI (23234) mpu_example: TEMP: 28.284273[0m
+[0;32mI (23264) mpu_example: GYRO => X: 64929, Y: 62887, Z: 4080[0m
+[0;32mI (23264) mpu_example: ACCEL => X: 12864, Y: 952, Z: 6712[0m
+[0;32mI (23264) mpu_example: TEMP: 28.380117[0m
+[0;32mI (23294) mpu_example: GYRO => X: 64827, Y: 63697, Z: 5204[0m
+[0;32mI (23294) mpu_example: ACCEL => X: 12320, Y: 1048, Z: 7240[0m
+[0;32mI (23294) mpu_example: TEMP: 28.428041[0m
+[0;32mI (23324) mpu_example: GYRO => X: 64835, Y: 62606, Z: 5378[0m
+[0;32mI (23324) mpu_example: ACCEL => X: 12936, Y: 944, Z: 7224[0m
+[0;32mI (23324) mpu_example: TEMP: 28.236349[0m
+[0;32mI (23354) mpu_example: GYRO => X: 64456, Y: 62862, Z: 3308[0m
+[0;32mI (23354) mpu_example: ACCEL => X: 14008, Y: 440, Z: 7424[0m
+[0;32mI (23354) mpu_example: TEMP: 28.428041[0m
+[0;32mI (23384) mpu_example: GYRO => X: 64543, Y: 63681, Z: 1844[0m
+[0;32mI (23384) mpu_example: ACCEL => X: 13048, Y: 112, Z: 7072[0m
+[0;32mI (23384) mpu_example: TEMP: 28.284273[0m
+[0;32mI (23414) mpu_example: GYRO => X: 64620, Y: 63260, Z: 64579[0m
+[0;32mI (23414) mpu_example: ACCEL => X: 13872, Y: 65392, Z: 6432[0m
+[0;32mI (23414) mpu_example: TEMP: 28.428041[0m
+[0;32mI (23444) mpu_example: GYRO => X: 64742, Y: 63520, Z: 62783[0m
+[0;32mI (23444) mpu_example: ACCEL => X: 13992, Y: 192, Z: 7312[0m
+[0;32mI (23444) mpu_example: TEMP: 28.092581[0m
+[0;32mI (23474) mpu_example: GYRO => X: 65125, Y: 65416, Z: 62737[0m
+[0;32mI (23474) mpu_example: ACCEL => X: 13840, Y: 256, Z: 6688[0m
+[0;32mI (23474) mpu_example: TEMP: 28.236349[0m
+[0;32mI (23504) mpu_example: GYRO => X: 64941, Y: 64875, Z: 59499[0m
+[0;32mI (23504) mpu_example: ACCEL => X: 12240, Y: 552, Z: 6808[0m
+[0;32mI (23504) mpu_example: TEMP: 28.380117[0m
+[0;32mI (23534) mpu_example: GYRO => X: 64557, Y: 64662, Z: 60340[0m
+[0;32mI (23534) mpu_example: ACCEL => X: 14728, Y: 664, Z: 6616[0m
+[0;32mI (23534) mpu_example: TEMP: 28.236349[0m
+[0;32mI (23564) mpu_example: GYRO => X: 64861, Y: 64476, Z: 61579[0m
+[0;32mI (23564) mpu_example: ACCEL => X: 13936, Y: 1064, Z: 6856[0m
+[0;32mI (23564) mpu_example: TEMP: 28.140503[0m
+[0;32mI (23594) mpu_example: GYRO => X: 65001, Y: 65263, Z: 62265[0m
+[0;32mI (23594) mpu_example: ACCEL => X: 13696, Y: 1288, Z: 6672[0m
+[0;32mI (23594) mpu_example: TEMP: 28.380117[0m
+[0;32mI (23624) mpu_example: GYRO => X: 65129, Y: 374, Z: 63298[0m
+[0;32mI (23624) mpu_example: ACCEL => X: 13840, Y: 1080, Z: 6176[0m
+[0;32mI (23624) mpu_example: TEMP: 28.428041[0m
+[0;32mI (23654) mpu_example: GYRO => X: 64942, Y: 65095, Z: 63456[0m
+[0;32mI (23654) mpu_example: ACCEL => X: 14040, Y: 1736, Z: 6456[0m
+[0;32mI (23654) mpu_example: TEMP: 28.092581[0m
+[0;32mI (23684) mpu_example: GYRO => X: 65249, Y: 860, Z: 63054[0m
+[0;32mI (23684) mpu_example: ACCEL => X: 13904, Y: 1496, Z: 6752[0m
+[0;32mI (23684) mpu_example: TEMP: 28.428041[0m
+[0;32mI (23714) mpu_example: GYRO => X: 65313, Y: 221, Z: 63453[0m
+[0;32mI (23714) mpu_example: ACCEL => X: 13296, Y: 1504, Z: 6424[0m
+[0;32mI (23714) mpu_example: TEMP: 28.236349[0m
+[0;32mI (23744) mpu_example: GYRO => X: 65490, Y: 272, Z: 64764[0m
+[0;32mI (23744) mpu_example: ACCEL => X: 13608, Y: 1568, Z: 6880[0m
+[0;32mI (23744) mpu_example: TEMP: 28.475964[0m
+[0;32mI (23774) mpu_example: GYRO => X: 65182, Y: 65148, Z: 64712[0m
+[0;32mI (23774) mpu_example: ACCEL => X: 13816, Y: 1600, Z: 7080[0m
+[0;32mI (23774) mpu_example: TEMP: 28.236349[0m
+[0;32mI (23804) mpu_example: GYRO => X: 65381, Y: 65287, Z: 64851[0m
+[0;32mI (23804) mpu_example: ACCEL => X: 13560, Y: 1672, Z: 6552[0m
+[0;32mI (23804) mpu_example: TEMP: 28.428041[0m
+[0;32mI (23834) mpu_example: GYRO => X: 56, Y: 444, Z: 65322[0m
+[0;32mI (23834) mpu_example: ACCEL => X: 14328, Y: 1712, Z: 6824[0m
+[0;32mI (23834) mpu_example: TEMP: 28.380117[0m
+[0;32mI (23864) mpu_example: GYRO => X: 65347, Y: 342, Z: 65496[0m
+[0;32mI (23864) mpu_example: ACCEL => X: 13928, Y: 2000, Z: 6760[0m
+[0;32mI (23864) mpu_example: TEMP: 28.428041[0m
+[0;32mI (23894) mpu_example: GYRO => X: 65327, Y: 7, Z: 64981[0m
+[0;32mI (23894) mpu_example: ACCEL => X: 12808, Y: 1560, Z: 6872[0m
+[0;32mI (23894) mpu_example: TEMP: 28.140503[0m
+[0;32mI (23924) mpu_example: GYRO => X: 154, Y: 535, Z: 4[0m
+[0;32mI (23924) mpu_example: ACCEL => X: 13392, Y: 1496, Z: 6448[0m
+[0;32mI (23924) mpu_example: TEMP: 28.380117[0m
+[0;32mI (23954) mpu_example: GYRO => X: 65472, Y: 64999, Z: 65139[0m
+[0;32mI (23954) mpu_example: ACCEL => X: 14144, Y: 1880, Z: 6912[0m
+[0;32mI (23954) mpu_example: TEMP: 28.284273[0m
+[0;32mI (23984) mpu_example: GYRO => X: 65351, Y: 65462, Z: 65345[0m
+[0;32mI (23984) mpu_example: ACCEL => X: 13136, Y: 1968, Z: 7392[0m
+[0;32mI (23984) mpu_example: TEMP: 28.092581[0m
+[0;32mI (24014) mpu_example: GYRO => X: 65448, Y: 193, Z: 65314[0m
+[0;32mI (24014) mpu_example: ACCEL => X: 13312, Y: 2024, Z: 6424[0m
+[0;32mI (24014) mpu_example: TEMP: 28.571810[0m
+[0;32mI (24044) mpu_example: GYRO => X: 65210, Y: 64659, Z: 64613[0m
+[0;32mI (24044) mpu_example: ACCEL => X: 13480, Y: 1984, Z: 6832[0m
+[0;32mI (24044) mpu_example: TEMP: 28.428041[0m
+[0;32mI (24074) mpu_example: GYRO => X: 79, Y: 337, Z: 11[0m
+[0;32mI (24074) mpu_example: ACCEL => X: 13368, Y: 2024, Z: 6736[0m
+[0;32mI (24074) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24104) mpu_example: GYRO => X: 65248, Y: 64987, Z: 64973[0m
+[0;32mI (24104) mpu_example: ACCEL => X: 13968, Y: 1976, Z: 6576[0m
+[0;32mI (24104) mpu_example: TEMP: 28.092581[0m
+[0;32mI (24134) mpu_example: GYRO => X: 30, Y: 331, Z: 240[0m
+[0;32mI (24134) mpu_example: ACCEL => X: 13736, Y: 1720, Z: 6720[0m
+[0;32mI (24134) mpu_example: TEMP: 28.475964[0m
+[0;32mI (24164) mpu_example: GYRO => X: 37, Y: 284, Z: 65460[0m
+[0;32mI (24164) mpu_example: ACCEL => X: 13736, Y: 2256, Z: 6824[0m
+[0;32mI (24164) mpu_example: TEMP: 28.428041[0m
+[0;32mI (24194) mpu_example: GYRO => X: 65222, Y: 64914, Z: 65062[0m
+[0;32mI (24194) mpu_example: ACCEL => X: 13760, Y: 1912, Z: 6432[0m
+[0;32mI (24194) mpu_example: TEMP: 28.284273[0m
+[0;32mI (24224) mpu_example: GYRO => X: 65078, Y: 65510, Z: 65424[0m
+[0;32mI (24224) mpu_example: ACCEL => X: 13568, Y: 1744, Z: 6408[0m
+[0;32mI (24224) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24254) mpu_example: GYRO => X: 202, Y: 423, Z: 65434[0m
+[0;32mI (24254) mpu_example: ACCEL => X: 13376, Y: 1744, Z: 6488[0m
+[0;32mI (24254) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24284) mpu_example: GYRO => X: 65396, Y: 385, Z: 65402[0m
+[0;32mI (24284) mpu_example: ACCEL => X: 13616, Y: 1848, Z: 6752[0m
+[0;32mI (24284) mpu_example: TEMP: 28.428041[0m
+[0;32mI (24314) mpu_example: GYRO => X: 65475, Y: 65382, Z: 64968[0m
+[0;32mI (24314) mpu_example: ACCEL => X: 13496, Y: 1464, Z: 6528[0m
+[0;32mI (24314) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24344) mpu_example: GYRO => X: 116, Y: 130, Z: 65246[0m
+[0;32mI (24344) mpu_example: ACCEL => X: 13688, Y: 1936, Z: 6952[0m
+[0;32mI (24344) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24374) mpu_example: GYRO => X: 65504, Y: 360, Z: 33[0m
+[0;32mI (24374) mpu_example: ACCEL => X: 13568, Y: 1552, Z: 6968[0m
+[0;32mI (24374) mpu_example: TEMP: 28.428041[0m
+[0;32mI (24404) mpu_example: GYRO => X: 65438, Y: 65275, Z: 65444[0m
+[0;32mI (24404) mpu_example: ACCEL => X: 13752, Y: 1712, Z: 6888[0m
+[0;32mI (24404) mpu_example: TEMP: 28.236349[0m
+[0;32mI (24434) mpu_example: GYRO => X: 65394, Y: 65262, Z: 65486[0m
+[0;32mI (24434) mpu_example: ACCEL => X: 13768, Y: 1552, Z: 6888[0m
+[0;32mI (24434) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24464) mpu_example: GYRO => X: 65361, Y: 65227, Z: 65330[0m
+[0;32mI (24464) mpu_example: ACCEL => X: 14000, Y: 1984, Z: 6592[0m
+[0;32mI (24464) mpu_example: TEMP: 28.475964[0m
+[0;32mI (24494) mpu_example: GYRO => X: 65489, Y: 326, Z: 425[0m
+[0;32mI (24494) mpu_example: ACCEL => X: 13976, Y: 1736, Z: 6480[0m
+[0;32mI (24494) mpu_example: TEMP: 28.475964[0m
+[0;32mI (24524) mpu_example: GYRO => X: 65507, Y: 3, Z: 40[0m
+[0;32mI (24524) mpu_example: ACCEL => X: 13504, Y: 1760, Z: 6784[0m
+[0;32mI (24524) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24554) mpu_example: GYRO => X: 31, Y: 65272, Z: 65407[0m
+[0;32mI (24554) mpu_example: ACCEL => X: 13384, Y: 1728, Z: 6816[0m
+[0;32mI (24554) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24584) mpu_example: GYRO => X: 65457, Y: 65267, Z: 65327[0m
+[0;32mI (24584) mpu_example: ACCEL => X: 13496, Y: 1808, Z: 6752[0m
+[0;32mI (24584) mpu_example: TEMP: 28.475964[0m
+[0;32mI (24614) mpu_example: GYRO => X: 65404, Y: 29, Z: 65496[0m
+[0;32mI (24614) mpu_example: ACCEL => X: 13600, Y: 1616, Z: 6592[0m
+[0;32mI (24614) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24644) mpu_example: GYRO => X: 0, Y: 65373, Z: 44[0m
+[0;32mI (24644) mpu_example: ACCEL => X: 13136, Y: 1768, Z: 6848[0m
+[0;32mI (24644) mpu_example: TEMP: 28.428041[0m
+[0;32mI (24674) mpu_example: GYRO => X: 65434, Y: 31, Z: 65513[0m
+[0;32mI (24674) mpu_example: ACCEL => X: 13856, Y: 1720, Z: 6864[0m
+[0;32mI (24674) mpu_example: TEMP: 28.092581[0m
+[0;32mI (24704) mpu_example: GYRO => X: 65497, Y: 39, Z: 65487[0m
+[0;32mI (24704) mpu_example: ACCEL => X: 13760, Y: 2016, Z: 6696[0m
+[0;32mI (24704) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24734) mpu_example: GYRO => X: 25, Y: 558, Z: 211[0m
+[0;32mI (24734) mpu_example: ACCEL => X: 13752, Y: 1696, Z: 6808[0m
+[0;32mI (24734) mpu_example: TEMP: 28.428041[0m
+[0;32mI (24764) mpu_example: GYRO => X: 65525, Y: 103, Z: 65441[0m
+[0;32mI (24764) mpu_example: ACCEL => X: 13408, Y: 1776, Z: 6400[0m
+[0;32mI (24764) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24794) mpu_example: GYRO => X: 65444, Y: 65500, Z: 65399[0m
+[0;32mI (24794) mpu_example: ACCEL => X: 13504, Y: 1760, Z: 6472[0m
+[0;32mI (24794) mpu_example: TEMP: 28.428041[0m
+[0;32mI (24824) mpu_example: GYRO => X: 65521, Y: 93, Z: 65379[0m
+[0;32mI (24824) mpu_example: ACCEL => X: 13576, Y: 1736, Z: 6824[0m
+[0;32mI (24824) mpu_example: TEMP: 28.380117[0m
+[0;32mI (24854) mpu_example: GYRO => X: 6, Y: 689, Z: 278[0m
+[0;32mI (24854) mpu_example: ACCEL => X: 13872, Y: 1656, Z: 6824[0m
+[0;32mI (24854) mpu_example: TEMP: 28.428041[0m
+[0;32mI (24884) mpu_example: GYRO => X: 39, Y: 529, Z: 65466[0m
+[0;32mI (24884) mpu_example: ACCEL => X: 13184, Y: 1608, Z: 7064[0m
+[0;32mI (24884) mpu_example: TEMP: 28.284273[0m
+[0;32mI (24914) mpu_example: GYRO => X: 47, Y: 507, Z: 65309[0m
+[0;32mI (24914) mpu_example: ACCEL => X: 13128, Y: 1504, Z: 6800[0m
+[0;32mI (24914) mpu_example: TEMP: 28.284273[0m
+[0;32mI (24944) mpu_example: GYRO => X: 114, Y: 65469, Z: 65294[0m
+[0;32mI (24944) mpu_example: ACCEL => X: 13520, Y: 1688, Z: 7152[0m
+[0;32mI (24944) mpu_example: TEMP: 28.571810[0m
+[0;32mI (24974) mpu_example: GYRO => X: 65361, Y: 65315, Z: 65315[0m
+[0;32mI (24974) mpu_example: ACCEL => X: 13096, Y: 1768, Z: 7064[0m
+[0;32mI (24974) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25004) mpu_example: GYRO => X: 65516, Y: 124, Z: 112[0m
+[0;32mI (25004) mpu_example: ACCEL => X: 13496, Y: 1736, Z: 7040[0m
+[0;32mI (25004) mpu_example: TEMP: 28.092581[0m
+[0;32mI (25034) mpu_example: GYRO => X: 45, Y: 592, Z: 275[0m
+[0;32mI (25034) mpu_example: ACCEL => X: 13984, Y: 1744, Z: 6520[0m
+[0;32mI (25034) mpu_example: TEMP: 28.140503[0m
+[0;32mI (25064) mpu_example: GYRO => X: 65526, Y: 187, Z: 65282[0m
+[0;32mI (25064) mpu_example: ACCEL => X: 13512, Y: 1592, Z: 6904[0m
+[0;32mI (25064) mpu_example: TEMP: 28.284273[0m
+[0;32mI (25094) mpu_example: GYRO => X: 181, Y: 678, Z: 372[0m
+[0;32mI (25094) mpu_example: ACCEL => X: 13640, Y: 2040, Z: 7088[0m
+[0;32mI (25094) mpu_example: TEMP: 28.284273[0m
+[0;32mI (25124) mpu_example: GYRO => X: 65351, Y: 598, Z: 241[0m
+[0;32mI (25124) mpu_example: ACCEL => X: 13888, Y: 1768, Z: 6632[0m
+[0;32mI (25124) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25154) mpu_example: GYRO => X: 65419, Y: 229, Z: 65448[0m
+[0;32mI (25154) mpu_example: ACCEL => X: 13656, Y: 1336, Z: 6856[0m
+[0;32mI (25154) mpu_example: TEMP: 28.284273[0m
+[0;32mI (25184) mpu_example: GYRO => X: 65372, Y: 65144, Z: 64959[0m
+[0;32mI (25184) mpu_example: ACCEL => X: 13192, Y: 1608, Z: 6968[0m
+[0;32mI (25184) mpu_example: TEMP: 28.380117[0m
+[0;32mI (25214) mpu_example: GYRO => X: 92, Y: 765, Z: 65393[0m
+[0;32mI (25214) mpu_example: ACCEL => X: 13312, Y: 1672, Z: 7064[0m
+[0;32mI (25214) mpu_example: TEMP: 28.475964[0m
+[0;32mI (25244) mpu_example: GYRO => X: 65469, Y: 347, Z: 151[0m
+[0;32mI (25244) mpu_example: ACCEL => X: 13840, Y: 1688, Z: 7032[0m
+[0;32mI (25244) mpu_example: TEMP: 28.236349[0m
+[0;32mI (25274) mpu_example: GYRO => X: 65366, Y: 64980, Z: 65322[0m
+[0;32mI (25274) mpu_example: ACCEL => X: 13632, Y: 1712, Z: 6872[0m
+[0;32mI (25274) mpu_example: TEMP: 28.475964[0m
+[0;32mI (25304) mpu_example: GYRO => X: 65352, Y: 65185, Z: 65292[0m
+[0;32mI (25304) mpu_example: ACCEL => X: 13080, Y: 1576, Z: 7040[0m
+[0;32mI (25304) mpu_example: TEMP: 28.571810[0m
+[0;32mI (25334) mpu_example: GYRO => X: 65443, Y: 392, Z: 65419[0m
+[0;32mI (25334) mpu_example: ACCEL => X: 13064, Y: 1776, Z: 7096[0m
+[0;32mI (25334) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25364) mpu_example: GYRO => X: 27, Y: 638, Z: 327[0m
+[0;32mI (25364) mpu_example: ACCEL => X: 13712, Y: 1632, Z: 6656[0m
+[0;32mI (25364) mpu_example: TEMP: 28.284273[0m
+[0;32mI (25394) mpu_example: GYRO => X: 65426, Y: 81, Z: 65453[0m
+[0;32mI (25394) mpu_example: ACCEL => X: 13752, Y: 1320, Z: 6800[0m
+[0;32mI (25394) mpu_example: TEMP: 28.284273[0m
+[0;32mI (25424) mpu_example: GYRO => X: 3, Y: 65286, Z: 65217[0m
+[0;32mI (25424) mpu_example: ACCEL => X: 13312, Y: 1784, Z: 7248[0m
+[0;32mI (25424) mpu_example: TEMP: 28.380117[0m
+[0;32mI (25454) mpu_example: GYRO => X: 65460, Y: 190, Z: 65508[0m
+[0;32mI (25454) mpu_example: ACCEL => X: 13360, Y: 1352, Z: 7048[0m
+[0;32mI (25454) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25484) mpu_example: GYRO => X: 54, Y: 65481, Z: 65281[0m
+[0;32mI (25484) mpu_example: ACCEL => X: 13600, Y: 1344, Z: 6832[0m
+[0;32mI (25484) mpu_example: TEMP: 28.380117[0m
+[0;32mI (25514) mpu_example: GYRO => X: 55, Y: 143, Z: 65350[0m
+[0;32mI (25514) mpu_example: ACCEL => X: 13576, Y: 1968, Z: 6896[0m
+[0;32mI (25514) mpu_example: TEMP: 28.284273[0m
+[0;32mI (25544) mpu_example: GYRO => X: 91, Y: 356, Z: 156[0m
+[0;32mI (25544) mpu_example: ACCEL => X: 13112, Y: 1728, Z: 7240[0m
+[0;32mI (25544) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25574) mpu_example: GYRO => X: 65398, Y: 372, Z: 10[0m
+[0;32mI (25574) mpu_example: ACCEL => X: 13160, Y: 1952, Z: 7152[0m
+[0;32mI (25574) mpu_example: TEMP: 28.236349[0m
+[0;32mI (25604) mpu_example: GYRO => X: 65321, Y: 37, Z: 65237[0m
+[0;32mI (25604) mpu_example: ACCEL => X: 13328, Y: 1704, Z: 7072[0m
+[0;32mI (25604) mpu_example: TEMP: 28.284273[0m
+[0;32mI (25634) mpu_example: GYRO => X: 65476, Y: 65523, Z: 65332[0m
+[0;32mI (25634) mpu_example: ACCEL => X: 13400, Y: 1384, Z: 6656[0m
+[0;32mI (25634) mpu_example: TEMP: 28.284273[0m
+[0;32mI (25664) mpu_example: GYRO => X: 207, Y: 328, Z: 65336[0m
+[0;32mI (25664) mpu_example: ACCEL => X: 13504, Y: 1608, Z: 6752[0m
+[0;32mI (25664) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25694) mpu_example: GYRO => X: 259, Y: 439, Z: 65139[0m
+[0;32mI (25694) mpu_example: ACCEL => X: 13112, Y: 2000, Z: 7400[0m
+[0;32mI (25694) mpu_example: TEMP: 28.140503[0m
+[0;32mI (25724) mpu_example: GYRO => X: 46, Y: 84, Z: 65168[0m
+[0;32mI (25724) mpu_example: ACCEL => X: 13344, Y: 1816, Z: 6952[0m
+[0;32mI (25724) mpu_example: TEMP: 28.284273[0m
+[0;32mI (25754) mpu_example: GYRO => X: 155, Y: 268, Z: 41[0m
+[0;32mI (25754) mpu_example: ACCEL => X: 13704, Y: 1592, Z: 7336[0m
+[0;32mI (25754) mpu_example: TEMP: 28.380117[0m
+[0;32mI (25784) mpu_example: GYRO => X: 68, Y: 91, Z: 65223[0m
+[0;32mI (25784) mpu_example: ACCEL => X: 13416, Y: 1696, Z: 6944[0m
+[0;32mI (25784) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25814) mpu_example: GYRO => X: 70, Y: 194, Z: 65390[0m
+[0;32mI (25814) mpu_example: ACCEL => X: 13472, Y: 1792, Z: 7496[0m
+[0;32mI (25814) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25844) mpu_example: GYRO => X: 65150, Y: 65462, Z: 316[0m
+[0;32mI (25844) mpu_example: ACCEL => X: 13232, Y: 1840, Z: 7008[0m
+[0;32mI (25844) mpu_example: TEMP: 28.571810[0m
+[0;32mI (25874) mpu_example: GYRO => X: 65214, Y: 253, Z: 65527[0m
+[0;32mI (25874) mpu_example: ACCEL => X: 13112, Y: 1696, Z: 6928[0m
+[0;32mI (25874) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25904) mpu_example: GYRO => X: 65272, Y: 65377, Z: 65378[0m
+[0;32mI (25904) mpu_example: ACCEL => X: 12552, Y: 1768, Z: 6584[0m
+[0;32mI (25904) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25934) mpu_example: GYRO => X: 65533, Y: 65111, Z: 65352[0m
+[0;32mI (25934) mpu_example: ACCEL => X: 13176, Y: 1488, Z: 6488[0m
+[0;32mI (25934) mpu_example: TEMP: 28.428041[0m
+[0;32mI (25964) mpu_example: GYRO => X: 65510, Y: 65505, Z: 65261[0m
+[0;32mI (25964) mpu_example: ACCEL => X: 13904, Y: 1560, Z: 6760[0m
+[0;32mI (25964) mpu_example: TEMP: 28.380117[0m
+[0;32mI (25994) mpu_example: GYRO => X: 19, Y: 65426, Z: 65427[0m
+[0;32mI (25994) mpu_example: ACCEL => X: 13096, Y: 1920, Z: 6688[0m
+[0;32mI (25994) mpu_example: TEMP: 28.380117[0m
+[0;32mI (26024) mpu_example: GYRO => X: 65531, Y: 327, Z: 65425[0m
+[0;32mI (26024) mpu_example: ACCEL => X: 13392, Y: 1984, Z: 7288[0m
+[0;32mI (26024) mpu_example: TEMP: 28.140503[0m
+[0;32mI (26054) mpu_example: GYRO => X: 65415, Y: 65349, Z: 65051[0m
+[0;32mI (26054) mpu_example: ACCEL => X: 13408, Y: 1728, Z: 7192[0m
+[0;32mI (26054) mpu_example: TEMP: 28.475964[0m
+[0;32mI (26084) mpu_example: GYRO => X: 65518, Y: 138, Z: 65340[0m
+[0;32mI (26084) mpu_example: ACCEL => X: 13544, Y: 1848, Z: 7288[0m
+[0;32mI (26084) mpu_example: TEMP: 28.140503[0m
+[0;32mI (26114) mpu_example: GYRO => X: 238, Y: 178, Z: 65290[0m
+[0;32mI (26114) mpu_example: ACCEL => X: 13592, Y: 1704, Z: 7248[0m
+[0;32mI (26114) mpu_example: TEMP: 28.236349[0m
+[0;32mI (26144) mpu_example: GYRO => X: 359, Y: 709, Z: 186[0m
+[0;32mI (26144) mpu_example: ACCEL => X: 13408, Y: 1976, Z: 7288[0m
+[0;32mI (26144) mpu_example: TEMP: 28.571810[0m
+[0;32mI (26174) mpu_example: GYRO => X: 309, Y: 303, Z: 41[0m
+[0;32mI (26174) mpu_example: ACCEL => X: 13088, Y: 1560, Z: 7056[0m
+[0;32mI (26174) mpu_example: TEMP: 28.428041[0m
+[0;32mI (26204) mpu_example: GYRO => X: 50, Y: 239, Z: 227[0m
+[0;32mI (26204) mpu_example: ACCEL => X: 13072, Y: 1816, Z: 7632[0m
+[0;32mI (26204) mpu_example: TEMP: 28.236349[0m
+[0;32mI (26234) mpu_example: GYRO => X: 65508, Y: 713, Z: 103[0m
+[0;32mI (26234) mpu_example: ACCEL => X: 13664, Y: 1696, Z: 6968[0m
+[0;32mI (26234) mpu_example: TEMP: 28.236349[0m
+[0;32mI (26264) mpu_example: GYRO => X: 114, Y: 668, Z: 101[0m
+[0;32mI (26264) mpu_example: ACCEL => X: 13552, Y: 1504, Z: 6912[0m
+[0;32mI (26264) mpu_example: TEMP: 28.092581[0m
+[0;32mI (26294) mpu_example: GYRO => X: 146, Y: 272, Z: 65331[0m
+[0;32mI (26294) mpu_example: ACCEL => X: 13136, Y: 1560, Z: 7744[0m
+[0;32mI (26294) mpu_example: TEMP: 28.236349[0m
+[0;32mI (26324) mpu_example: GYRO => X: 65476, Y: 645, Z: 120[0m
+[0;32mI (26324) mpu_example: ACCEL => X: 13360, Y: 2032, Z: 7784[0m
+[0;32mI (26324) mpu_example: TEMP: 28.044659[0m
+[0;32mI (26354) mpu_example: GYRO => X: 65360, Y: 1309, Z: 339[0m
+[0;32mI (26354) mpu_example: ACCEL => X: 13656, Y: 1544, Z: 7176[0m
+[0;32mI (26354) mpu_example: TEMP: 28.428041[0m
+[0;32mI (26384) mpu_example: GYRO => X: 65335, Y: 2325, Z: 1233[0m
+[0;32mI (26384) mpu_example: ACCEL => X: 13816, Y: 1416, Z: 7016[0m
+[0;32mI (26384) mpu_example: TEMP: 28.284273[0m
+[0;32mI (26414) mpu_example: GYRO => X: 65088, Y: 4900, Z: 1648[0m
+[0;32mI (26414) mpu_example: ACCEL => X: 14736, Y: 1472, Z: 7416[0m
+[0;32mI (26414) mpu_example: TEMP: 28.475964[0m
+[0;32mI (26444) mpu_example: GYRO => X: 488, Y: 4225, Z: 1192[0m
+[0;32mI (26444) mpu_example: ACCEL => X: 10888, Y: 1232, Z: 6264[0m
+[0;32mI (26444) mpu_example: TEMP: 28.428041[0m
+[0;32mI (26474) mpu_example: GYRO => X: 406, Y: 2028, Z: 305[0m
+[0;32mI (26474) mpu_example: ACCEL => X: 13152, Y: 1912, Z: 8568[0m
+[0;32mI (26474) mpu_example: TEMP: 28.236349[0m
+[0;32mI (26504) mpu_example: GYRO => X: 65081, Y: 3807, Z: 829[0m
+[0;32mI (26504) mpu_example: ACCEL => X: 13520, Y: 1776, Z: 8392[0m
+[0;32mI (26504) mpu_example: TEMP: 28.428041[0m
+[0;32mI (26534) mpu_example: GYRO => X: 65399, Y: 2437, Z: 696[0m
+[0;32mI (26534) mpu_example: ACCEL => X: 11392, Y: 1696, Z: 8848[0m
+[0;32mI (26534) mpu_example: TEMP: 28.428041[0m
+[0;32mI (26564) mpu_example: GYRO => X: 64779, Y: 1689, Z: 308[0m
+[0;32mI (26564) mpu_example: ACCEL => X: 12440, Y: 1488, Z: 8480[0m
+[0;32mI (26564) mpu_example: TEMP: 28.284273[0m
+[0;32mI (26594) mpu_example: GYRO => X: 64713, Y: 2087, Z: 280[0m
+[0;32mI (26594) mpu_example: ACCEL => X: 13048, Y: 1120, Z: 8000[0m
+[0;32mI (26594) mpu_example: TEMP: 28.380117[0m
+[0;32mI (26624) mpu_example: GYRO => X: 64632, Y: 5667, Z: 1045[0m
+[0;32mI (26624) mpu_example: ACCEL => X: 13976, Y: 1240, Z: 7688[0m
+[0;32mI (26624) mpu_example: TEMP: 28.092581[0m
+[0;32mI (26654) mpu_example: GYRO => X: 64471, Y: 10365, Z: 1795[0m
+[0;32mI (26654) mpu_example: ACCEL => X: 13912, Y: 584, Z: 8016[0m
+[0;32mI (26654) mpu_example: TEMP: 28.140503[0m
+[0;32mI (26684) mpu_example: GYRO => X: 64904, Y: 18793, Z: 5133[0m
+[0;32mI (26684) mpu_example: ACCEL => X: 14720, Y: 840, Z: 7576[0m
+[0;32mI (26684) mpu_example: TEMP: 28.284273[0m
+[0;32mI (26714) mpu_example: GYRO => X: 1657, Y: 25191, Z: 7277[0m
+[0;32mI (26714) mpu_example: ACCEL => X: 13296, Y: 65040, Z: 7424[0m
+[0;32mI (26714) mpu_example: TEMP: 28.380117[0m
+[0;32mI (26744) mpu_example: GYRO => X: 5889, Y: 31350, Z: 10997[0m
+[0;32mI (26744) mpu_example: ACCEL => X: 9016, Y: 64848, Z: 7736[0m
+[0;32mI (26744) mpu_example: TEMP: 28.092581[0m
+[0;32mI (26774) mpu_example: GYRO => X: 11886, Y: 28889, Z: 14002[0m
+[0;32mI (26774) mpu_example: ACCEL => X: 7240, Y: 2152, Z: 12016[0m
+[0;32mI (26774) mpu_example: TEMP: 28.380117[0m
+[0;32mI (26804) mpu_example: GYRO => X: 12068, Y: 25404, Z: 13681[0m
+[0;32mI (26804) mpu_example: ACCEL => X: 1880, Y: 1912, Z: 11984[0m
+[0;32mI (26804) mpu_example: TEMP: 28.236349[0m
+[0;32mI (26834) mpu_example: GYRO => X: 9551, Y: 16290, Z: 10983[0m
+[0;32mI (26834) mpu_example: ACCEL => X: 608, Y: 2296, Z: 11584[0m
+[0;32mI (26834) mpu_example: TEMP: 28.140503[0m
+[0;32mI (26864) mpu_example: GYRO => X: 7779, Y: 8617, Z: 27086[0m
+[0;32mI (26864) mpu_example: ACCEL => X: 224, Y: 9232, Z: 11688[0m
+[0;32mI (26864) mpu_example: TEMP: 28.428041[0m
+[0;32mI (26894) mpu_example: GYRO => X: 805, Y: 32767, Z: 32767[0m
+[0;32mI (26894) mpu_example: ACCEL => X: 7680, Y: 65200, Z: 8344[0m
+[0;32mI (26894) mpu_example: TEMP: 28.475964[0m
+[0;32mI (26924) mpu_example: GYRO => X: 32768, Y: 32767, Z: 35020[0m
+[0;32mI (26924) mpu_example: ACCEL => X: 3752, Y: 1032, Z: 61952[0m
+[0;32mI (26924) mpu_example: TEMP: 28.284273[0m
+[0;32mI (26954) mpu_example: GYRO => X: 2035, Y: 16020, Z: 3136[0m
+[0;32mI (26954) mpu_example: ACCEL => X: 60576, Y: 10984, Z: 18856[0m
+[0;32mI (26954) mpu_example: TEMP: 28.284273[0m
+[0;32mI (26984) mpu_example: GYRO => X: 58238, Y: 22599, Z: 54955[0m
+[0;32mI (26984) mpu_example: ACCEL => X: 60904, Y: 63592, Z: 16296[0m
+[0;32mI (26984) mpu_example: TEMP: 28.236349[0m
+[0;32mI (27014) mpu_example: GYRO => X: 64101, Y: 11497, Z: 64352[0m
+[0;32mI (27014) mpu_example: ACCEL => X: 60696, Y: 1320, Z: 15816[0m
+[0;32mI (27014) mpu_example: TEMP: 28.284273[0m
+[0;32mI (27044) mpu_example: GYRO => X: 62329, Y: 14795, Z: 9952[0m
+[0;32mI (27044) mpu_example: ACCEL => X: 54912, Y: 65464, Z: 10000[0m
+[0;32mI (27044) mpu_example: TEMP: 28.380117[0m
+[0;32mI (27074) mpu_example: GYRO => X: 59630, Y: 10541, Z: 5043[0m
+[0;32mI (27074) mpu_example: ACCEL => X: 54456, Y: 920, Z: 12904[0m
+[0;32mI (27074) mpu_example: TEMP: 28.092581[0m
+[0;32mI (27104) mpu_example: GYRO => X: 55871, Y: 8456, Z: 2646[0m
+[0;32mI (27104) mpu_example: ACCEL => X: 53240, Y: 64824, Z: 11832[0m
+[0;32mI (27104) mpu_example: TEMP: 28.428041[0m
+[0;32mI (27134) mpu_example: GYRO => X: 50223, Y: 4737, Z: 3114[0m
+[0;32mI (27134) mpu_example: ACCEL => X: 52864, Y: 63472, Z: 10256[0m
+[0;32mI (27134) mpu_example: TEMP: 27.900890[0m
+[0;32mI (27164) mpu_example: GYRO => X: 47534, Y: 5761, Z: 707[0m
+[0;32mI (27164) mpu_example: ACCEL => X: 56384, Y: 64432, Z: 9264[0m
+[0;32mI (27164) mpu_example: TEMP: 28.619732[0m
+[0;32mI (27194) mpu_example: GYRO => X: 55668, Y: 64967, Z: 64094[0m
+[0;32mI (27194) mpu_example: ACCEL => X: 55488, Y: 57904, Z: 11752[0m
+[0;32mI (27194) mpu_example: TEMP: 28.284273[0m
+[0;32mI (27224) mpu_example: GYRO => X: 56943, Y: 1648, Z: 2796[0m
+[0;32mI (27224) mpu_example: ACCEL => X: 56168, Y: 58832, Z: 7800[0m
+[0;32mI (27224) mpu_example: TEMP: 28.428041[0m
+[0;32mI (27254) mpu_example: GYRO => X: 60520, Y: 63896, Z: 18963[0m
+[0;32mI (27254) mpu_example: ACCEL => X: 53656, Y: 61600, Z: 7592[0m
+[0;32mI (27254) mpu_example: TEMP: 28.428041[0m
+[0;32mI (27284) mpu_example: GYRO => X: 59220, Y: 1399, Z: 13919[0m
+[0;32mI (27284) mpu_example: ACCEL => X: 55464, Y: 208, Z: 8560[0m
+[0;32mI (27284) mpu_example: TEMP: 28.619732[0m
+[0;32mI (27314) mpu_example: GYRO => X: 41251, Y: 28143, Z: 53213[0m
+[0;32mI (27314) mpu_example: ACCEL => X: 59712, Y: 5168, Z: 2568[0m
+[0;32mI (27314) mpu_example: TEMP: 28.475964[0m
+[0;32mI (27344) mpu_example: GYRO => X: 52065, Y: 32767, Z: 23744[0m
+[0;32mI (27344) mpu_example: ACCEL => X: 8440, Y: 8240, Z: 3528[0m
+[0;32mI (27344) mpu_example: TEMP: 28.619732[0m
+[0;32mI (27374) mpu_example: GYRO => X: 41445, Y: 32767, Z: 53334[0m
+[0;32mI (27374) mpu_example: ACCEL => X: 64464, Y: 6264, Z: 976[0m
+[0;32mI (27374) mpu_example: TEMP: 28.380117[0m
+[0;32mI (27404) mpu_example: GYRO => X: 33981, Y: 32767, Z: 2936[0m
+[0;32mI (27404) mpu_example: ACCEL => X: 58544, Y: 2552, Z: 64432[0m
+[0;32mI (27404) mpu_example: TEMP: 28.428041[0m
+[0;32mI (27434) mpu_example: GYRO => X: 1132, Y: 48619, Z: 20747[0m
+[0;32mI (27434) mpu_example: ACCEL => X: 32832, Y: 45056, Z: 64208[0m
+[0;32mI (27434) mpu_example: TEMP: 28.571810[0m
+[0;32mI (27464) mpu_example: GYRO => X: 51870, Y: 8777, Z: 32768[0m
+[0;32mI (27464) mpu_example: ACCEL => X: 59000, Y: 3240, Z: 2544[0m
+[0;32mI (27464) mpu_example: TEMP: 28.428041[0m
+[0;32mI (27494) mpu_example: GYRO => X: 54821, Y: 59581, Z: 13310[0m
+[0;32mI (27494) mpu_example: ACCEL => X: 1184, Y: 63512, Z: 61624[0m
+[0;32mI (27494) mpu_example: TEMP: 28.475964[0m
+[0;32mI (27524) mpu_example: GYRO => X: 57336, Y: 498, Z: 44098[0m
+[0;32mI (27524) mpu_example: ACCEL => X: 57136, Y: 58856, Z: 1696[0m
+[0;32mI (27524) mpu_example: TEMP: 28.428041[0m
+[0;32mI (27554) mpu_example: GYRO => X: 62124, Y: 62665, Z: 7102[0m
+[0;32mI (27554) mpu_example: ACCEL => X: 47152, Y: 54592, Z: 64704[0m
+[0;32mI (27554) mpu_example: TEMP: 28.284273[0m
+[0;32mI (27584) mpu_example: GYRO => X: 1521, Y: 64995, Z: 5182[0m
+[0;32mI (27584) mpu_example: ACCEL => X: 51440, Y: 59968, Z: 112[0m
+[0;32mI (27584) mpu_example: TEMP: 28.380117[0m
+[0;32mI (27614) mpu_example: GYRO => X: 1836, Y: 29, Z: 7261[0m
+[0;32mI (27614) mpu_example: ACCEL => X: 48896, Y: 62120, Z: 1136[0m
+[0;32mI (27614) mpu_example: TEMP: 28.236349[0m
+[0;32mI (27644) mpu_example: GYRO => X: 64273, Y: 65310, Z: 61023[0m
+[0;32mI (27644) mpu_example: ACCEL => X: 49440, Y: 61784, Z: 712[0m
+[0;32mI (27644) mpu_example: TEMP: 28.475964[0m
+[0;32mI (27674) mpu_example: GYRO => X: 2436, Y: 64968, Z: 5989[0m
+[0;32mI (27674) mpu_example: ACCEL => X: 51224, Y: 60280, Z: 65440[0m
+[0;32mI (27674) mpu_example: TEMP: 29.242729[0m
+[0;32mI (27704) mpu_example: GYRO => X: 2238, Y: 64572, Z: 8537[0m
+[0;32mI (27704) mpu_example: ACCEL => X: 49104, Y: 62528, Z: 1552[0m
+[0;32mI (27704) mpu_example: TEMP: 28.571810[0m
+[0;32mI (27734) mpu_example: GYRO => X: 64786, Y: 831, Z: 62086[0m
+[0;32mI (27734) mpu_example: ACCEL => X: 48568, Y: 62928, Z: 1072[0m
+[0;32mI (27734) mpu_example: TEMP: 28.475964[0m
+[0;32mI (27764) mpu_example: GYRO => X: 63241, Y: 2280, Z: 56994[0m
+[0;32mI (27764) mpu_example: ACCEL => X: 49904, Y: 61720, Z: 792[0m
+[0;32mI (27764) mpu_example: TEMP: 28.571810[0m
+[0;32mI (27794) mpu_example: GYRO => X: 64389, Y: 1072, Z: 61518[0m
+[0;32mI (27794) mpu_example: ACCEL => X: 50240, Y: 61064, Z: 16[0m
+[0;32mI (27794) mpu_example: TEMP: 28.428041[0m
+[0;32mI (27824) mpu_example: GYRO => X: 968, Y: 64808, Z: 3870[0m
+[0;32mI (27824) mpu_example: ACCEL => X: 50024, Y: 60960, Z: 368[0m
+[0;32mI (27824) mpu_example: TEMP: 28.475964[0m
+[0;32mI (27854) mpu_example: GYRO => X: 1229, Y: 64316, Z: 4583[0m
+[0;32mI (27854) mpu_example: ACCEL => X: 49208, Y: 62016, Z: 608[0m
+[0;32mI (27854) mpu_example: TEMP: 28.284273[0m
+[0;32mI (27884) mpu_example: GYRO => X: 35, Y: 50, Z: 183[0m
+[0;32mI (27884) mpu_example: ACCEL => X: 49296, Y: 62144, Z: 824[0m
+[0;32mI (27884) mpu_example: TEMP: 28.428041[0m
+[0;32mI (27914) mpu_example: GYRO => X: 64592, Y: 659, Z: 62623[0m
+[0;32mI (27914) mpu_example: ACCEL => X: 49560, Y: 61992, Z: 560[0m
+[0;32mI (27914) mpu_example: TEMP: 28.475964[0m
+[0;32mI (27944) mpu_example: GYRO => X: 64707, Y: 706, Z: 63334[0m
+[0;32mI (27944) mpu_example: ACCEL => X: 49744, Y: 61456, Z: 368[0m
+[0;32mI (27944) mpu_example: TEMP: 28.619732[0m
+[0;32mI (27974) mpu_example: GYRO => X: 150, Y: 166, Z: 8[0m
+[0;32mI (27974) mpu_example: ACCEL => X: 49816, Y: 61352, Z: 65096[0m
+[0;32mI (27974) mpu_example: TEMP: 28.428041[0m
+[0;32mI (28004) mpu_example: GYRO => X: 442, Y: 65379, Z: 1644[0m
+[0;32mI (28004) mpu_example: ACCEL => X: 49928, Y: 61184, Z: 784[0m
+[0;32mI (28004) mpu_example: TEMP: 28.284273[0m
+[0;32mI (28034) mpu_example: GYRO => X: 65520, Y: 232, Z: 233[0m
+[0;32mI (28034) mpu_example: ACCEL => X: 49408, Y: 61792, Z: 888[0m
+[0;32mI (28034) mpu_example: TEMP: 28.428041[0m
+[0;32mI (28064) mpu_example: GYRO => X: 65239, Y: 4, Z: 64398[0m
+[0;32mI (28064) mpu_example: ACCEL => X: 49816, Y: 61640, Z: 672[0m
+[0;32mI (28064) mpu_example: TEMP: 28.380117[0m
+[0;32mI (28094) mpu_example: GYRO => X: 65413, Y: 100, Z: 65201[0m
+[0;32mI (28094) mpu_example: ACCEL => X: 49408, Y: 61520, Z: 768[0m
+[0;32mI (28094) mpu_example: TEMP: 28.284273[0m
+[0;32mI (28124) mpu_example: GYRO => X: 235, Y: 65364, Z: 513[0m
+[0;32mI (28124) mpu_example: ACCEL => X: 49664, Y: 61592, Z: 632[0m
+[0;32mI (28124) mpu_example: TEMP: 28.428041[0m
+[0;32mI (28154) mpu_example: GYRO => X: 250, Y: 65403, Z: 755[0m
+[0;32mI (28154) mpu_example: ACCEL => X: 50160, Y: 61224, Z: 552[0m
+[0;32mI (28154) mpu_example: TEMP: 28.428041[0m
+[0;32mI (28184) mpu_example: GYRO => X: 35, Y: 56, Z: 95[0m
+[0;32mI (28184) mpu_example: ACCEL => X: 49520, Y: 61840, Z: 888[0m
+[0;32mI (28184) mpu_example: TEMP: 28.475964[0m
+[0;32mI (28214) mpu_example: GYRO => X: 65117, Y: 267, Z: 63984[0m
+[0;32mI (28214) mpu_example: ACCEL => X: 49744, Y: 61472, Z: 280[0m
+[0;32mI (28214) mpu_example: TEMP: 28.428041[0m
+[0;32mI (28244) mpu_example: GYRO => X: 169, Y: 65424, Z: 681[0m
+[0;32mI (28244) mpu_example: ACCEL => X: 50136, Y: 61480, Z: 704[0m
+[0;32mI (28244) mpu_example: TEMP: 29.194807[0m
+[0;32mI (28274) mpu_example: GYRO => X: 254, Y: 65409, Z: 840[0m
+[0;32mI (28274) mpu_example: ACCEL => X: 49512, Y: 61984, Z: 688[0m
+[0;32mI (28274) mpu_example: TEMP: 28.571810[0m
+[0;32mI (28304) mpu_example: GYRO => X: 51319, Y: 60113, Z: 7838[0m
+[0;32mI (28304) mpu_example: ACCEL => X: 32792, Y: 13000, Z: 57352[0m
+[0;32mI (28304) mpu_example: TEMP: 28.475964[0m
+[0;32mI (28334) mpu_example: GYRO => X: 57395, Y: 64069, Z: 58969[0m
+[0;32mI (28334) mpu_example: ACCEL => X: 60336, Y: 59536, Z: 2016[0m
+[0;32mI (28334) mpu_example: TEMP: 28.380117[0m
+[0;32mI (28364) mpu_example: GYRO => X: 62592, Y: 64849, Z: 1184[0m
+[0;32mI (28364) mpu_example: ACCEL => X: 46488, Y: 62192, Z: 64416[0m
+[0;32mI (28364) mpu_example: TEMP: 28.428041[0m
+[0;32mI (28394) mpu_example: GYRO => X: 406, Y: 64689, Z: 4892[0m
+[0;32mI (28394) mpu_example: ACCEL => X: 48056, Y: 63632, Z: 2704[0m
+[0;32mI (28394) mpu_example: TEMP: 28.571810[0m
+[0;32mI (28424) mpu_example: GYRO => X: 897, Y: 64589, Z: 2718[0m
+[0;32mI (28424) mpu_example: ACCEL => X: 49104, Y: 61496, Z: 1032[0m
+[0;32mI (28424) mpu_example: TEMP: 28.475964[0m
+[0;32mI (28454) mpu_example: GYRO => X: 90, Y: 132, Z: 156[0m
+[0;32mI (28454) mpu_example: ACCEL => X: 49320, Y: 62304, Z: 880[0m
+[0;32mI (28454) mpu_example: TEMP: 28.284273[0m
+[0;32mI (28484) mpu_example: GYRO => X: 64958, Y: 400, Z: 64757[0m
+[0;32mI (28484) mpu_example: ACCEL => X: 49568, Y: 62072, Z: 640[0m
+[0;32mI (28484) mpu_example: TEMP: 28.475964[0m
+[0;32mI (28514) mpu_example: GYRO => X: 65345, Y: 440, Z: 558[0m
+[0;32mI (28514) mpu_example: ACCEL => X: 49752, Y: 61992, Z: 632[0m
+[0;32mI (28514) mpu_example: TEMP: 28.428041[0m
+[0;32mI (28544) mpu_example: GYRO => X: 65452, Y: 65494, Z: 324[0m
+[0;32mI (28544) mpu_example: ACCEL => X: 49296, Y: 62320, Z: 784[0m
+[0;32mI (28544) mpu_example: TEMP: 28.571810[0m
+[0;32mI (28574) mpu_example: GYRO => X: 97, Y: 65469, Z: 609[0m
+[0;32mI (28574) mpu_example: ACCEL => X: 49744, Y: 62152, Z: 688[0m
+[0;32mI (28574) mpu_example: TEMP: 28.475964[0m
+[0;32mI (28604) mpu_example: GYRO => X: 43, Y: 65511, Z: 68[0m
+[0;32mI (28604) mpu_example: ACCEL => X: 49160, Y: 62536, Z: 864[0m
+[0;32mI (28604) mpu_example: TEMP: 28.571810[0m
+[0;32mI (28634) mpu_example: GYRO => X: 133, Y: 65465, Z: 280[0m
+[0;32mI (28634) mpu_example: ACCEL => X: 49280, Y: 62368, Z: 424[0m
+[0;32mI (28634) mpu_example: TEMP: 28.236349[0m
+[0;32mI (28664) mpu_example: GYRO => X: 64183, Y: 64695, Z: 2150[0m
+[0;32mI (28664) mpu_example: ACCEL => X: 49280, Y: 63872, Z: 1032[0m
+[0;32mI (28664) mpu_example: TEMP: 28.571810[0m
+[0;32mI (28694) mpu_example: GYRO => X: 65253, Y: 364, Z: 64282[0m
+[0;32mI (28694) mpu_example: ACCEL => X: 49048, Y: 62328, Z: 1016[0m
+[0;32mI (28694) mpu_example: TEMP: 28.428041[0m
+[0;32mI (28724) mpu_example: GYRO => X: 64302, Y: 64812, Z: 63793[0m
+[0;32mI (28724) mpu_example: ACCEL => X: 47944, Y: 63128, Z: 1080[0m
+[0;32mI (28724) mpu_example: TEMP: 28.380117[0m
+[0;32mI (28754) mpu_example: GYRO => X: 64750, Y: 64835, Z: 657[0m
+[0;32mI (28754) mpu_example: ACCEL => X: 48280, Y: 61832, Z: 65488[0m
+[0;32mI (28754) mpu_example: TEMP: 28.571810[0m
+[0;32mI (28784) mpu_example: GYRO => X: 55, Y: 171, Z: 64240[0m
+[0;32mI (28784) mpu_example: ACCEL => X: 49512, Y: 56744, Z: 64528[0m
+[0;32mI (28784) mpu_example: TEMP: 27.996735[0m
+[0;32mI (28814) mpu_example: GYRO => X: 33, Y: 65476, Z: 185[0m
+[0;32mI (28814) mpu_example: ACCEL => X: 49464, Y: 62248, Z: 648[0m
+[0;32mI (28814) mpu_example: TEMP: 28.428041[0m
+[0;32mI (28844) mpu_example: GYRO => X: 287, Y: 65451, Z: 685[0m
+[0;32mI (28844) mpu_example: ACCEL => X: 49640, Y: 62680, Z: 720[0m
+[0;32mI (28844) mpu_example: TEMP: 28.475964[0m
+[0;32mI (28874) mpu_example: GYRO => X: 215, Y: 65334, Z: 682[0m
+[0;32mI (28874) mpu_example: ACCEL => X: 49232, Y: 62688, Z: 848[0m
+[0;32mI (28874) mpu_example: TEMP: 28.428041[0m
+[0;32mI (28904) mpu_example: GYRO => X: 65444, Y: 187, Z: 65211[0m
+[0;32mI (28904) mpu_example: ACCEL => X: 49328, Y: 62232, Z: 552[0m
+[0;32mI (28904) mpu_example: TEMP: 28.380117[0m
+[0;32mI (28934) mpu_example: GYRO => X: 65246, Y: 122, Z: 65050[0m
+[0;32mI (28934) mpu_example: ACCEL => X: 49568, Y: 62528, Z: 984[0m
+[0;32mI (28934) mpu_example: TEMP: 28.475964[0m
+[0;32mI (28964) mpu_example: GYRO => X: 65227, Y: 179, Z: 64636[0m
+[0;32mI (28964) mpu_example: ACCEL => X: 49408, Y: 62288, Z: 760[0m
+[0;32mI (28964) mpu_example: TEMP: 28.380117[0m
+[0;32mI (28994) mpu_example: GYRO => X: 290, Y: 65467, Z: 1130[0m
+[0;32mI (28994) mpu_example: ACCEL => X: 49840, Y: 62360, Z: 752[0m
+[0;32mI (28994) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29024) mpu_example: GYRO => X: 265, Y: 65518, Z: 1156[0m
+[0;32mI (29024) mpu_example: ACCEL => X: 49368, Y: 62600, Z: 752[0m
+[0;32mI (29024) mpu_example: TEMP: 28.571810[0m
+[0;32mI (29054) mpu_example: GYRO => X: 209, Y: 65420, Z: 679[0m
+[0;32mI (29054) mpu_example: ACCEL => X: 49304, Y: 62704, Z: 768[0m
+[0;32mI (29054) mpu_example: TEMP: 28.092581[0m
+[0;32mI (29084) mpu_example: GYRO => X: 202, Y: 0, Z: 664[0m
+[0;32mI (29084) mpu_example: ACCEL => X: 49696, Y: 62640, Z: 584[0m
+[0;32mI (29084) mpu_example: TEMP: 28.380117[0m
+[0;32mI (29114) mpu_example: GYRO => X: 355, Y: 65275, Z: 1508[0m
+[0;32mI (29114) mpu_example: ACCEL => X: 49408, Y: 62600, Z: 792[0m
+[0;32mI (29114) mpu_example: TEMP: 28.380117[0m
+[0;32mI (29144) mpu_example: GYRO => X: 343, Y: 65294, Z: 1136[0m
+[0;32mI (29144) mpu_example: ACCEL => X: 49024, Y: 62984, Z: 968[0m
+[0;32mI (29144) mpu_example: TEMP: 28.428041[0m
+[0;32mI (29174) mpu_example: GYRO => X: 467, Y: 65535, Z: 1571[0m
+[0;32mI (29174) mpu_example: ACCEL => X: 49192, Y: 62608, Z: 928[0m
+[0;32mI (29174) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29204) mpu_example: GYRO => X: 517, Y: 64871, Z: 1837[0m
+[0;32mI (29204) mpu_example: ACCEL => X: 49240, Y: 63296, Z: 1048[0m
+[0;32mI (29204) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29234) mpu_example: GYRO => X: 136, Y: 341, Z: 521[0m
+[0;32mI (29234) mpu_example: ACCEL => X: 49400, Y: 63488, Z: 960[0m
+[0;32mI (29234) mpu_example: TEMP: 28.428041[0m
+[0;32mI (29264) mpu_example: GYRO => X: 63990, Y: 773, Z: 62602[0m
+[0;32mI (29264) mpu_example: ACCEL => X: 48368, Y: 63848, Z: 1208[0m
+[0;32mI (29264) mpu_example: TEMP: 28.380117[0m
+[0;32mI (29294) mpu_example: GYRO => X: 64522, Y: 309, Z: 62862[0m
+[0;32mI (29294) mpu_example: ACCEL => X: 49360, Y: 63144, Z: 592[0m
+[0;32mI (29294) mpu_example: TEMP: 28.428041[0m
+[0;32mI (29324) mpu_example: GYRO => X: 65118, Y: 636, Z: 63568[0m
+[0;32mI (29324) mpu_example: ACCEL => X: 49488, Y: 62568, Z: 648[0m
+[0;32mI (29324) mpu_example: TEMP: 28.236349[0m
+[0;32mI (29354) mpu_example: GYRO => X: 65368, Y: 65243, Z: 419[0m
+[0;32mI (29354) mpu_example: ACCEL => X: 49600, Y: 62616, Z: 520[0m
+[0;32mI (29354) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29384) mpu_example: GYRO => X: 65458, Y: 83, Z: 65266[0m
+[0;32mI (29384) mpu_example: ACCEL => X: 49168, Y: 62800, Z: 560[0m
+[0;32mI (29384) mpu_example: TEMP: 28.428041[0m
+[0;32mI (29414) mpu_example: GYRO => X: 65397, Y: 97, Z: 64993[0m
+[0;32mI (29414) mpu_example: ACCEL => X: 49464, Y: 62624, Z: 968[0m
+[0;32mI (29414) mpu_example: TEMP: 28.619732[0m
+[0;32mI (29444) mpu_example: GYRO => X: 101, Y: 65491, Z: 303[0m
+[0;32mI (29444) mpu_example: ACCEL => X: 49312, Y: 62760, Z: 616[0m
+[0;32mI (29444) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29474) mpu_example: GYRO => X: 65459, Y: 55, Z: 65265[0m
+[0;32mI (29474) mpu_example: ACCEL => X: 49568, Y: 62704, Z: 976[0m
+[0;32mI (29474) mpu_example: TEMP: 28.380117[0m
+[0;32mI (29504) mpu_example: GYRO => X: 65512, Y: 2, Z: 65465[0m
+[0;32mI (29504) mpu_example: ACCEL => X: 49584, Y: 62664, Z: 752[0m
+[0;32mI (29504) mpu_example: TEMP: 28.619732[0m
+[0;32mI (29534) mpu_example: GYRO => X: 52, Y: 65528, Z: 164[0m
+[0;32mI (29534) mpu_example: ACCEL => X: 49416, Y: 62712, Z: 968[0m
+[0;32mI (29534) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29564) mpu_example: GYRO => X: 65441, Y: 65521, Z: 65223[0m
+[0;32mI (29564) mpu_example: ACCEL => X: 49592, Y: 62472, Z: 984[0m
+[0;32mI (29564) mpu_example: TEMP: 28.428041[0m
+[0;32mI (29594) mpu_example: GYRO => X: 18, Y: 65500, Z: 65289[0m
+[0;32mI (29594) mpu_example: ACCEL => X: 49480, Y: 62688, Z: 672[0m
+[0;32mI (29594) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29624) mpu_example: GYRO => X: 65531, Y: 65532, Z: 9[0m
+[0;32mI (29624) mpu_example: ACCEL => X: 49624, Y: 62864, Z: 552[0m
+[0;32mI (29624) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29654) mpu_example: GYRO => X: 65499, Y: 65280, Z: 65380[0m
+[0;32mI (29654) mpu_example: ACCEL => X: 49632, Y: 62736, Z: 592[0m
+[0;32mI (29654) mpu_example: TEMP: 28.428041[0m
+[0;32mI (29684) mpu_example: GYRO => X: 65528, Y: 23, Z: 65431[0m
+[0;32mI (29684) mpu_example: ACCEL => X: 49488, Y: 62928, Z: 736[0m
+[0;32mI (29684) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29714) mpu_example: GYRO => X: 65526, Y: 37, Z: 65461[0m
+[0;32mI (29714) mpu_example: ACCEL => X: 49400, Y: 62656, Z: 720[0m
+[0;32mI (29714) mpu_example: TEMP: 28.619732[0m
+[0;32mI (29744) mpu_example: GYRO => X: 65287, Y: 15, Z: 65530[0m
+[0;32mI (29744) mpu_example: ACCEL => X: 49280, Y: 62480, Z: 744[0m
+[0;32mI (29744) mpu_example: TEMP: 28.428041[0m
+[0;32mI (29774) mpu_example: GYRO => X: 27, Y: 65480, Z: 55[0m
+[0;32mI (29774) mpu_example: ACCEL => X: 49448, Y: 62728, Z: 536[0m
+[0;32mI (29774) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29804) mpu_example: GYRO => X: 65523, Y: 4, Z: 65492[0m
+[0;32mI (29804) mpu_example: ACCEL => X: 49280, Y: 62776, Z: 728[0m
+[0;32mI (29804) mpu_example: TEMP: 28.571810[0m
+[0;32mI (29834) mpu_example: GYRO => X: 65500, Y: 65533, Z: 65376[0m
+[0;32mI (29834) mpu_example: ACCEL => X: 49280, Y: 62728, Z: 648[0m
+[0;32mI (29834) mpu_example: TEMP: 28.380117[0m
+[0;32mI (29864) mpu_example: GYRO => X: 65535, Y: 65507, Z: 65491[0m
+[0;32mI (29864) mpu_example: ACCEL => X: 49392, Y: 62504, Z: 616[0m
+[0;32mI (29864) mpu_example: TEMP: 28.380117[0m
+[0;32mI (29894) mpu_example: GYRO => X: 65522, Y: 65518, Z: 65413[0m
+[0;32mI (29894) mpu_example: ACCEL => X: 49368, Y: 62720, Z: 560[0m
+[0;32mI (29894) mpu_example: TEMP: 28.571810[0m
+[0;32mI (29924) mpu_example: GYRO => X: 26, Y: 65528, Z: 156[0m
+[0;32mI (29924) mpu_example: ACCEL => X: 49456, Y: 62496, Z: 992[0m
+[0;32mI (29924) mpu_example: TEMP: 28.284273[0m
+[0;32mI (29954) mpu_example: GYRO => X: 136, Y: 167, Z: 39[0m
+[0;32mI (29954) mpu_example: ACCEL => X: 49424, Y: 62712, Z: 928[0m
+[0;32mI (29954) mpu_example: TEMP: 28.475964[0m
+[0;32mI (29984) mpu_example: GYRO => X: 142, Y: 65433, Z: 766[0m
+[0;32mI (29984) mpu_example: ACCEL => X: 49448, Y: 62720, Z: 904[0m
+[0;32mI (29984) mpu_example: TEMP: 27.900890[0m
+[0;32mI (30014) mpu_example: GYRO => X: 39, Y: 74, Z: 169[0m
+[0;32mI (30014) mpu_example: ACCEL => X: 49152, Y: 63160, Z: 656[0m
+[0;32mI (30014) mpu_example: TEMP: 28.571810[0m
+[0;32mI (30044) mpu_example: GYRO => X: 65435, Y: 108, Z: 65052[0m
+[0;32mI (30044) mpu_example: ACCEL => X: 49184, Y: 62920, Z: 760[0m
+[0;32mI (30044) mpu_example: TEMP: 28.428041[0m
+[0;32mI (30074) mpu_example: GYRO => X: 31, Y: 65482, Z: 159[0m
+[0;32mI (30074) mpu_example: ACCEL => X: 49408, Y: 62760, Z: 512[0m
+[0;32mI (30074) mpu_example: TEMP: 28.380117[0m
+[0;32mI (30104) mpu_example: GYRO => X: 65484, Y: 65520, Z: 65412[0m
+[0;32mI (30104) mpu_example: ACCEL => X: 49240, Y: 62824, Z: 848[0m
+[0;32mI (30104) mpu_example: TEMP: 28.428041[0m
+[0;32mI (30134) mpu_example: GYRO => X: 34, Y: 34, Z: 65520[0m
+[0;32mI (30134) mpu_example: ACCEL => X: 49296, Y: 62768, Z: 728[0m
+[0;32mI (30134) mpu_example: TEMP: 28.475964[0m
+[0;32mI (30164) mpu_example: GYRO => X: 25, Y: 65465, Z: 160[0m
+[0;32mI (30164) mpu_example: ACCEL => X: 49168, Y: 62896, Z: 712[0m
+[0;32mI (30164) mpu_example: TEMP: 28.284273[0m
+[0;32mI (30194) mpu_example: GYRO => X: 65525, Y: 253, Z: 65408[0m
+[0;32mI (30194) mpu_example: ACCEL => X: 49520, Y: 62944, Z: 744[0m
+[0;32mI (30194) mpu_example: TEMP: 28.475964[0m
+[0;32mI (30224) mpu_example: GYRO => X: 65522, Y: 65490, Z: 65520[0m
+[0;32mI (30224) mpu_example: ACCEL => X: 49336, Y: 62888, Z: 512[0m
+[0;32mI (30224) mpu_example: TEMP: 28.428041[0m
+[0;32mI (30254) mpu_example: GYRO => X: 65532, Y: 65504, Z: 65504[0m
+[0;32mI (30254) mpu_example: ACCEL => X: 49320, Y: 62896, Z: 672[0m
+[0;32mI (30254) mpu_example: TEMP: 28.428041[0m
+[0;32mI (30284) mpu_example: GYRO => X: 65528, Y: 252, Z: 65472[0m
+[0;32mI (30284) mpu_example: ACCEL => X: 49248, Y: 62720, Z: 472[0m
+[0;32mI (30284) mpu_example: TEMP: 28.571810[0m
+[0;32mI (30314) mpu_example: GYRO => X: 65529, Y: 65512, Z: 10[0m
+[0;32mI (30314) mpu_example: ACCEL => X: 49400, Y: 62896, Z: 736[0m
+[0;32mI (30314) mpu_example: TEMP: 28.475964[0m
+[0;32mI (30344) mpu_example: GYRO => X: 20, Y: 65506, Z: 65469[0m
+[0;32mI (30344) mpu_example: ACCEL => X: 49152, Y: 63152, Z: 784[0m
+[0;32mI (30344) mpu_example: TEMP: 28.428041[0m
+[0;32mI (30374) mpu_example: GYRO => X: 22, Y: 65532, Z: 65443[0m
+[0;32mI (30374) mpu_example: ACCEL => X: 49312, Y: 62936, Z: 512[0m
+[0;32mI (30374) mpu_example: TEMP: 28.380117[0m
+[0;32mI (30404) mpu_example: GYRO => X: 1, Y: 65503, Z: 65456[0m
+[0;32mI (30404) mpu_example: ACCEL => X: 49248, Y: 62856, Z: 576[0m
+[0;32mI (30404) mpu_example: TEMP: 28.619732[0m
+[0;32mI (30434) mpu_example: GYRO => X: 0, Y: 0, Z: 65508[0m
+[0;32mI (30434) mpu_example: ACCEL => X: 49304, Y: 62768, Z: 784[0m
+[0;32mI (30434) mpu_example: TEMP: 28.380117[0m
+[0;32mI (30464) mpu_example: GYRO => X: 16, Y: 65502, Z: 103[0m
+[0;32mI (30464) mpu_example: ACCEL => X: 49240, Y: 63048, Z: 848[0m
+[0;32mI (30464) mpu_example: TEMP: 28.428041[0m
+[0;32mI (30494) mpu_example: GYRO => X: 65530, Y: 35, Z: 65487[0m
+[0;32mI (30494) mpu_example: ACCEL => X: 49248, Y: 62720, Z: 672[0m
+[0;32mI (30494) mpu_example: TEMP: 28.475964[0m
+[0;32mI (30524) mpu_example: GYRO => X: 65530, Y: 253, Z: 65476[0m
+[0;32mI (30524) mpu_example: ACCEL => X: 49320, Y: 62968, Z: 608[0m
+[0;32mI (30524) mpu_example: TEMP: 28.428041[0m
+[0;32mI (30554) mpu_example: GYRO => X: 65289, Y: 65529, Z: 65471[0m
+[0;32mI (30554) mpu_example: ACCEL => X: 49288, Y: 62920, Z: 704[0m
+[0;32mI (30554) mpu_example: TEMP: 28.475964[0m
+[0;32mI (30584) mpu_example: GYRO => X: 3, Y: 34, Z: 65462[0m
+[0;32mI (30584) mpu_example: ACCEL => X: 49456, Y: 62904, Z: 656[0m
+[0;32mI (30584) mpu_example: TEMP: 28.428041[0m
+[0;32mI (30614) mpu_example: GYRO => X: 12, Y: 65516, Z: 50[0m
+[0;32mI (30614) mpu_example: ACCEL => X: 49216, Y: 63016, Z: 960[0m
+[0;32mI (30614) mpu_example: TEMP: 28.571810[0m
+[0;32mI (30644) mpu_example: GYRO => X: 33, Y: 65526, Z: 41[0m
+[0;32mI (30644) mpu_example: ACCEL => X: 49352, Y: 62984, Z: 552[0m
+[0;32mI (30644) mpu_example: TEMP: 28.475964[0m
+[0;32mI (30674) mpu_example: GYRO => X: 65509, Y: 12, Z: 65466[0m
+[0;32mI (30674) mpu_example: ACCEL => X: 49328, Y: 62984, Z: 696[0m
+[0;32mI (30674) mpu_example: TEMP: 28.475964[0m
+[0;32mI (30704) mpu_example: GYRO => X: 65527, Y: 65523, Z: 65487[0m
+[0;32mI (30704) mpu_example: ACCEL => X: 49328, Y: 62864, Z: 600[0m
+[0;32mI (30704) mpu_example: TEMP: 28.428041[0m
+[0;32mI (30734) mpu_example: GYRO => X: 0, Y: 3, Z: 254[0m
+[0;32mI (30734) mpu_example: ACCEL => X: 49656, Y: 62864, Z: 536[0m
+[0;32mI (30734) mpu_example: TEMP: 28.380117[0m
+[0;32mI (30764) mpu_example: GYRO => X: 31, Y: 65490, Z: 118[0m
+[0;32mI (30764) mpu_example: ACCEL => X: 49472, Y: 62912, Z: 840[0m
+[0;32mI (30764) mpu_example: TEMP: 28.428041[0m
+[0;32mI (30794) mpu_example: GYRO => X: 65403, Y: 65375, Z: 65294[0m
+[0;32mI (30794) mpu_example: ACCEL => X: 49184, Y: 62856, Z: 792[0m
+[0;32mI (30794) mpu_example: TEMP: 28.571810[0m
+[0;32mI (30824) mpu_example: GYRO => X: 103, Y: 418, Z: 343[0m
+[0;32mI (30824) mpu_example: ACCEL => X: 49320, Y: 63008, Z: 728[0m
+[0;32mI (30824) mpu_example: TEMP: 28.475964[0m
+[0;32mI (30854) mpu_example: GYRO => X: 253, Y: 54, Z: 65293[0m
+[0;32mI (30854) mpu_example: ACCEL => X: 49160, Y: 63032, Z: 512[0m
+[0;32mI (30854) mpu_example: TEMP: 28.475964[0m
+[0;32mI (30884) mpu_example: GYRO => X: 5, Y: 65335, Z: 289[0m
+[0;32mI (30884) mpu_example: ACCEL => X: 49320, Y: 63040, Z: 680[0m
+[0;32mI (30884) mpu_example: TEMP: 28.380117[0m
+[0;32mI (30914) mpu_example: GYRO => X: 65461, Y: 65489, Z: 65490[0m
+[0;32mI (30914) mpu_example: ACCEL => X: 49256, Y: 63224, Z: 360[0m
+[0;32mI (30914) mpu_example: TEMP: 28.571810[0m
+[0;32mI (30944) mpu_example: GYRO => X: 7, Y: 331, Z: 65404[0m
+[0;32mI (30944) mpu_example: ACCEL => X: 49288, Y: 63048, Z: 632[0m
+[0;32mI (30944) mpu_example: TEMP: 28.475964[0m
+[0;32mI (30974) mpu_example: GYRO => X: 65504, Y: 18, Z: 65426[0m
+[0;32mI (30974) mpu_example: ACCEL => X: 49240, Y: 63208, Z: 784[0m
+[0;32mI (30974) mpu_example: TEMP: 28.428041[0m
+[0;32mI (31004) mpu_example: GYRO => X: 5, Y: 126, Z: 65437[0m
+[0;32mI (31004) mpu_example: ACCEL => X: 49272, Y: 62992, Z: 776[0m
+[0;32mI (31004) mpu_example: TEMP: 28.475964[0m

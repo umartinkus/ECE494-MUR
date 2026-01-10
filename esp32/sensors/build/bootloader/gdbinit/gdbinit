@@ -1,0 +1,2 @@
+source /home/nolan/ECE494-MUR/esp32/sensors/build/bootloader/gdbinit/symbols
+source /home/nolan/ECE494-MUR/esp32/sensors/build/bootloader/gdbinit/connect
