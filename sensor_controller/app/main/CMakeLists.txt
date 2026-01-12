@@ -1,3 +1,2 @@
-
 idf_component_register(SRCS "app.c"
-                    INCLUDE_DIRS "inc")
+                    INCLUDE_DIRS "")

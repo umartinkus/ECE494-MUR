@@ -3,4 +3,5 @@
 cmake_minimum_required(VERSION 3.16)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+set(EXTRA_PROJECT_DIRS "${CMAKE_SOURCE_DIR}/drivers")
 project(app)
