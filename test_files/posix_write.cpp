@@ -16,7 +16,7 @@ int open_port(void)
 		// opening port failed
 		perror("open_port: Unable to open /dev/ttyUSB0 - ");
 	} else {
-		fcntl(fd, F_SETFL, 0);
+		fcntl(fd, F_SETFL, FNDELAY);
 	}
 
 	return fd;
@@ -43,16 +43,12 @@ void config_port(int fd) {
 }
 
 void listen(int fd) {
-  char buf[4096]{};
+  char buf[16];
   size_t nbytes = sizeof(buf);
-  ssize_t bytes_read;
 
   while ( true ) {
-    bytes_read = read(fd, buf, nbytes);
-    if ( bytes_read > 0 ) {
-      std::cout.write(buf, bytes_read);
-      std::cout.flush();
-    }
+    read(fd, buf, nbytes);
+    std::cout << buf << std::endl;
   }
 }
 
