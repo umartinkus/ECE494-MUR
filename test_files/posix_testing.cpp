@@ -43,8 +43,7 @@ void config_port(int fd) {
 }
 
 void listen(int fd) {
-  size_t buf_size{256};
-  char buf[buf_size]{};
+  char buf[4096]{};
   size_t nbytes = sizeof(buf);
   ssize_t bytes_read;
 
