@@ -14,7 +14,7 @@ void BUS_MNGR(void *arg){
         int core_id = esp_cpu_get_core_id();
         ESP_LOGI(TAG, "task#%d is running on core#%d", task_id, core_id);
         testBus();
-        vTaskDelay(pdMS_TO_TICKS(150));
+        vTaskDelay(pdMS_TO_TICKS(4000));
     }
 }
 
