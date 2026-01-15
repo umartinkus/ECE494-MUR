@@ -4,6 +4,7 @@
 #include <vector>
 #include <utility>
 #include <mutex>
+#include <span>
 
 template<typename T>
 class Ring {
@@ -79,7 +80,7 @@ public:
     const T* peek_newest() const noexcept {
         return empty() ? nullptr : &buf_[head_];
     }
-    const &T peek_offset(std::size_t offset) const noexcept {
+    const T& peek_offset(std::size_t offset) const noexcept {
         return empty() ? nullptr : buf_[phys_index_(offset)];
     }
 
@@ -91,7 +92,7 @@ private:
     }
 
     std::size_t phys_index_(std::size_t offset) {
-        std::size idx = head_ + offset;
+        std::size_t idx = head_ + offset;
         const auto cap = capacity();
         if (idx >= capacity()) idx -= cap;
         return idx;
@@ -114,7 +115,7 @@ public:
     void clear() noexcept { ring_.clear(); }
 
     std::size_t write(std::span<const std::uint8_t> in) {
-        std::lock_guard<std::mutex> lock(ring.get_mutex);
+        std::lock_guard<std::mutex> lock(ring_.get_mutex());
 
         std::size_t n_written = 0;
         for(std::uint8_t pnt : in) {
@@ -126,7 +127,7 @@ public:
 
     // pass in a span object with a given size and read that many bytes from the buffer
     std::size_t read(std::span<std::uint8_t> out) {
-        std::lock_guard<std::mutex> lock(ring.get_mutex);
+        std::lock_guard<std::mutex> lock(ring_.get_mutex());
 
         std::size_t n = 0;
         for (; n < out.size(); n++) {
@@ -138,7 +139,7 @@ public:
     }
 
     std::size_t discard(std::size_t n) {
-        std::lock_guard<std::mutex> lock(ring.get_mutex);
+        std::lock_guard<std::mutex> lock(ring_.get_mutex());
 
         std::uint8_t b{};
         for (int i = 0; i < n; i++) {
@@ -147,7 +148,7 @@ public:
     }
 
     std::size_t peek(std::span<std::uint8_t> out) const {
-        std::lock_guard<std::mutex> lock(ring.get_mutex);
+        std::lock_guard<std::mutex> lock(ring_.get_mutex());
         const auto avail = ring.size();
         const auto n = std::min(avail, out.size());
         for (std::size_t i = 0; i < n; ++i) {
@@ -176,9 +177,11 @@ public:
     }
 
     bool copy_window(size_t offset, std::span<uint8_t> out) const {
-        std::uint8_t b{};
-        // you need to put a thing here to check for max size
-        for (size_t i = 0; i < out.size();)
+        if ( out.size() > ring_.size() ) return false;
+        for (size_t i = 0; i < out.size(); i++){
+          out[i] = ring.peek_offset(offset + i);
+        }
+        return true;
     }
 private:
     Ring<std::uint8_t> ring_;
