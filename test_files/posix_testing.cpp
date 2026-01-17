@@ -60,8 +60,8 @@ int main()
 {
 	int fd; 
 	fd = open_port();
-  config_port(fd);
-  listen(fd);
-  close(fd);
+    config_port(fd);
+    listen(fd);
+    close(fd);
 	return 0;
 }
