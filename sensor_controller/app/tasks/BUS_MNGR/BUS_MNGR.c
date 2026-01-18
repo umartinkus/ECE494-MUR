@@ -25,6 +25,6 @@ void testBus()
     i2c_master_dev_handle_t dev_handle;
     i2c_master_init(&bus_handle, &dev_handle); 
     ESP_LOGI(TAG, "I2C initialized successfully");
-    ESP_ERROR_CHECK(mpu9250_register_read(dev_handle, MPU9250_WHO_AM_I_REG_ADDR, data, 1));
+    ESP_ERROR_CHECK(mpu9250_register_read(dev_handle, WHO_AM_I_MPU9250, data, 1));
     ESP_LOGI(TAG, "WHO_AM_I = %X", data[0]);
 }

@@ -7,7 +7,6 @@ set(EXTRA_COMPONENT_DIRS
 ${CMAKE_CURRENT_LIST_DIR}/drivers
 ${CMAKE_CURRENT_LIST_DIR}/messaging
 ${CMAKE_CURRENT_LIST_DIR}/tasks
-
 )
 
 project(app)
