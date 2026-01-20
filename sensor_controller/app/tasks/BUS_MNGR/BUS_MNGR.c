@@ -12,8 +12,8 @@ void BUS_MNGR(void *arg){
     ESP_LOGI(TAG, "BUS_MNGR Task ID: %d", task_id); // remove
     int core_id = esp_cpu_get_core_id(); // remove
     ESP_LOGI(TAG, "task#%d is running on core#%d", task_id, core_id); // remove
-    initBus();
     for(;;){
+        initBus();
         vTaskDelay(pdMS_TO_TICKS(4000));
     }
 }
@@ -29,12 +29,12 @@ void BUS_MNGR(void *arg){
  *         if it does not return a value.
  * 
  * @note Optional notes or warnings can be included here.
- * @bug Optional known bugs can be listed here.
+ * @bug When one of the I2C devices fails to initialize, the system enters an infinite boot loop.
  */
 
 void initBus()
 {
-    uint8_t data[2];
+    uint8_t data[2] = {0, 0};
     i2c_master_bus_handle_t bus_handle;
     i2c_master_dev_handle_t imu1_handle;
     i2c_master_dev_handle_t imu2_handle;
