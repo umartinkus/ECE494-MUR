@@ -12,20 +12,21 @@ static i2c_master_dev_handle_t imu1_handle;
 static i2c_master_dev_handle_t imu2_handle;
 
 // Global IMU data structures
-// static mpu9250_axis3_i16_t imu1_accel_data;
-// static mpu9250_axis3_i16_t imu2_accel_data;
 static mpu9250_data_t imu1_data;
 static mpu9250_data_t imu2_data;
+
+// sync primitives
+static portMUX_TYPE imu_mux = portMUX_INITIALIZER_UNLOCKED;
 
 void GET_POSE(void *arg){
     initBus();
     configureDevices();
     vTaskDelay(pdMS_TO_TICKS(1000));
     for(;;){
-        // taskENTER_CRITICAL();
+        taskENTER_CRITICAL(&imu_mux); //ensure that one full I2C transaction is done before scheduling another task
         mpu9250_get_pose(imu1_handle, &imu1_data);
         mpu9250_get_pose(imu2_handle, &imu2_data);
-        // taskEXIT_CRITICAL();
+        taskEXIT_CRITICAL(&imu_mux);
         vTaskDelay(pdMS_TO_TICKS(10));
     }
 }
