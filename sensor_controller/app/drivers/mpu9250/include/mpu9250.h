@@ -125,6 +125,7 @@
 #define YA_OFFSET_L      0x7B
 #define ZA_OFFSET_H      0x7D
 #define ZA_OFFSET_L      0x7E
+#define INT_BYPASS_ENABLE 0X02
 
 #define MPU9250_ADDRESS0 0x68  // Device address when ADO = 0
 #define MPU9250_ADDRESS1 0x69  // Device address when ADO = 1
@@ -150,13 +151,13 @@ typedef struct {
     int16_t z;
 } mpu9250_axis3_i16_t;
 
-// typedef struct mpu9250_data
-// {
-//     mpu9250_axis3_i16_t accel;
-//     mpu9250_axis3_i16_t gyro;
-//     mpu9250_axis3_i16_t mag;
-//     int16_t temp;
-// };
+typedef struct
+{
+    mpu9250_axis3_i16_t accel;
+    mpu9250_axis3_i16_t gyro;
+    mpu9250_axis3_i16_t mag;
+    int16_t temp;
+} mpu9250_data_t;
 
 
 void i2c_master_init(
@@ -178,18 +179,28 @@ esp_err_t mpu9250_register_write_byte(
 void mpu9250_set_default_config(
   i2c_master_dev_handle_t dev_handle);
 
-// void mpu9250_read_gyro(
-//   i2c_master_dev_handle_t dev_handle,
-//   mpu9250_axis3_i16_t *gyro_data);
 
 void mpu9250_read_accel(
   i2c_master_dev_handle_t dev_handle,
-  mpu9250_axis3_i16_t *accel_data); 
+  mpu9250_axis3_i16_t *accel_data);
 
+
+void mpu9250_get_pose(
+  i2c_master_dev_handle_t dev_handle,
+  mpu9250_data_t *imu_data
+);
+
+void mpu9250_read_mag(
+  i2c_master_dev_handle_t dev_handle,
+  mpu9250_axis3_i16_t *mag_data);
+
+// FUTURE
+// void mpu9250_read_gyro(
+//   i2c_master_dev_handle_t dev_handle,
+//   mpu9250_axis3_i16_t *gyro_data);  
+
+//FUTURE
 // void mpu9250_read_temp(
 //   i2c_master_dev_handle_t dev_handle,
 //   int16_t *temp_data);
 
-// void mpu9250_read_mag(
-//   i2c_master_dev_handle_t dev_handle,
-//   mpu9250_axis3_i16_t *mag_data);

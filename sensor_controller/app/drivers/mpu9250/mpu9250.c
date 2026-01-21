@@ -1,17 +1,9 @@
 #include "mpu9250.h"
+#include "ak8963.h"
 #include "driver/i2c_master.h"
 #include "driver/i2c_types.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
-
-// Default configuration for MPU9250
-// static mpu9250_config_t default_mpu9250_config = {
-//     .gyro_enabled = true,
-//     .accel_enabled = true,
-//     .temp_enabled = true,
-//     .accel_filter_level = 6,
-//     .gyro_temp_filter_level = 6,
-// };
 
 /**
  * @brief 
@@ -131,4 +123,53 @@ void mpu9250_read_accel(i2c_master_dev_handle_t dev_handle, mpu9250_axis3_i16_t 
     accel_data->x = (int16_t)((raw_data[0] << 8) | raw_data[1]);
     accel_data->y = (int16_t)((raw_data[2] << 8) | raw_data[3]);
     accel_data->z = (int16_t)((raw_data[4] << 8) | raw_data[5]);
+}
+
+ /**
+ * @brief 
+ *
+ * get pose data from MPU9250
+ * 
+ * 
+ * @return 
+ *         
+ * 
+ * @note Optional notes or warnings can be included here.
+ * @bug Optional known bugs can be listed here.
+ */
+
+ void mpu9250_get_pose(i2c_master_dev_handle_t dev_handle, mpu9250_data_t *imu_data){
+    uint8_t raw_data[20] = {0};
+    mpu9250_register_read(dev_handle, ACCEL_XOUT_H, raw_data, 14); 
+    imu_data->accel.x = (int16_t)((raw_data[0] << 8) | raw_data[1]);
+    imu_data->accel.y = (int16_t)((raw_data[2] << 8) | raw_data[3]);
+    imu_data->accel.z = (int16_t)((raw_data[4] << 8) | raw_data[5]);
+    imu_data->temp = (int16_t)((raw_data[6] << 8) | raw_data[7]);
+    imu_data->gyro.x = (int16_t)((raw_data[8] << 8) | raw_data[9]);
+    imu_data->gyro.y = (int16_t)((raw_data[10] << 8) | raw_data[11]);
+    imu_data->gyro.z = (int16_t)((raw_data[12] << 8) | raw_data[13]);
+    mpu9250_read_mag(dev_handle, &imu_data->mag);
+}
+
+ /**
+ * @brief 
+ *
+ * get magnetometer data from MPU9250/AK8963
+ * 
+ * 
+ * @return 
+ *         
+ * 
+ * @note Optional notes or warnings can be included here.
+ * @bug Optional known bugs can be listed here.
+ */
+void mpu9250_read_mag(i2c_master_dev_handle_t dev_handle, mpu9250_axis3_i16_t *mag_data){
+    uint8_t raw_data[6] = {0};
+    // Enable bypass mode to access magnetometer
+    mpu9250_register_write_byte(dev_handle, INT_PIN_CFG, INT_BYPASS_ENABLE);
+    // Read magnetometer data
+    mpu9250_register_read(dev_handle, AK8963_RA_HXL, raw_data, 6);
+    mag_data->x = (int16_t)((raw_data[1] << 8) | raw_data[0]);
+    mag_data->y = (int16_t)((raw_data[3] << 8) | raw_data[2]);
+    mag_data->z = (int16_t)((raw_data[5] << 8) | raw_data[4]);
 }

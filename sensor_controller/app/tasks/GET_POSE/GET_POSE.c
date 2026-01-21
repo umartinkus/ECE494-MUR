@@ -12,19 +12,21 @@ static i2c_master_dev_handle_t imu1_handle;
 static i2c_master_dev_handle_t imu2_handle;
 
 // Global IMU data structures
-static mpu9250_axis3_i16_t imu1_accel_data;
-static mpu9250_axis3_i16_t imu2_accel_data;
+// static mpu9250_axis3_i16_t imu1_accel_data;
+// static mpu9250_axis3_i16_t imu2_accel_data;
+static mpu9250_data_t imu1_data;
+static mpu9250_data_t imu2_data;
 
 void GET_POSE(void *arg){
     initBus();
     configureDevices();
-    vTaskDelay(pdMS_TO_TICKS(1500));
+    vTaskDelay(pdMS_TO_TICKS(1000));
     for(;;){
-        mpu9250_read_accel(imu1_handle, &imu1_accel_data);
-        ESP_LOGI(TAG, "IMU1 Accel => X: %d, Y: %d, Z: %d", imu1_accel_data.x, imu1_accel_data.y, imu1_accel_data.z);
-        mpu9250_read_accel(imu2_handle, &imu2_accel_data);
-        ESP_LOGI(TAG, "IMU2 Accel => X: %d, Y: %d, Z: %d", imu2_accel_data.x, imu2_accel_data.y, imu2_accel_data.z);
-        vTaskDelay(pdMS_TO_TICKS(500));
+        // taskENTER_CRITICAL();
+        mpu9250_get_pose(imu1_handle, &imu1_data);
+        mpu9250_get_pose(imu2_handle, &imu2_data);
+        // taskEXIT_CRITICAL();
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
 }
 /**
