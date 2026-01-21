@@ -12,12 +12,23 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-add_executable(listener src/listener.cpp)
-ament_target_dependencies(listener rclcpp std_msgs)
+add_executable(sensor_node src/sensor_node.cpp)
+ament_target_dependencies(sensor_node rclcpp std_msgs)
+
+target_include_directories(sensor_node
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>)
 
 install(TARGETS
-  listener
+  sensor_node
   DESTINATION lib/${PROJECT_NAME})
+
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

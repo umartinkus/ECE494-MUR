@@ -2,40 +2,42 @@
 #include <functional>
 #include <memory>
 #include <string>
-
-#include <fcntl.h>
-#include <errno.h>
-#include <termios.h>
-#include <unistd.h>
+#include <thread>
+#include <functional>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "marlin_comms/serial_port.hpp"
+#include "marlin_comms/ring_buffer.hpp"
 
-class SerialPort {
-public:
-	SerialPort() : port("/dev/ttyUSB0") {
-		nbytes = sizeof(buf);
-	}
 
-	void open_port() {
-		fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY);
-		if ( fd == -1 ) {
-			// open port failed
-			perror("open_port: Unable to open /dev/ttyUSB0 ");
-		} else {
-			fcntl(fd, F_SETFL, 0);
-		}
-	}
+void port_listener(SerialPort& sp, ByteRing& br) {
+    std::cout << "running" << std::endl;
+    // setting the max size and the read timeout
+    const std::size_t max_len = 4096*2;
+    const std::chrono::milliseconds timeout(500);
 
-private:
-	std::string port;
-	int fd;  // file descriptor for port
-	char buf[256]{};
-	size_t nbytes;
-	ssize_t bytes_read;
-};
+    // creating a buffer vector
+    std::vector<std::uint8_t> buf;
+    buf.reserve(max_len);
 
-using namespace std::chrono_literals;
+    // num of bytes read from buffer
+    std::size_t n_read{};
+    std::size_t n_written{};
+
+    for (;;) {
+        n_read = sp.read(buf.data(), buf.capacity(), timeout);
+        n_written = br.write(buf.data(), n_read);
+        if (n_written > 0) {
+            std::vector<std::uint8_t> tmp;
+            br.read(tmp.data(), n_written);
+            for (const auto& val : tmp) {
+                std::cout << val;
+            }
+        }
+    }
+}
+
 
 class DataPublisher : public rclcpp::Node
 {
@@ -43,12 +45,8 @@ public:
 	DataPublisher() : Node("data_publisher"), count_(0) {
 		publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
 		timer_ = this->create_wall_timer(
-        std::chrono::miliseconds(500),
+        std::chrono::milliseconds(500),
         std::bind(&DataPublisher::timer_callback, this));
-	}
-
-	void get_port_data(SerialPort port_obj) {
-
 	}
 
 private:
@@ -64,15 +62,16 @@ private:
 	size_t count_;
 };
 
-int main(int argc, char * argv[])
-{
-	rclcpp::init(argc,argv);
-	auto publisher = std::make_shared<DataPublisher>();
-	rclcpp::spin(publisher);
 
-	SerialPort esp32;
-	esp32.open_port();
+int main() {
+    // initialize serial port obj
+    SerialPort sp("/dev/ttyUSB0");
+    sp.config_port(B115200);
+    
+    //initialize ByteRing obj
+    ByteRing br(32768);
 
-	rclcpp::shutdown();
-	return 0;
+    std::thread sp_thread(port_listener, std::ref(sp), std::ref(br));
+
+    sp_thread.join();
 }

@@ -157,6 +157,9 @@ public:
 
     // Drop-on-full write
     std::size_t write(const std::uint8_t* in, std::size_t len) {
+        for (std::size_t i = 0; i < len; i++) {
+            std::cout << in[i];
+        }
         if (!in || len == 0) return 0;
         std::size_t n_written = 0;
         for (; n_written < len; ++n_written) {

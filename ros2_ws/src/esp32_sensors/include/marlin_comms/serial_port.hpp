@@ -55,6 +55,7 @@ public:
 
     
     void config_port(speed_t baud) {
+        // baud rate is usually 
     // Start from current settings
         if (tcgetattr(fd_, &tty_) != 0) {
             throw std::system_error(errno, std::generic_category(), "tcgetattr");
@@ -97,7 +98,7 @@ public:
     }
 
     std::size_t read(std::uint8_t* out, std::size_t max_len,
-                           std::chrono::milliseconds timeout) {
+                           const std::chrono::milliseconds timeout) {
         if (fd_ < 0) {
             throw std::runtime_error("SerialPort not open");
         }
