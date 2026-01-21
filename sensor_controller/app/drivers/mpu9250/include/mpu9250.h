@@ -129,13 +129,67 @@
 #define MPU9250_ADDRESS0 0x68  // Device address when ADO = 0
 #define MPU9250_ADDRESS1 0x69  // Device address when ADO = 1
 
+#define MPU9250_DEFAULT_LPF_CONFIG 0x03  // DLPF_CFG = 3; Fs = 8kHz, BW = 44Hz
+#define MPU9250_DEFAULT_SAMPLERATE_DIV 0x04  // Sample Rate = Gyro Output Rate / (1 + SMPLRT_DIV); 1kHz/(1+4) = 200Hz
+#define MPU9250_DEFAULT_GYRO_SCALE  0x18  // ±2000dps
+#define MPU9250_DEFAULT_ACCEL_SCALE  0x10  // ±8g
+#define MPU9250_DEFAULT_ACCEL_DLPF_CONFIG 0x03  // A_DLPF_CFG = 3; Fs = 1kHz, BW = 44Hz
+
+
+typedef struct {
+    bool gyro_enabled;
+    bool accel_enabled;
+    bool temp_enabled;
+    uint8_t accel_filter_level;
+    uint8_t gyro_temp_filter_level;
+} mpu9250_config_t;
+
+typedef struct {
+    int16_t x;
+    int16_t y;
+    int16_t z;
+} mpu9250_axis3_i16_t;
+
+// typedef struct mpu9250_data
+// {
+//     mpu9250_axis3_i16_t accel;
+//     mpu9250_axis3_i16_t gyro;
+//     mpu9250_axis3_i16_t mag;
+//     int16_t temp;
+// };
+
+
+void i2c_master_init(
+  i2c_master_bus_handle_t *bus_handle,
+  i2c_master_dev_handle_t *imu1_handle,
+  i2c_master_dev_handle_t *imu2_handle);
+
 esp_err_t mpu9250_register_read(
   i2c_master_dev_handle_t dev_handle,
   uint8_t reg_addr, 
   uint8_t *data,
   size_t len);
 
-void i2c_master_init(
-  i2c_master_bus_handle_t *bus_handle,
-  i2c_master_dev_handle_t *imu1_handle,
-  i2c_master_dev_handle_t *imu2_handle);
+esp_err_t mpu9250_register_write_byte(
+  i2c_master_dev_handle_t dev_handle,
+  uint8_t reg_addr,
+  uint8_t data);
+
+void mpu9250_set_default_config(
+  i2c_master_dev_handle_t dev_handle);
+
+// void mpu9250_read_gyro(
+//   i2c_master_dev_handle_t dev_handle,
+//   mpu9250_axis3_i16_t *gyro_data);
+
+void mpu9250_read_accel(
+  i2c_master_dev_handle_t dev_handle,
+  mpu9250_axis3_i16_t *accel_data); 
+
+// void mpu9250_read_temp(
+//   i2c_master_dev_handle_t dev_handle,
+//   int16_t *temp_data);
+
+// void mpu9250_read_mag(
+//   i2c_master_dev_handle_t dev_handle,
+//   mpu9250_axis3_i16_t *mag_data);
