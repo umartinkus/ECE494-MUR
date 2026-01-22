@@ -22,7 +22,7 @@ public:
         return size_;
     }
 
-    std::size_t capacity() const noexcept { return buf_.size(); }
+    std::size_t capacity() const noexcept { return buf_.capacity(); }
 
     bool empty() const noexcept {
         std::lock_guard<std::mutex> g(mutex_);
@@ -31,7 +31,7 @@ public:
 
     bool full() const noexcept {
         std::lock_guard<std::mutex> g(mutex_);
-        return size_ == buf_.size();
+        return size_ == capacity();
     }
 
     void clear() noexcept {
@@ -44,7 +44,7 @@ public:
     // Drop-on-full
     bool push_drop(const T& val) {
         std::lock_guard<std::mutex> g(mutex_);
-        if (size_ == buf_.size()) return false;
+        if (full()) return false;
         buf_[head_] = val;
         head_ = inc_(head_);
         ++size_;
@@ -53,7 +53,7 @@ public:
 
     bool push_drop(T&& val) {
         std::lock_guard<std::mutex> g(mutex_);
-        if (size_ == buf_.size()) return false;
+        if (full()) return false;
         buf_[head_] = std::move(val);
         head_ = inc_(head_);
         ++size_;
@@ -63,9 +63,9 @@ public:
     // Overwrite-on-full
     void push_overwrite(const T& val) {
         std::lock_guard<std::mutex> g(mutex_);
-        if (buf_.empty()) return;
+        if (empty()) return;
 
-        const bool was_full = (size_ == buf_.size());
+        const bool was_full = (size_ == capacity());
         buf_[head_] = val;
         head_ = inc_(head_);
 
@@ -78,9 +78,9 @@ public:
 
     void push_overwrite(T&& val) {
         std::lock_guard<std::mutex> g(mutex_);
-        if (buf_.empty()) return;
+        if (empty()) return;
 
-        const bool was_full = (size_ == buf_.size());
+        const bool was_full = (size_ == capacity());
         buf_[head_] = std::move(val);
         head_ = inc_(head_);
 
@@ -112,7 +112,7 @@ public:
     const T* peek_newest() const noexcept {
         std::lock_guard<std::mutex> g(mutex_);
         if (size_ == 0) return nullptr;
-        const std::size_t newest_idx = (head_ == 0) ? (buf_.size() - 1) : (head_ - 1);
+        const std::size_t newest_idx = (head_ == 0) ? (capacity() - 1) : (head_ - 1);
         return &buf_[newest_idx];
     }
 
@@ -127,14 +127,14 @@ public:
 private:
     std::size_t inc_(std::size_t i) const noexcept {
         ++i;
-        if (i == buf_.size()) i = 0;
+        if (i == capacity()) i = 0;
         return i;
     }
 
     std::size_t phys_index_from_tail_(std::size_t offset) const noexcept {
         // assumes offset < size_
         std::size_t idx = tail_ + offset;
-        const std::size_t cap = buf_.size();
+        const std::size_t cap = capacity();
         if (idx >= cap) idx -= cap;
         return idx;
     }
@@ -155,15 +155,17 @@ public:
     std::size_t capacity() const noexcept { return ring_.capacity(); }
     void clear() noexcept { ring_.clear(); }
 
+    bool full() const noexcept { return ring_.full(); }
+    bool empty() const noexcept { return ring_.empty(); }
+
     // Drop-on-full write
     std::size_t write(const std::uint8_t* in, std::size_t len) {
-        for (std::size_t i = 0; i < len; i++) {
-            std::cout << in[i];
-        }
+        std::cout << ring_.size() << std::endl;
         if (!in || len == 0) return 0;
         std::size_t n_written = 0;
         for (; n_written < len; ++n_written) {
             if (!ring_.push_drop(in[n_written])) break;
+            std::cout << n_written << std::endl;
         }
         return n_written;
     }

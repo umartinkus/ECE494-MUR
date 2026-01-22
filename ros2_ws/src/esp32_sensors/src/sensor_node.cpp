@@ -29,11 +29,12 @@ void port_listener(SerialPort& sp, ByteRing& br) {
         n_read = sp.read(buf.data(), buf.capacity(), timeout);
         n_written = br.write(buf.data(), n_read);
         if (n_written > 0) {
+            std::cout << "ugh" << std::endl;
             std::vector<std::uint8_t> tmp;
             br.read(tmp.data(), n_written);
-            for (const auto& val : tmp) {
-                std::cout << val;
-            }
+            // for (const auto& val : tmp) {
+            //     std::cout << val;
+            // }
         }
     }
 }
