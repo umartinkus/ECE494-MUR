@@ -14,6 +14,6 @@ void app_main(void)
     int task_id0 = 0;
     xTaskCreatePinnedToCore(GET_POSE, "pinned_task0_core0", 4096, (void*)task_id0, TASK_PRIO_3, NULL, CORE0);
     for(;;){
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(1500));
     }
 }
