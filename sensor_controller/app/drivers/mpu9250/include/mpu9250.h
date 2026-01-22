@@ -12,6 +12,16 @@
 #define I2C_MASTER_RX_BUF_DISABLE   0                           /*!< I2C master doesn't need buffer */
 #define I2C_MASTER_TIMEOUT_MS       1000
 
+// MPU9250 Default Configuration Values
+#define MPU9250_DEFAULT_LPF_CONFIG 0x03  // DLPF_CFG = 3; Fs = 8kHz, BW = 44Hz
+#define MPU9250_DEFAULT_SAMPLERATE_DIV 0x04  // Sample Rate = Gyro Output Rate / (1 + SMPLRT_DIV); 1kHz/(1+4) = 200Hz
+#define MPU9250_DEFAULT_GYRO_SCALE  0x00  // ±250dps
+#define MPU9250_DEFAULT_ACCEL_SCALE  0x00  // ±2g
+#define MPU9250_DEFAULT_ACCEL_DLPF_CONFIG 0x03  // A_DLPF_CFG = 3; Fs = 1kHz, BW = 44Hz
+
+#define MPU9250_ACCEL_SCALE_MODIFIER_2G 16384.0f
+#define MPU9250_GYRO_SCALE_MODIFIER_250DEG 131.0f 
+
 // MPU9250 I2C Registers
 #define SELF_TEST_X_ACCEL 0x0D
 #define SELF_TEST_Y_ACCEL 0x0E    
@@ -125,17 +135,9 @@
 #define YA_OFFSET_L      0x7B
 #define ZA_OFFSET_H      0x7D
 #define ZA_OFFSET_L      0x7E
-#define INT_BYPASS_ENABLE 0X02
-
+#define INT_BYPASS_ENABLE 0X02 // Enable I2C bypass to access magnetometer
 #define MPU9250_ADDRESS0 0x68  // Device address when ADO = 0
 #define MPU9250_ADDRESS1 0x69  // Device address when ADO = 1
-
-#define MPU9250_DEFAULT_LPF_CONFIG 0x03  // DLPF_CFG = 3; Fs = 8kHz, BW = 44Hz
-#define MPU9250_DEFAULT_SAMPLERATE_DIV 0x04  // Sample Rate = Gyro Output Rate / (1 + SMPLRT_DIV); 1kHz/(1+4) = 200Hz
-#define MPU9250_DEFAULT_GYRO_SCALE  0x18  // ±2000dps
-#define MPU9250_DEFAULT_ACCEL_SCALE  0x10  // ±8g
-#define MPU9250_DEFAULT_ACCEL_DLPF_CONFIG 0x03  // A_DLPF_CFG = 3; Fs = 1kHz, BW = 44Hz
-
 
 typedef struct {
     bool gyro_enabled;

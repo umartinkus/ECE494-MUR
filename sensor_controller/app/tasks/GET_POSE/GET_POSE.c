@@ -17,18 +17,20 @@ static mpu9250_data_t imu2_data;
 
 // sync primitives
 // static portMUX_TYPE imu_mux = portMUX_INITIALIZER_UNLOCKED;
+uint64_t get_ms_freertos(){
+  return xTaskGetTickCount()/portTICK_PERIOD_MS;
+}
 
 void GET_POSE(void *arg){
     initBus();
     configureDevices();
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(1000)); // give time for other tasks to start
     for(;;){
         // taskENTER_CRITICAL(&imu_mux); //ensure that one full I2C transaction is done before scheduling another task
-        ESP_LOGI(TAG, "Reading IMU Data...");
         mpu9250_get_pose(imu1_handle, &imu1_data);
-        ESP_LOGI(TAG, "IMU1 Accel => X: %d, Y: %d, Z: %d Gyro => X: %d, Y: %d, Z: %d Mag => X: %d, Y: %d, Z: %d Temp => %d", imu1_data.accel.x, imu1_data.accel.y, imu1_data.accel.z,imu1_data.gyro.x, imu1_data.gyro.y, imu1_data.gyro.z,imu1_data.mag.x, imu1_data.mag.y, imu1_data.mag.z,imu1_data.temp);
+        // ESP_LOGI(TAG, "IMU1 Accel => X: %d, Y: %d, Z: %d Gyro => X: %d, Y: %d, Z: %d Mag => X: %d, Y: %d, Z: %d Temp => %d", imu1_data.accel.x, imu1_data.accel.y, imu1_data.accel.z,imu1_data.gyro.x, imu1_data.gyro.y, imu1_data.gyro.z,imu1_data.mag.x, imu1_data.mag.y, imu1_data.mag.z,imu1_data.temp);
         mpu9250_get_pose(imu2_handle, &imu2_data);
-        ESP_LOGI(TAG, "IMU2 Accel => X: %d, Y: %d, Z: %d Gyro => X: %d, Y: %d, Z: %d Mag => X: %d, Y: %d, Z: %d Temp => %d", imu2_data.accel.x, imu2_data.accel.y, imu2_data.accel.z,imu2_data.gyro.x, imu2_data.gyro.y, imu2_data.gyro.z,imu2_data.mag.x, imu2_data.mag.y, imu2_data.mag.z,imu2_data.temp);
+        // ESP_LOGI(TAG, "IMU2 Accel => X: %d, Y: %d, Z: %d Gyro => X: %d, Y: %d, Z: %d Mag => X: %d, Y: %d, Z: %d Temp => %d", imu2_data.accel.x, imu2_data.accel.y, imu2_data.accel.z,imu2_data.gyro.x, imu2_data.gyro.y, imu2_data.gyro.z,imu2_data.mag.x, imu2_data.mag.y, imu2_data.mag.z,imu2_data.temp);
             // taskEXIT_CRITICAL(&imu_mux);
         vTaskDelay(pdMS_TO_TICKS(10000));
     }
