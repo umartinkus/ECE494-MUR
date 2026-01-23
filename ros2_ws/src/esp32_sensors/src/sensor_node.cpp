@@ -1,16 +1,20 @@
 #include <chrono>
+#include <condition_variable>
+#include <cstddef>
 #include <functional>
 #include <iostream>
 #include <string>
 #include <thread>
 
+#include "marlin_comms/data_struct.hpp"
 #include "marlin_comms/ring_buffer.hpp"
 #include "marlin_comms/serial_port.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
+#define BUF_SIZE 4096
+
 void port_listener(SerialPort &sp, ByteRing &br) {
-  std::cout << "running" << std::endl;
   // setting the max size and the read timeout
   const std::size_t max_len = 4096 * 2;
   const std::chrono::milliseconds timeout(500);
@@ -20,15 +24,26 @@ void port_listener(SerialPort &sp, ByteRing &br) {
 
   // num of bytes read from buffer
   std::size_t n_read{};
+  std::size_t n_written{};
 
   // poll and write to ring buffer
   // note that the buffer is a drop buffer
   for (;;) {
     n_read = sp.read(buf.data(), buf.size(), timeout);
-    br.write(buf.data(), n_read);
+    n_written = br.write(buf.data(), n_read);
   }
 }
-template <typename T> void parser(ByteRing &br, Ring<T> &sr) {}
+void parser(ByteRing &br, Ring<DataContainer> &sr) {
+  std::vector<std::uint8_t> temp(BUF_SIZE);
+  std::size_t n_read{0};
+
+  for (;;) {
+    n_read = br.read(temp.data(), BUF_SIZE);
+    for (std::size_t i = 0; i < n_read; i++) {
+      std::cout << temp[i];
+    }
+  }
+}
 
 class DataPublisher : public rclcpp::Node {
 public:
@@ -53,14 +68,21 @@ private:
 };
 
 int main() {
+  // create a condition_variable
+  std::condition_variable cv;
+
   // initialize serial port obj
   SerialPort sp("/dev/ttyUSB0");
   sp.config_port(B115200);
 
   // initialize ByteRing obj
   ByteRing br(32768);
+  Ring<DataContainer> dr(BUF_SIZE);
 
-  std::thread sp_thread(port_listener, std::ref(sp), std::ref(br));
+  // instatiate threads
+  std::thread producer_thread(port_listener, std::ref(sp), std::ref(br));
+  std::thread consumer_thread(parser, std::ref(br), std::ref(dr));
 
-  sp_thread.join();
+  producer_thread.join();
+  consumer_thread.join();
 }
