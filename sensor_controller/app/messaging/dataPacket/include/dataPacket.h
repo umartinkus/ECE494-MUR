@@ -12,3 +12,8 @@ typedef struct {
     __uint8_t device_address;
     __uint8_t depth_data[6];
 } depthPacket_t;
+
+typedef struct{
+    void* pose_buff;
+    void* depth_buff;   
+} dataBuffers_t;

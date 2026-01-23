@@ -34,7 +34,7 @@ void GET_POSE(void *pvParameters){
         mpu9250_get_pose(imu2_handle, &imu2_data);
         makePacket(MPU9250_ADDRESS1, &imu2_data);
         xMessageBufferSend(imu_buff, (void*)&pose_packet, sizeof(pose_packet), pdMS_TO_TICKS(10));
-        vTaskDelay(pdMS_TO_TICKS(10000)); // 100Hz
+        vTaskDelay(pdMS_TO_TICKS(10)); // 100Hz
     }
 }
 
