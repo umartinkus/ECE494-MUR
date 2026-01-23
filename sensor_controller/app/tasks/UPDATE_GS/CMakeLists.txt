@@ -1,2 +1,2 @@
-idf_component_register(SRCS "JET_LINK.c"
+idf_component_register(SRCS "UPDATE_GS.c"
                     INCLUDE_DIRS "include")

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "GET_POSE.h"
 #include "mpu9250.h"
+#include "dataPacket.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -11,30 +12,34 @@ static i2c_master_bus_handle_t bus_handle;
 static i2c_master_dev_handle_t imu1_handle;
 static i2c_master_dev_handle_t imu2_handle;
 
-// Global IMU data structures
+// Private IMU data structures
 static mpu9250_data_t imu1_data;
 static mpu9250_data_t imu2_data;
+static imuPacket_t pose_packet = (imuPacket_t){
+    .data_size = sizeof(mpu9250_data_t),
+    .device_address = 0x00,
+    .pose_data = {0}
+}; // only one imu packet bc msg buff send copy
 
-// sync primitives
-// static portMUX_TYPE imu_mux = portMUX_INITIALIZER_UNLOCKED;
-uint64_t get_ms_freertos(){
-  return xTaskGetTickCount()/portTICK_PERIOD_MS;
-}
-
-void GET_POSE(void *arg){
+// -------------------- TASK LOOP -------------------- //
+void GET_POSE(void *pvParameters){
     initBus();
     configureDevices();
+    MessageBufferHandle_t imu_buff = (MessageBufferHandle_t) pvParameters;
     vTaskDelay(pdMS_TO_TICKS(1000)); // give time for other tasks to start
     for(;;){
-        // taskENTER_CRITICAL(&imu_mux); //ensure that one full I2C transaction is done before scheduling another task
         mpu9250_get_pose(imu1_handle, &imu1_data);
-        // ESP_LOGI(TAG, "IMU1 Accel => X: %d, Y: %d, Z: %d Gyro => X: %d, Y: %d, Z: %d Mag => X: %d, Y: %d, Z: %d Temp => %d", imu1_data.accel.x, imu1_data.accel.y, imu1_data.accel.z,imu1_data.gyro.x, imu1_data.gyro.y, imu1_data.gyro.z,imu1_data.mag.x, imu1_data.mag.y, imu1_data.mag.z,imu1_data.temp);
+        makePacket(MPU9250_ADDRESS0, &imu1_data);
+        xMessageBufferSend(imu_buff, (void*)&pose_packet, sizeof(pose_packet), pdMS_TO_TICKS(10));
         mpu9250_get_pose(imu2_handle, &imu2_data);
-        // ESP_LOGI(TAG, "IMU2 Accel => X: %d, Y: %d, Z: %d Gyro => X: %d, Y: %d, Z: %d Mag => X: %d, Y: %d, Z: %d Temp => %d", imu2_data.accel.x, imu2_data.accel.y, imu2_data.accel.z,imu2_data.gyro.x, imu2_data.gyro.y, imu2_data.gyro.z,imu2_data.mag.x, imu2_data.mag.y, imu2_data.mag.z,imu2_data.temp);
-            // taskEXIT_CRITICAL(&imu_mux);
-        vTaskDelay(pdMS_TO_TICKS(10000));
+        makePacket(MPU9250_ADDRESS1, &imu2_data);
+        xMessageBufferSend(imu_buff, (void*)&pose_packet, sizeof(pose_packet), pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(10000)); // 100Hz
     }
 }
+
+// -------------------- PRIVATE FUNCTIONS -------------------- //
+
 /**
  * @brief initialize the i2c bus that hosts imu1 and imu2.
  *
@@ -60,8 +65,27 @@ void initBus()
     ESP_LOGI(TAG, "I2C bus initialized successfully");
 }
 
+/**
+ * @brief set defualt configs for the two IMUs
+ *
+ * 
+ * 
+ * 
+ * @return Description of the value returned by the function, or "void" 
+ *         if it does not return a value.
+ * 
+ * @note Optional notes or warnings can be included here.
+ * @bug 
+ */
 void configureDevices()
 {
     mpu9250_set_default_config(imu1_handle);
     mpu9250_set_default_config(imu2_handle);
+}
+
+void makePacket(__uint8_t device_address, void* imu_data)
+{
+    mpu9250_data_t* data = (mpu9250_data_t*)imu_data;
+    pose_packet.device_address = device_address;
+    memcpy(pose_packet.pose_data, data, sizeof(mpu9250_data_t));
 }
