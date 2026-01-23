@@ -16,25 +16,19 @@ void port_listener(SerialPort &sp, ByteRing &br) {
   const std::chrono::milliseconds timeout(500);
 
   // creating a buffer vector
-  std::vector<std::uint8_t> buf;
-  buf.reserve(max_len);
+  std::vector<std::uint8_t> buf(max_len);
 
   // num of bytes read from buffer
   std::size_t n_read{};
-  std::size_t n_written{};
 
+  // poll and write to ring buffer
+  // note that the buffer is a drop buffer
   for (;;) {
-    n_read = sp.read(buf.data(), buf.capacity(), timeout);
-    n_written = br.write(buf.data(), n_read);
-    if (n_written > 0) {
-      std::vector<std::uint8_t> tmp;
-      br.read(tmp.data(), n_written);
-      // for (const auto& val : tmp) {
-      //     std::cout << val;
-      // }
-    }
+    n_read = sp.read(buf.data(), buf.size(), timeout);
+    br.write(buf.data(), n_read);
   }
 }
+template <typename T> void parser(ByteRing &br, Ring<T> &sr) {}
 
 class DataPublisher : public rclcpp::Node {
 public:

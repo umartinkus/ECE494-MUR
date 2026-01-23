@@ -2,7 +2,6 @@
 #include <algorithm> // std::min
 #include <cstddef>
 #include <cstdint>
-#include <iostream>
 #include <mutex>
 #include <utility>
 #include <vector>
@@ -21,7 +20,7 @@ public:
     return size_;
   }
 
-  std::size_t capacity() const noexcept { return buf_.capacity(); }
+  std::size_t capacity() const noexcept { return buf_.size(); }
 
   bool empty() const noexcept {
     std::lock_guard<std::mutex> g(mutex_);
@@ -43,7 +42,7 @@ public:
   // Drop-on-full
   bool push_drop(const T &val) {
     std::lock_guard<std::mutex> g(mutex_);
-    if (full())
+    if (size_ == capacity())
       return false;
     buf_[head_] = val;
     head_ = inc_(head_);
@@ -53,7 +52,7 @@ public:
 
   bool push_drop(T &&val) {
     std::lock_guard<std::mutex> g(mutex_);
-    if (full())
+    if (size_ == capacity())
       return false;
     buf_[head_] = std::move(val);
     head_ = inc_(head_);
@@ -64,9 +63,6 @@ public:
   // Overwrite-on-full
   void push_overwrite(const T &val) {
     std::lock_guard<std::mutex> g(mutex_);
-    if (empty())
-      return;
-
     const bool was_full = (size_ == capacity());
     buf_[head_] = val;
     head_ = inc_(head_);
@@ -80,9 +76,6 @@ public:
 
   void push_overwrite(T &&val) {
     std::lock_guard<std::mutex> g(mutex_);
-    if (empty())
-      return;
-
     const bool was_full = (size_ == capacity());
     buf_[head_] = std::move(val);
     head_ = inc_(head_);
@@ -175,9 +168,7 @@ public:
     for (; n_written < len; ++n_written) {
       if (!ring_.push_drop(in[n_written]))
         break;
-      std::cout << n_written << std::endl;
     }
-    std::cout << size() << std::endl;
     return n_written;
   }
 
