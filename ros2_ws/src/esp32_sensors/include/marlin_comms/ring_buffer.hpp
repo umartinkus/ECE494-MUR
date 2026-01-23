@@ -1,8 +1,8 @@
 #pragma once
 #include <algorithm> // std::min
+#include <condition_variable>
 #include <cstddef>
 #include <cstdint>
-#include <iostream>
 #include <mutex>
 #include <utility>
 #include <vector>
@@ -16,25 +16,15 @@ public:
   explicit Ring(std::size_t capacity)
       : buf_(capacity), head_(0), tail_(0), size_(0) {}
 
-  std::size_t size() const noexcept {
-    std::lock_guard<std::mutex> g(mutex_);
-    return size_;
-  }
+  std::size_t size() const noexcept { return size_; }
 
-  std::size_t capacity() const noexcept { return buf_.capacity(); }
+  std::size_t capacity() const noexcept { return buf_.size(); }
 
-  bool empty() const noexcept {
-    std::lock_guard<std::mutex> g(mutex_);
-    return size_ == 0;
-  }
+  bool empty() const noexcept { return size_ == 0; }
 
-  bool full() const noexcept {
-    std::lock_guard<std::mutex> g(mutex_);
-    return size_ == capacity();
-  }
+  bool full() const noexcept { return size_ == capacity(); }
 
   void clear() noexcept {
-    std::lock_guard<std::mutex> g(mutex_);
     head_ = 0;
     tail_ = 0;
     size_ = 0;
@@ -42,8 +32,7 @@ public:
 
   // Drop-on-full
   bool push_drop(const T &val) {
-    std::lock_guard<std::mutex> g(mutex_);
-    if (full())
+    if (size_ == capacity())
       return false;
     buf_[head_] = val;
     head_ = inc_(head_);
@@ -52,8 +41,7 @@ public:
   }
 
   bool push_drop(T &&val) {
-    std::lock_guard<std::mutex> g(mutex_);
-    if (full())
+    if (size_ == capacity())
       return false;
     buf_[head_] = std::move(val);
     head_ = inc_(head_);
@@ -63,10 +51,6 @@ public:
 
   // Overwrite-on-full
   void push_overwrite(const T &val) {
-    std::lock_guard<std::mutex> g(mutex_);
-    if (empty())
-      return;
-
     const bool was_full = (size_ == capacity());
     buf_[head_] = val;
     head_ = inc_(head_);
@@ -79,10 +63,6 @@ public:
   }
 
   void push_overwrite(T &&val) {
-    std::lock_guard<std::mutex> g(mutex_);
-    if (empty())
-      return;
-
     const bool was_full = (size_ == capacity());
     buf_[head_] = std::move(val);
     head_ = inc_(head_);
@@ -95,7 +75,6 @@ public:
   }
 
   bool pop(T &out) {
-    std::lock_guard<std::mutex> g(mutex_);
     if (size_ == 0)
       return false;
 
@@ -107,14 +86,12 @@ public:
 
   // Returns pointer to oldest element, or nullptr if empty.
   const T *peek_oldest() const noexcept {
-    std::lock_guard<std::mutex> g(mutex_);
     return (size_ == 0) ? nullptr : &buf_[tail_];
   }
 
   // Returns pointer to newest element, or nullptr if empty.
   // Newest is the element just before head_ (wrapping).
   const T *peek_newest() const noexcept {
-    std::lock_guard<std::mutex> g(mutex_);
     if (size_ == 0)
       return nullptr;
     const std::size_t newest_idx =
@@ -124,7 +101,6 @@ public:
 
   // Offset from OLDEST (tail_). offset=0 => oldest.
   const T *peek_offset(std::size_t offset_from_oldest) const noexcept {
-    std::lock_guard<std::mutex> g(mutex_);
     if (offset_from_oldest >= size_)
       return nullptr;
     const std::size_t idx = phys_index_from_tail_(offset_from_oldest);
@@ -148,7 +124,6 @@ private:
     return idx;
   }
 
-  mutable std::mutex mutex_;
   std::vector<T> buf_;
   std::size_t head_;
   std::size_t tail_;
@@ -160,24 +135,36 @@ class ByteRing {
 public:
   explicit ByteRing(std::size_t capacity) : ring_(capacity) {}
 
-  std::size_t size() const noexcept { return ring_.size(); }
+  std::size_t size() const noexcept {
+    std::lock_guard<std::mutex> lock(r_lock_);
+    return ring_.size();
+  }
   std::size_t capacity() const noexcept { return ring_.capacity(); }
-  void clear() noexcept { ring_.clear(); }
+  void clear() noexcept {
+    std::lock_guard<std::mutex> lock(r_lock_);
+    ring_.clear();
+  }
 
-  bool full() const noexcept { return ring_.full(); }
-  bool empty() const noexcept { return ring_.empty(); }
+  bool full() const noexcept {
+    std::lock_guard<std::mutex> lock(r_lock_);
+    return ring_.full();
+  }
+  bool empty() const noexcept {
+    std::lock_guard<std::mutex> lock(r_lock_);
+    return ring_.empty();
+  }
 
   // Drop-on-full write
   std::size_t write(const std::uint8_t *in, std::size_t len) {
+    std::unique_lock<std::mutex> lock(r_lock_);
     if (!in || len == 0)
       return 0;
     std::size_t n_written = 0;
     for (; n_written < len; ++n_written) {
       if (!ring_.push_drop(in[n_written]))
         break;
-      std::cout << n_written << std::endl;
     }
-    std::cout << size() << std::endl;
+    cv_.notify_one();
     return n_written;
   }
 
@@ -189,6 +176,11 @@ public:
   std::size_t read(std::uint8_t *out, std::size_t len) {
     if (!out || len == 0)
       return 0;
+
+    // lock and wait until notified by write
+    std::unique_lock<std::mutex> lock(r_lock_);
+    cv_.wait(lock, [this]() { return !ring_.empty(); });
+
     std::size_t n = 0;
     for (; n < len; ++n) {
       std::uint8_t b{};
@@ -205,6 +197,7 @@ public:
   }
 
   std::size_t discard(std::size_t n) {
+    std::lock_guard<std::mutex> lock(r_lock_);
     std::size_t discarded = 0;
     std::uint8_t b{};
     for (; discarded < n; ++discarded) {
@@ -216,6 +209,7 @@ public:
 
   // Copy (without removing) up to len bytes starting at oldest.
   std::size_t peek(std::uint8_t *out, std::size_t len) const {
+    std::lock_guard<std::mutex> lock(r_lock_);
     if (!out || len == 0)
       return 0;
     const std::size_t avail = ring_.size();
@@ -235,13 +229,18 @@ public:
   // Find a byte pattern in the current buffer (offset from oldest).
   std::size_t find_pattern(const std::uint8_t *pattern,
                            std::size_t pattern_len) const {
+    // check for empty pattern
     if (!pattern || pattern_len == 0)
       return 0;
 
+    std::lock_guard<std::mutex> lock(r_lock_);
+
+    // check that the ring insn't empyt
     const std::size_t avail = ring_.size();
     if (pattern_len > avail)
       return no_val;
 
+    // check max length that can be checked
     const std::size_t limit = avail - pattern_len;
     for (std::size_t i = 0; i <= limit; ++i) {
       bool match = true;
@@ -261,6 +260,7 @@ public:
   // Copy an exact window without removing. offset is from oldest.
   bool copy_window(std::size_t offset, std::uint8_t *out,
                    std::size_t out_len) const {
+    std::lock_guard<std::mutex> lock(r_lock_);
     if (!out)
       return false;
     const std::size_t avail = ring_.size();
@@ -280,4 +280,6 @@ public:
 
 private:
   Ring<std::uint8_t> ring_;
+  mutable std::mutex r_lock_;
+  std::condition_variable cv_;
 };
