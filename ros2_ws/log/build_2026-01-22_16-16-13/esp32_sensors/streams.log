@@ -1,0 +1,32 @@
+[0.008s] Invoking command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors -- -j16 -l16
+[0.034s] [35m[1mConsolidate compiler generated dependencies of target sensor_node[0m
+[0.044s] [ 50%] [32mBuilding CXX object CMakeFiles/sensor_node.dir/src/sensor_node.cpp.o[0m
+[2.061s] [100%] [32m[1mLinking CXX executable sensor_node[0m
+[2.126s] [100%] Built target sensor_node
+[2.134s] Invoked command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors -- -j16 -l16
+[2.135s] Invoking command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors
+[2.140s] -- Install configuration: "Debug"
+[2.140s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/lib/esp32_sensors/sensor_node
+[2.141s] -- Set runtime path of "/home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/lib/esp32_sensors/sensor_node" to ""
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include/marlin_comms
+[2.141s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include/marlin_comms/ring_buffer.hpp
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include/marlin_comms/test.cpp
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include/marlin_comms/serial_port.hpp
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include/marlin_comms/protocol.hpp
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/ament_index/resource_index/package_run_dependencies/esp32_sensors
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/ament_index/resource_index/parent_prefix_path/esp32_sensors
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/environment/ament_prefix_path.sh
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/environment/ament_prefix_path.dsv
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/environment/path.sh
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/environment/path.dsv
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/local_setup.bash
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/local_setup.sh
+[2.141s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/local_setup.zsh
+[2.142s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/local_setup.dsv
+[2.142s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/package.dsv
+[2.142s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/ament_index/resource_index/packages/esp32_sensors
+[2.142s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/cmake/esp32_sensorsConfig.cmake
+[2.142s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/cmake/esp32_sensorsConfig-version.cmake
+[2.142s] -- Up-to-date: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/package.xml
+[2.142s] Invoked command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors
