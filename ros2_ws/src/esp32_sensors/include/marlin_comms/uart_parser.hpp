@@ -19,9 +19,11 @@ public:
 
 private:
   void step_(std::uint8_t b) {
+    std::cout << std::hex << b;
     switch (state_) {
     case State::WAIT_SYNC:
       if (first_sync_ && b == 0xFF) {
+
         // both conditions met, move to next state
         state_ = State::READ_SIZE;
         first_sync_ = false;
@@ -47,7 +49,7 @@ private:
       payload_[idx_++] = b;
       if (idx_ == data_size_)
         state_ = State::WAIT_SYNC;
-      std::cout << "we made it\n";
+      std::cout << std::endl;
       // add some sort of callback to handle the data payload
       break;
     }
