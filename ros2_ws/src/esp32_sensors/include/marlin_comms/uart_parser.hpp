@@ -19,7 +19,7 @@ public:
 
 private:
   void step_(std::uint8_t b) {
-    std::cout << std::hex << static_cast<unsigned int>(b);
+    std::cout << std::hex << static_cast<unsigned int>(b) << " ";
     switch (state_) {
     case State::WAIT_SYNC:
       if (first_sync_ && b == 0xFF) {
