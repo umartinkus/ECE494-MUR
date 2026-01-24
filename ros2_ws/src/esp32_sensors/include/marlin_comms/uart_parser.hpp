@@ -1,5 +1,5 @@
 #pragma once
-#include "data_struct.hpp"
+#include <iostream>
 #include <vector>
 
 class UartParser {
@@ -47,6 +47,7 @@ private:
       payload_[idx_++] = b;
       if (idx_ == data_size_)
         state_ = State::WAIT_SYNC;
+      std::cout << "we made it\n";
       // add some sort of callback to handle the data payload
       break;
     }

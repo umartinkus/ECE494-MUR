@@ -164,7 +164,7 @@ public:
       if (!ring_.push_drop(in[n_written]))
         break;
     }
-    cv_.notify_one();
+    cv_.notify_all();
     return n_written;
   }
 
@@ -233,7 +233,7 @@ public:
     if (!pattern || pattern_len == 0)
       return 0;
 
-    std::lock_guard<std::mutex> lock(r_lock_);
+    std::unique_lock<std::mutex> lock(r_lock_);
 
     // check that the ring insn't empyt
     const std::size_t avail = ring_.size();

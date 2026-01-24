@@ -9,6 +9,7 @@
 #include "marlin_comms/data_struct.hpp"
 #include "marlin_comms/ring_buffer.hpp"
 #include "marlin_comms/serial_port.hpp"
+#include "marlin_comms/uart_parser.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
@@ -37,11 +38,13 @@ void parser(ByteRing &br) {
   std::vector<std::uint8_t> temp(BUF_SIZE);
   std::size_t n_read{0};
 
+  // create an instance of the state machine
+  UartParser parser_object;
+
+  // consume bytes and pass into the state machine
   for (;;) {
     n_read = br.read(temp.data(), BUF_SIZE);
-    for (std::size_t i = 0; i < n_read; i++) {
-      std::cout << temp[i];
-    }
+    parser_object.consume(temp.data(), n_read);
   }
 }
 
