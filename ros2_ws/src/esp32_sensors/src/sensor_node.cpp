@@ -24,16 +24,16 @@ void port_listener(SerialPort &sp, ByteRing &br) {
 
   // num of bytes read from buffer
   std::size_t n_read{};
-  std::size_t n_written{};
 
   // poll and write to ring buffer
   // note that the buffer is a drop buffer
   for (;;) {
     n_read = sp.read(buf.data(), buf.size(), timeout);
-    n_written = br.write(buf.data(), n_read);
+    br.write(buf.data(), n_read);
   }
 }
-void parser(ByteRing &br, Ring<DataContainer> &sr) {
+void parser(ByteRing &br) {
+  // this is going to be a state machine
   std::vector<std::uint8_t> temp(BUF_SIZE);
   std::size_t n_read{0};
 
@@ -81,7 +81,7 @@ int main() {
 
   // instatiate threads
   std::thread producer_thread(port_listener, std::ref(sp), std::ref(br));
-  std::thread consumer_thread(parser, std::ref(br), std::ref(dr));
+  std::thread consumer_thread(parser, std::ref(br));
 
   producer_thread.join();
   consumer_thread.join();
