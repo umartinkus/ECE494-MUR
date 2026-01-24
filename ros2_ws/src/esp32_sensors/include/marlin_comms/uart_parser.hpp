@@ -47,9 +47,10 @@ private:
 
     case State::READ_DATA:
       payload_[idx_++] = b;
-      if (idx_ == data_size_)
+      if (idx_ == data_size_) {
         state_ = State::WAIT_SYNC;
-      std::cout << std::endl;
+        std::cout << std::endl;
+        }
       // add some sort of callback to handle the data payload
       break;
     }
