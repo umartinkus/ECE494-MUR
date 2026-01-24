@@ -16,7 +16,6 @@ void UPDATE_GS(void *arg)
 
     for(;;)
     {
-        // Placeholder for future implementation
         vTaskDelay(pdMS_TO_TICKS(2000)); // Delay for 2 seconds
         xMessageBufferReceive(pose_msg_buffer, buffer, 22, portMAX_DELAY);
         ESP_LOGI(TAG, "Size of data: %d, address: %x", buffer[0], buffer[1]);
