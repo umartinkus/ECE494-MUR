@@ -75,7 +75,7 @@ int main() {
   std::condition_variable cv;
 
   // initialize serial port obj
-  SerialPort sp("/dev/ttyUSB0");
+  SerialPort sp("/dev/ttyTHS1");
   sp.config_port(B115200);
 
   // initialize ByteRing obj
