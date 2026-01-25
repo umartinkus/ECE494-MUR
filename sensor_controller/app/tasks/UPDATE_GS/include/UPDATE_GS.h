@@ -3,8 +3,11 @@
 
 #define TXD_PIN 34
 #define RXD_PIN 35
+#define RX_BUF_SIZE 1024
+#define BAUD_RATE 115200
 
 void UPDATE_GS(void *arg);
+void RECEIVE_GS(void *arg);
 int send_data(const char* logName, const char* data);
 void init(void);
 

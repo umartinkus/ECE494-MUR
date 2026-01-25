@@ -54,7 +54,7 @@ void GET_POSE(void *pvParameters){
  * @bug When one of the I2C devices fails to initialize, the system enters an infinite boot loop.
  */
 
-void initBus()
+static void initBus()
 {
     uint8_t data[2] = {0, 0};
     i2c_master_init(&bus_handle, &imu1_handle, &imu2_handle); 
@@ -77,13 +77,13 @@ void initBus()
  * @note Optional notes or warnings can be included here.
  * @bug 
  */
-void configureDevices()
+static void configureDevices()
 {
     mpu9250_set_default_config(imu1_handle);
     mpu9250_set_default_config(imu2_handle);
 }
 
-void makePacket(__uint8_t device_address, void* imu_data)
+static void makePacket(__uint8_t device_address, void* imu_data)
 {
     mpu9250_data_t* data = (mpu9250_data_t*)imu_data;
     pose_packet.device_address = device_address;
