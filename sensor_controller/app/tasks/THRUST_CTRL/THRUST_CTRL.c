@@ -1,28 +1,31 @@
 #include <stdio.h>
 #include "THRUST_CTRL.h"
+#include "hal/ledc_types.h"
 #include "pwm.h"
 #include "esp_err.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
 #define THRUSTER_NEUTRAL_US (1500U)
-void THRUST_CTRL(void* params)
-{
-    thruster_config();
-    ESP_ERROR_CHECK(thruster_set_pulse_us(THR_1_CHANNEL, THRUSTER_NEUTRAL_US));
-    vTaskDelay(pdMS_TO_TICKS(5000));
-    ESP_ERROR_CHECK(thruster_set_pulse_us(THR_1_CHANNEL, 1700U));
-    for (;;) {
-        vTaskDelay(pdMS_TO_TICKS(3000));
-    }
-}
+#define NUM_CHANNELS (6)
 
-// void app_main(void)
-// {
-//     // Set the LEDC peripheral configuration
-//     example_ledc_init();
-//     // Set duty to 50%
-//     ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, THR_1_CHANNEL, LEDC_DUTY));
-//     // Update duty to apply the new value
-//     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, THR_1_CHANNEL));
-// }
+static ledc_channel_config_t pwm_channels[NUM_CHANNELS];
+static ledc_timer_config_t ledc_timer;
+
+void THRUST_CTRL(void* params) {
+  // initialize the timer and pwm_array
+  init_timer(&ledc_timer);
+  init_pwm_array(pwm_channels, NUM_CHANNELS);
+  
+  // start all of the pwms and neutral then set to 1700us
+  for (int i = 0; i < NUM_CHANNELS; i++) {
+    ESP_ERROR_CHECK(thruster_set_pulse_us(i, THRUSTER_NEUTRAL_US));
+    vTaskDelay(pdMS_TO_TICKS(5000));
+    ESP_ERROR_CHECK(thruster_set_pulse_us(i, 1700U));
+  }
+
+  // keep task running as not to reset the pwm signals
+  for (;;) {
+      vTaskDelay(pdMS_TO_TICKS(3000));
+  }
+}

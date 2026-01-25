@@ -1,3 +1,4 @@
+// std libs and esp-idf libs
 #include <stdio.h>
 #include "esp_err.h"
 #include "esp_log.h"
@@ -5,9 +6,14 @@
 #include "freertos/idf_additions.h"
 #include "freertos/task.h"
 #include "FreeRTOSConfig.h"
+
+// tasks
 #include "GET_POSE.h"
 #include "UPDATE_GS.h"
 #include "THRUST_CTRL.h"
+#include "UART_LISTEN.h"
+
+// other needed includes
 #include "dataPacket.h" // might need to move this somewhere else later
 
 #define CORE0 0

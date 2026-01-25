@@ -1,2 +1,8 @@
 .vscode
 build/
+log/
+.clangd
+.gdb*
+.cache/
+build.clang/
+AGENTS.md
