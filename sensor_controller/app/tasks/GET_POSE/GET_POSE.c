@@ -16,10 +16,17 @@ static i2c_master_dev_handle_t imu2_handle;
 static mpu9250_data_t imu1_data;
 static mpu9250_data_t imu2_data;
 static imuPacket_t pose_packet = (imuPacket_t){
+    .start_frameH = START_FRAMEH,
+    .start_frameL = START_FRAMEL,
     .data_size = sizeof(mpu9250_data_t),
     .device_address = 0x00,
     .pose_data = {0}
 }; // only one imu packet bc msg buff send copy
+
+// Private function prototypes
+static void initBus();
+static void configureDevices();
+static void makePacket(__uint8_t device_address, void* imu_data);
 
 // -------------------- TASK LOOP -------------------- //
 void GET_POSE(void *pvParameters){
