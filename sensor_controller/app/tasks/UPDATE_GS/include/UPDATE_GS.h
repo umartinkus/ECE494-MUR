@@ -8,8 +8,8 @@
 
 void UPDATE_GS(void *arg);
 void RECEIVE_GS(void *arg);
-int send_data(const char* logName, const char* data);
-void init(void);
+int sendData(const char* logName, const char* data);
+void uart_init(void);
 
 #endif // UPDATE_GS_H
 
