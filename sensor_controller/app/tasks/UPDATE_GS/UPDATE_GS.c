@@ -5,35 +5,32 @@
 #include "freertos/task.h"
 #include "dataPacket.h"
 #include "driver/uart.h"
-// #include "driver/gpio.h"
 
 const static char *TAG = "UPDATE_GS Task";
+__uint8_t msg_buffer[64]; // general buffer to receive slow lane messages
 
-__uint8_t imu_buffer[22];
 // -------------------- TASK LOOP -------------------- //
 void UPDATE_GS(void *arg)
 {
-    dataBuffers_t* data_buffers = (dataBuffers_t*) arg;
-    MessageBufferHandle_t pose_msg_buffer = (MessageBufferHandle_t)(data_buffers->pose_buff);
-    if(!uart_is_driver_installed(UART_NUM_1)){init();}
-    // MessageBufferHandle_t depth_msg_buffer = (MessageBufferHandle_t)(data_buffers->depth_buff);
+    MessageBufferHandle_t slow_lane_buffer = (MessageBufferHandle_t) arg;
+    if(!uart_is_driver_installed(UART_NUM_1)){uart_init();}
     for(;;)
     {
         vTaskDelay(pdMS_TO_TICKS(2000)); // Delay for 2 seconds
-        xMessageBufferReceive(pose_msg_buffer, imu_buffer, 22, portMAX_DELAY);
-
-        // xMessageBufferReceive(depth_msg_buffer, buffer, 6, portMAX_DELAY);
-        // ESP_LOGI(TAG, "Size of data: %d, address: %x", buffer[0], buffer[1]);
+        xMessageBufferReceive(slow_lane_buffer, msg_buffer, 64, portMAX_DELAY);\
+        __uint8_t dataSize = msg_buffer[2];
+        void * data_ptr = malloc(dataSize + 4); // allocate memory for incoming data
+        if (data_ptr == NULL) {
+            ESP_LOGE(TAG, "Memory allocation failed");
+            continue; // Skip this iteration if memory allocation fails
+        }
+        memcpy(data_ptr, msg_buffer, dataSize + 4); // copy
+        sendData(TAG, (const char*)data_ptr); // send data over UART
+        free(data_ptr); // free allocated memory
     }
 }
 
-void RECEIVE_GS(void *arg)
-{
-    if(!uart_is_driver_installed(UART_NUM_1)){init();}
-}
-
-
-void init(void)
+void uart_init(void)
 {
     const uart_config_t uart_config = {
         .baud_rate = BAUD_RATE,

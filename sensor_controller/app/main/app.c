@@ -22,15 +22,15 @@
 #define TASK_PRIO_5 5
 
 // Global Message Buffers
-static MessageBufferHandle_t pose_msg_buffer;
-static MessageBufferHandle_t depth_msg_buffer;
-static dataBuffers_t data_buffers;
+static MessageBufferHandle_t slow_lane_buff;
+static MessageBufferHandle_t fast_lane_buff;
 
 //  Event Queues
 static QueueHandle_t uart_event_queue;
 
 void app_main(void)
 {
+<<<<<<< HEAD
     // start the uart port
     init();
 
@@ -44,4 +44,12 @@ void app_main(void)
     // xTaskCreatePinnedToCore(UPDATE_GS, "UPDATE_GS_TASK_C0", 4096, (void*)&data_buffers, TASK_PRIO_4, NULL, CORE1);
     xTaskCreatePinnedToCore(THRUST_CTRL, "THRUST_CTRL_TASK_C0", 4096, (void*)uart_event_queue, TASK_PRIO_4, NULL, CORE0);
     xTaskCreatePinnedToCore(UART_LISTEN, "UART_LISTEN_TASK_C0", 4096, (void*)uart_event_queue, TASK_PRIO_3, NULL, CORE0);
+=======
+    slow_lane_buff = xMessageBufferCreate(1024);
+    fast_lane_buff = xMessageBufferCreate(2048);
+    uart_init();
+    xTaskCreatePinnedToCore(GET_POSE, "POSE_TASK_C0", 4096, (void*)slow_lane_buff, TASK_PRIO_5, NULL, CORE0);
+    xTaskCreatePinnedToCore(UPDATE_GS, "UPDATE_GS_TASK_C0", 4096, (void*)&fast_lane_buff, TASK_PRIO_4, NULL, CORE1);
+    // xTaskCreatePinnedToCore(THRUST_CTRL, "THRUST_CTRL_TASK_C0", 4096, NULL, TASK_PRIO_3, NULL, CORE0);
+>>>>>>> refs/remotes/origin/sensor_controller
 }
