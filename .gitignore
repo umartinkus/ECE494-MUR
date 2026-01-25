@@ -1,2 +1,8 @@
 .vscode
+build*/
 build/
+.clangd
+.gdb*
+log/
+install/
+build.clang/
