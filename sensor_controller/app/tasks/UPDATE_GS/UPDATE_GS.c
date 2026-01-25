@@ -7,8 +7,8 @@
 #include "driver/uart.h"
 
 const static char *TAG = "UPDATE_GS Task";
-
 __uint8_t msg_buffer[64]; // general buffer to receive slow lane messages
+
 // -------------------- TASK LOOP -------------------- //
 void UPDATE_GS(void *arg)
 {

@@ -7,7 +7,6 @@
 #define BAUD_RATE 115200
 
 void UPDATE_GS(void *arg);
-void RECEIVE_GS(void *arg);
 int sendData(const char* logName, const char* data);
 void uart_init(void);
 
