@@ -6,3 +6,4 @@ build/
 log/
 install/
 build.clang/
+.cache
