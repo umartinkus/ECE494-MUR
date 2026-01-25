@@ -1,6 +1,8 @@
 #ifndef DATAPACKET_H
 #define DATAPACKET_H
 #endif // DATAPACKET_H
+
+#define START_FRAME 0XFFFF
 typedef struct {
     __uint8_t data_size;
     __uint8_t device_address;
