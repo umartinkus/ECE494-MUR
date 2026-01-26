@@ -27,7 +27,7 @@ void THRUST_CTRL(void* params) {
 void update_thruster_status(bool* thruster_status) {
     for (int i = 0; i < NUM_CHANNELS; i++) {
         if (thruster_status[i]) {
-            ESP_ERROR_CHECK(thruster_set_pulse_us(i, 1750U));
+            ESP_ERROR_CHECK(thruster_set_pulse_us(i, 1550U));
         } else {
             ESP_ERROR_CHECK(thruster_set_pulse_us(i, 1500U));
         }
