@@ -17,7 +17,7 @@ void UPDATE_GS(void *arg)
     for(;;)
     {
         vTaskDelay(pdMS_TO_TICKS(2000)); // Delay for 2 seconds
-        xMessageBufferReceive(slow_lane_buffer, msg_buffer, 64, portMAX_DELAY);\
+        xMessageBufferReceive(slow_lane_buffer, msg_buffer, 64, portMAX_DELAY);
         __uint8_t dataSize = msg_buffer[2];
         void * data_ptr = malloc(dataSize + 4); // allocate memory for incoming data
         if (data_ptr == NULL) {
