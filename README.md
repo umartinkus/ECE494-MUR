@@ -1,4 +1,1 @@
-This is the README file
-
-I will put things to read here eventually
-testing commits pt.2 
+This is the main directory for the MARLIN project. The bulk of the ESP32 code is in the sensor_controller folder, while the esp32 folder is depreciated and will be removed soon
