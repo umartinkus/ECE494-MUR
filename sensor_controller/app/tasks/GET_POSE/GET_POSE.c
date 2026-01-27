@@ -8,13 +8,13 @@
 
 const static char *TAG = "IMU Task";
 // I2C bus and device handles
-static i2c_master_bus_handle_t bus_handle;
-static i2c_master_dev_handle_t imu1_handle;
-static i2c_master_dev_handle_t imu2_handle;
+static i2c_master_bus_handle_t bus_handle; // bus handle that hosts both IMUs
+static i2c_master_dev_handle_t imu1_handle; // device handle that holds IMU @ 0x68
+static i2c_master_dev_handle_t imu2_handle; // handle for IMU @ 0x69
 
 // Private IMU data structures
-static mpu9250_data_t imu1_data;
-static mpu9250_data_t imu2_data;
+static mpu9250_data_t imu1_data; // data for IMU @ 0x68
+static mpu9250_data_t imu2_data; // data for IMU @ 0x69
 static imuPacket_t pose_packet = (imuPacket_t){
     .start_frameH = START_FRAMEH,
     .start_frameL = START_FRAMEL,
@@ -26,7 +26,7 @@ static imuPacket_t pose_packet = (imuPacket_t){
 // Private function prototypes
 static void initBus();
 static void configureDevices();
-static void makePacket(__uint8_t device_address, void* imu_data);
+static void makePacket(__uint8_t device_address, mpu9250_data_t* imu_data);
 
 // -------------------- TASK LOOP -------------------- //
 void GET_POSE(void *pvParameters){
@@ -35,10 +35,10 @@ void GET_POSE(void *pvParameters){
     MessageBufferHandle_t imu_buff = (MessageBufferHandle_t) pvParameters;
     vTaskDelay(pdMS_TO_TICKS(1000)); // give time for other tasks to start
     for(;;){
-        mpu9250_get_pose(imu1_handle, &imu1_data);
+        mpu9250_get_pose(imu1_handle, &imu1_data); // sending data to imu1
         makePacket(MPU9250_ADDRESS0, &imu1_data);
         xMessageBufferSend(imu_buff, (void*)&pose_packet, sizeof(pose_packet), pdMS_TO_TICKS(10));
-        mpu9250_get_pose(imu2_handle, &imu2_data);
+        mpu9250_get_pose(imu2_handle, &imu2_data); // sending data to imu2
         makePacket(MPU9250_ADDRESS1, &imu2_data);
         xMessageBufferSend(imu_buff, (void*)&pose_packet, sizeof(pose_packet), pdMS_TO_TICKS(10));
         vTaskDelay(pdMS_TO_TICKS(10)); // 100Hz
@@ -90,9 +90,8 @@ static void configureDevices()
     mpu9250_set_default_config(imu2_handle);
 }
 
-static void makePacket(__uint8_t device_address, void* imu_data)
+static void makePacket(__uint8_t device_address, mpu9250_data_t* imu_data)
 {
-    mpu9250_data_t* data = (mpu9250_data_t*)imu_data;
     pose_packet.device_address = device_address;
-    memcpy(pose_packet.pose_data, data, sizeof(mpu9250_data_t));
+    memcpy(pose_packet.pose_data, imu_data, sizeof(mpu9250_data_t));
 }
