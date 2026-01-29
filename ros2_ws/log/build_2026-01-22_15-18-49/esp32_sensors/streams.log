@@ -1,0 +1,75 @@
+[0.006s] Invoking command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/nolan/ECE494-MUR/ros2_ws/src/esp32_sensors -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --no-warn-unused-cli -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors
+[0.012s] Not searching for unused variables given on the command line.
+[0.045s] -- The C compiler identification is GNU 11.4.0
+[0.082s] -- The CXX compiler identification is GNU 11.4.0
+[0.087s] -- Detecting C compiler ABI info
+[0.136s] -- Detecting C compiler ABI info - done
+[0.140s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.140s] -- Detecting C compile features
+[0.140s] -- Detecting C compile features - done
+[0.142s] -- Detecting CXX compiler ABI info
+[0.196s] -- Detecting CXX compiler ABI info - done
+[0.201s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.201s] -- Detecting CXX compile features
+[0.201s] -- Detecting CXX compile features - done
+[0.202s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.297s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.348s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.376s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.378s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.383s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.389s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.397s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.419s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.421s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.478s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.495s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.519s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.523s] -- Looking for pthread.h
+[0.575s] -- Looking for pthread.h - found
+[0.575s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.632s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.633s] -- Found Threads: TRUE  
+[0.664s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.705s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.705s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/nolan/ECE494-MUR/ros2_ws/src/esp32_sensors/include>
+[0.705s] -- Configured cppcheck exclude dirs and/or files: 
+[0.705s] -- Added test 'lint_cmake' to check CMake code style
+[0.706s] -- Added test 'uncrustify' to check C / C++ code style
+[0.706s] -- Configured uncrustify additional arguments: 
+[0.706s] -- Added test 'xmllint' to check XML markup files
+[0.707s] -- Configuring done
+[0.711s] -- Generating done
+[0.713s] -- Build files have been written to: /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors
+[0.720s] Invoked command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/nolan/ECE494-MUR/ros2_ws/src/esp32_sensors -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --no-warn-unused-cli -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors
+[0.720s] Invoking command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors -- -j16 -l16
+[0.753s] [ 50%] [32mBuilding CXX object CMakeFiles/sensor_node.dir/src/sensor_node.cpp.o[0m
+[2.803s] [100%] [32m[1mLinking CXX executable sensor_node[0m
+[2.867s] [100%] Built target sensor_node
+[2.876s] Invoked command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors -- -j16 -l16
+[2.878s] Invoking command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors
+[2.883s] -- Install configuration: "Debug"
+[2.883s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/lib/esp32_sensors/sensor_node
+[2.884s] -- Set runtime path of "/home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/lib/esp32_sensors/sensor_node" to ""
+[2.884s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include
+[2.884s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include/marlin_comms
+[2.884s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include/marlin_comms/ring_buffer.hpp
+[2.884s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include/marlin_comms/test.cpp
+[2.884s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include/marlin_comms/serial_port.hpp
+[2.884s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/include/marlin_comms/protocol.hpp
+[2.884s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/ament_index/resource_index/package_run_dependencies/esp32_sensors
+[2.884s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/ament_index/resource_index/parent_prefix_path/esp32_sensors
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/environment/ament_prefix_path.sh
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/environment/ament_prefix_path.dsv
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/environment/path.sh
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/environment/path.dsv
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/local_setup.bash
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/local_setup.sh
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/local_setup.zsh
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/local_setup.dsv
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/package.dsv
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/ament_index/resource_index/packages/esp32_sensors
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/cmake/esp32_sensorsConfig.cmake
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/cmake/esp32_sensorsConfig-version.cmake
+[2.885s] -- Installing: /home/nolan/ECE494-MUR/ros2_ws/install/esp32_sensors/share/esp32_sensors/package.xml
+[2.887s] Invoked command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors

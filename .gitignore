@@ -1,0 +1,19 @@
+.vscode
+build*/
+build/
+<<<<<<< HEAD
+.clangd
+.gdb*
+log/
+install/
+build.clang/
+.cache
+=======
+log/
+.clangd
+.gdb*
+.cache/
+build.clang/
+install/
+AGENTS.md
+>>>>>>> pwm

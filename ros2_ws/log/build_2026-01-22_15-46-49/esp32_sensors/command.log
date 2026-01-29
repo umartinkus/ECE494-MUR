@@ -1,0 +1,4 @@
+Invoking command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors -- -j16 -l16
+Invoked command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors -- -j16 -l16
+Invoking command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors
+Invoked command in '/home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/nolan/ECE494-MUR/ros2_ws/build/esp32_sensors
