@@ -1,5 +1,6 @@
 .vscode
 .gdb_history
 .clangd
+clangd/
 build/
 AGENTS.md
