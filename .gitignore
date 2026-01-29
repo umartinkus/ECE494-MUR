@@ -4,3 +4,9 @@
 clangd/
 build/
 AGENTS.md
+build*/
+.gdb*
+build.clang/
+.cache
+log/
+install/
