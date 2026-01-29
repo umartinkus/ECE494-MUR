@@ -7,19 +7,18 @@
 #include "driver/uart.h"
 
 const static char *TAG = "UPDATE_GS Task";
-__uint8_t msg_buffer[24]; // general buffer to receive slow lane messages
+uint8_t msg_buffer[68]; // general buffer to receive slow lane messages
 
 // -------------------- TASK LOOP -------------------- //
 void UPDATE_GS(void *arg)
 {
     ESP_LOGI(TAG, "Starting UPDATE_GS Task");
     MessageBufferHandle_t slow_lane_buffer = (MessageBufferHandle_t) arg;
-    // if(!uart_is_driver_installed(UART_NUM_1)){uart_init();}
     for(;;)
     {
         vTaskDelay(pdMS_TO_TICKS(2000)); // Delay for 2 seconds
-        xMessageBufferReceive(slow_lane_buffer, msg_buffer, 24, portMAX_DELAY);
-        __uint8_t dataSize = msg_buffer[2];
+        xMessageBufferReceive(slow_lane_buffer, msg_buffer, 68, portMAX_DELAY);
+        uint8_t dataSize = msg_buffer[2];
         void * data_ptr = malloc(dataSize + 4); // allocate memory for incoming data
         if (data_ptr == NULL) {
             ESP_LOGE(TAG, "Memory allocation failed");
