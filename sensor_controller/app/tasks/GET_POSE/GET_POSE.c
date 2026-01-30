@@ -32,22 +32,21 @@ static void makePacket(uint8_t device_address, mpu9250_data_t* imu_data);
 void GET_POSE(void *pvParameters){
     initBus();
     configureDevices();
-    MessageBufferHandle_t imu_buff = (MessageBufferHandle_t) pvParameters;
+    MessageBufferHandle_t fast_lane_buff = (MessageBufferHandle_t) pvParameters;
     vTaskDelay(pdMS_TO_TICKS(1000)); // give time for other tasks to start
     for(;;){
         mpu9250_get_pose(imu1_handle, &imu1_data); // sending data to imu1
         makePacket(MPU9250_ADDRESS0, &imu1_data);
-        xMessageBufferSend(imu_buff, (void*)&uart_packet, sizeof(uartPacket_t), pdMS_TO_TICKS(10));
+        xMessageBufferSend(fast_lane_buff, (void*)&uart_packet, sizeof(uartPacket_t), pdMS_TO_TICKS(10));
         mpu9250_get_pose(imu2_handle, &imu2_data); // sending data to imu2
         makePacket(MPU9250_ADDRESS1, &imu2_data);
-        xMessageBufferSend(imu_buff, (void*)&uart_packet, sizeof(uartPacket_t), pdMS_TO_TICKS(10));
+        xMessageBufferSend(fast_lane_buff, (void*)&uart_packet, sizeof(uartPacket_t), pdMS_TO_TICKS(10));
         vTaskDelay(pdMS_TO_TICKS(10)); // 100Hz
     }
 }
 
 // -------------------- PRIVATE FUNCTIONS -------------------- //
-
-/**
+/*
  * @brief initialize the i2c bus that hosts imu1 and imu2.
  *
  * This function will create a bus handle, two device handles, and open up and i2c bus. The bus is created
@@ -72,7 +71,7 @@ static void initBus()
     ESP_LOGI(TAG, "I2C bus initialized successfully");
 }
 
-/**
+/*
  * @brief set defualt configs for the two IMUs
  *
  * 
