@@ -1,19 +1,12 @@
 .vscode
-build*/
-build/
-<<<<<<< HEAD
+.gdb_history
 .clangd
+clangd/
+build/
+AGENTS.md
+build*/
 .gdb*
-log/
-install/
 build.clang/
 .cache
-=======
 log/
-.clangd
-.gdb*
-.cache/
-build.clang/
 install/
-AGENTS.md
->>>>>>> pwm

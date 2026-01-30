@@ -1,1 +1,0 @@
-/home/jetson/ECE494-MUR/ros2_ws/build/groundstation_interface/ament_cmake_core/groundstation_interfaceConfig-version.cmake
