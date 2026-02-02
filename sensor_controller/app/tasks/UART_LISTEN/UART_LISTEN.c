@@ -7,7 +7,6 @@
 #include "freertos/idf_additions.h"
 #include "freertos/projdefs.h"
 #include "freertos/task.h"
-#include "hal/uart_types.h"
 
 #define BUF_SIZE 256
 

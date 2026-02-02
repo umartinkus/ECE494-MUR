@@ -5,12 +5,16 @@
 #include "esp_err.h"
 #include "hal/ledc_types.h"
 #include "pwm.h"
+#include "state_machine.h"
 
 #define THRUSTER_NEUTRAL_US (1500U)
 #define NUM_CHANNELS (6)
 
 static ledc_channel_config_t pwm_channels[NUM_CHANNELS];
 static ledc_timer_config_t ledc_timer;
+
+extern State state;
+const float deadzone = 0.05;
 
 void THRUST_CTRL(void* params) {
   // initialize the timer and pwm_array
@@ -27,7 +31,7 @@ void THRUST_CTRL(void* params) {
 void update_thruster_status(bool* thruster_status) {
     for (int i = 0; i < NUM_CHANNELS; i++) {
         if (thruster_status[i]) {
-            ESP_ERROR_CHECK(thruster_set_pulse_us(i, 1550U));
+            ESP_ERROR_CHECK(thruster_set_pulse_us(i, 1750U));
         } else {
             ESP_ERROR_CHECK(thruster_set_pulse_us(i, 1500U));
         }
@@ -36,36 +40,14 @@ void update_thruster_status(bool* thruster_status) {
 
 void THRUST_UART_CONS(void* param) {
     QueueHandle_t cmd_queue = (QueueHandle_t)param;
-    static uint8_t thr_cmd = 0;
-    static bool thruster_status[6] = {false, false, false, false, false, false};
+    uint8_t thr_cmd = 0;
+
     
     // poll forever to get values
-    for (;;) {
-        if (xQueueReceive(cmd_queue, &thr_cmd, portMAX_DELAY)) {
-            switch (thr_cmd) {
-                case 49:
-                    thruster_status[0] = !thruster_status[0];
-                break;
-                case 50:
-                    thruster_status[1] = !thruster_status[1];
-                break;
-                case 51:
-                    thruster_status[2] = !thruster_status[2];
-                break;
-                case 52:
-                    thruster_status[3] = !thruster_status[3];
-                break;
-                case 53:
-                    thruster_status[4] = !thruster_status[4];
-                break;
-                case 54:
-                    thruster_status[5] = !thruster_status[5];
-                break;
-                default:
-                    printf("no");
-            }
-            update_thruster_status(thruster_status);
-        }
-        vTaskDelay(pdMS_TO_TICKS(10));
-    }
+    // for (;;) {
+    //     if (xQueueReceive(cmd_queue, &thr_cmd, portMAX_DELAY)) {
+    //         update_thruster_status();
+    //     }
+    //     vTaskDelay(pdMS_TO_TICKS(10));
+    // }
 }

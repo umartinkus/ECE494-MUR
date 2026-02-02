@@ -14,6 +14,7 @@
 
 // other needed includes
 #include "dataPacket.h" // might need to move this somewhere else later
+#include "packet_checks.h"
 
 #define CORE0 0
 #define CORE1 1

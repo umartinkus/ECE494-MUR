@@ -1,5 +1,6 @@
 #include "state_machine.h"
 #include "include/state_machine.h"
+#include "dataPacket.h"
 
 static State state;
 static bool sync_recieved = false;
