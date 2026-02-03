@@ -2,8 +2,8 @@
 #define DATAPACKET_H
 #include <stdint.h>
 
-#define START_FRAMEH 0XFF
-#define START_FRAMEL 0XFF
+#define START_FRAMEH 0X55
+#define START_FRAMEL 0X55
 typedef struct {
     __uint8_t start_frameH;
     __uint8_t start_frameL;

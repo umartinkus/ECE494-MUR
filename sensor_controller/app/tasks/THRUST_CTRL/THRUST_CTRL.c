@@ -13,7 +13,6 @@
 static ledc_channel_config_t pwm_channels[NUM_CHANNELS];
 static ledc_timer_config_t ledc_timer;
 
-extern State state;
 const float deadzone = 0.05;
 
 void THRUST_CTRL(void* params) {

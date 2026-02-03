@@ -80,12 +80,13 @@ int main() {
 
   // initialize ByteRing obj
   ByteRing br(32768);
-  Ring<DataContainer> dr(BUF_SIZE);
+  Ring<uartPacket_t> dr(BUF_SIZE);
 
   // instatiate threads
   std::thread producer_thread(port_listener, std::ref(sp), std::ref(br));
   std::thread consumer_thread(parser, std::ref(br));
 
+    // wait until threads are done (which never happens)
   producer_thread.join();
   consumer_thread.join();
 }
