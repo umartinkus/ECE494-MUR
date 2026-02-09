@@ -14,6 +14,10 @@ void UPDATE_GS(void *arg)
 {
     ESP_LOGI(TAG, "Starting UPDATE_GS Task");
     uart_init();
+    for(;;)
+    {
+
+    }
 }
 
 void uart_init(void)
