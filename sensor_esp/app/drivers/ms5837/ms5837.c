@@ -45,22 +45,25 @@ void i2c_master_init(i2c_master_bus_handle_t *bus_handle, i2c_master_dev_handle_
     }
 }
 
-void bar30_setup(i2c_master_dev_handle_t dev_handle){
+void bar30_setup(i2c_master_bus_handle_t bus_handle,i2c_master_dev_handle_t bar30_handle){
+    
+    // i2c_master_init(&bus_handle, &bar30_handle);
     // Send reset command to the sensor
     uint8_t cmd = CMD_MS58XX_RESET;
-    i2c_master_transmit(dev_handle, &cmd, 1, I2C_MASTER_TIMEOUT_MS);
+    i2c_master_transmit(bar30_handle, &cmd, 1, I2C_MASTER_TIMEOUT_MS);
     vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor reset - this is as per the datasheet
 
     // Read calibration coefficients from PROM
     uint8_t read_buffer[2];
     for (uint8_t i = 0; i < 7; i++) {
         cmd = CMD_MS58XX_PROM + (i * 2);
-        i2c_master_transmit_receive(dev_handle, &cmd, 1, read_buffer, 2, I2C_MASTER_TIMEOUT_MS);
+        ESP_LOGI(TAG, "Reading PROM word %d from address 0x%02x", i, cmd);
+        i2c_master_transmit_receive(bar30_handle, &cmd, 1, read_buffer, 2, I2C_MASTER_TIMEOUT_MS);
         ESP_LOGI(TAG, "Read Prom word: %d, value: 0x%04x", i, (read_buffer[1] << 8) | read_buffer[0]); // TODO: test this and remove the debug log
-        prom[2*i] = read_buffer[1];
-        prom[2*i+1] = read_buffer[0]; // Store in big-endian format
+        prom[2*i] = read_buffer[1]; // LSB from bar30
+        prom[2*i+1] = read_buffer[0]; // MSB from bar30
+        ESP_LOGI(TAG, "Stored in Prom[%d]: 0x%02x%02x", 2*i, prom[2*i+1], prom[2*i]);
     }
-    ESP_LOGI(TAG, "Calibration coeffs read from PROM: C1=%x, C2=%x, C3=%x, C4=%x, C5=%x, C6=%x", prom[0], prom[2], prom[4], prom[6], prom[8], prom[10]); //TODO: test and remove this log
     ESP_LOGI(TAG, "MS5837 setup complete. Calibration coefficients read.");
 }
 

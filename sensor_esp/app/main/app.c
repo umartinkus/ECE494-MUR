@@ -13,6 +13,8 @@
 #define CORE1 1
 #define TASK_PRIO_4 4
 
+
+
 void app_main(void)
 {
     xTaskCreatePinnedToCore(UPDATE_GS, "UPDATE_GS_TASK_C0", 4096, NULL, TASK_PRIO_4, NULL, CORE1);

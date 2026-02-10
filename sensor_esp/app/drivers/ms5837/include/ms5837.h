@@ -1,4 +1,4 @@
-#pragma once
+// #pragma once
 #include "driver/i2c_master.h"
 #include "driver/i2c_types.h"
 
@@ -45,5 +45,6 @@ esp_err_t bar30_register_write_byte(
   uint8_t data);
 
 void bar30_setup(
+  i2c_master_bus_handle_t bus_handle,
   i2c_master_dev_handle_t dev_handle);
 

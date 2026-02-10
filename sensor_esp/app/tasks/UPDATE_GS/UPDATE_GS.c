@@ -5,18 +5,26 @@
 #include "freertos/task.h"
 #include "dataPacket.h"
 #include "driver/uart.h"
+#include "ms5837.h"
 
 const static char *TAG = "UPDATE_GS Task";
 uint8_t msg_buffer[68] = {0}; // general buffer to receive slow lane messages
+
+// Private variables
+static i2c_master_bus_handle_t bus_handle;
+static i2c_master_dev_handle_t bar30_handle;
 
 // -------------------- TASK LOOP -------------------- //
 void UPDATE_GS(void *arg)
 {
     ESP_LOGI(TAG, "Starting UPDATE_GS Task");
     uart_init();
+    i2c_master_init(&bus_handle, &bar30_handle);
+    vTaskDelay(pdMS_TO_TICKS(1000)); // Give some time for the sensor to initialize before starting the loop
     for(;;)
     {
-
+        bar30_setup(bus_handle, bar30_handle);
+        vTaskDelay(pdMS_TO_TICKS(5000)); // 2Do: adjust this delay as needed
     }
 }
 
