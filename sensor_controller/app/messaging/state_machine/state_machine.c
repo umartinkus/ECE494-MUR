@@ -23,9 +23,9 @@ extern State state;
 
 void sync_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
-    ESP_LOGI(TAG, "yo it worked: %d", event);
 
-    if (sync_recieved && event == START_FRAMEL) {
+    if (sync_recieved && (event == START_FRAMEL)) {
+        ESP_LOGI(TAG, "sync state: %c", event);
         state = size_state;
 
     } else if (event == START_FRAMEH) {
@@ -36,6 +36,7 @@ void sync_state(uint8_t event, QueueHandle_t queue) {
 void size_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
 
+    ESP_LOGI(TAG, "size state: %c", event);
     packet_buf.data_size = event;
     state = addr_state;
 }
@@ -43,11 +44,13 @@ void size_state(uint8_t event, QueueHandle_t queue) {
 void addr_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
 
+    ESP_LOGI(TAG, "addr state: %c", event);
     packet_buf.device_address = event;
     state = data_state;
 }
 
 void data_state(uint8_t event, QueueHandle_t queue) {
+    ESP_LOGI(TAG, "data state: %c", event);
     if (position < packet_buf.data_size) {
         packet_buf.data[position++] = event;
     } else {
@@ -55,6 +58,7 @@ void data_state(uint8_t event, QueueHandle_t queue) {
         state = sync_state;
         sync_recieved = false;
         position = 0;
+        memset(&packet_buf, 0, sizeof(packet_buf));
         ESP_LOGI(TAG, "yo it worked: %d", uxQueueMessagesWaiting(queue));
     }
 }

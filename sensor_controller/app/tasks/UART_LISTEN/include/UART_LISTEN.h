@@ -6,6 +6,7 @@
 struct UartVariables {
     QueueHandle_t* uart_queue;
     QueueHandle_t* parsed_queue;
+    uint8_t test;
 };
 
 void UART_LISTEN(void* params);

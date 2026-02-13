@@ -4,9 +4,9 @@
 #include "driver/uart.h"
 
 // if you change this to the usb, make sure to change all 3
-#define UART_PORT UART_NUM_0
-#define TXD_PIN 3
-#define RXD_PIN 1
+#define UART_PORT UART_NUM_1
+#define TXD_PIN 16
+#define RXD_PIN 17
 
 #define RX_BUF_SIZE 1024
 #define BAUD_RATE 115200

@@ -17,6 +17,7 @@
 #include "freertos/task.h"
 
 #define BUF_SIZE 256
+static const char* TAG = "state_machine";
 
 extern State state; // gonna be so real, this is kinda dumb but it needs to be defined here
 
@@ -25,8 +26,11 @@ void UART_LISTEN(void* params) {
     struct UartVariables* pvParams = (struct UartVariables*)params;
 
     // get the queue handles from the struct pointer
-    QueueHandle_t uart_queue = *pvParams->uart_queue;
-    QueueHandle_t parsed_queue = *pvParams->parsed_queue;
+    QueueHandle_t uart_queue = *(pvParams->uart_queue);
+    QueueHandle_t parsed_queue = *(pvParams->parsed_queue);
+
+    uint8_t test = pvParams->test;
+    
 
     // setting some variables to be used later
     uint8_t uart_read_buffer[BUF_SIZE];
@@ -35,11 +39,13 @@ void UART_LISTEN(void* params) {
 
     state = sync_state;
 
+    int i = 0;
     // enter the main listening loop
     for (;;) {
+        available_bytes = 0;
         // get available bytes
         ESP_ERROR_CHECK(uart_get_buffered_data_len(UART_PORT, &available_bytes));
-        
+
         // if no available bytes, block for 10ms and try again
         if (!available_bytes) {
             vTaskDelay(pdMS_TO_TICKS(10));
@@ -57,6 +63,7 @@ void UART_LISTEN(void* params) {
         // push bytes into the buffer
         for (int i = 0; i < bytes_read; i++) {
             state(uart_read_buffer[i], uart_queue);
+            uart_write_bytes(UART_PORT, (const void*)&uart_read_buffer[i], 1);
         }
 
         vTaskDelay(pdMS_TO_TICKS(10));
