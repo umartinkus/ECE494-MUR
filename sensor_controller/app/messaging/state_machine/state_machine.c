@@ -19,13 +19,13 @@ float thr_inv[6][6] = {
 static bool sync_recieved = false;
 uartPacket_t packet_buf = {0};
 static size_t position = 0;
-extern State state;
+State state = sync_state;
 
 void sync_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
 
     if (sync_recieved && (event == START_FRAMEL)) {
-        ESP_LOGI(TAG, "sync state: %c", event);
+        ESP_LOGI(TAG, "sync state: %p", state);
         state = size_state;
 
     } else if (event == START_FRAMEH) {
@@ -53,7 +53,9 @@ void data_state(uint8_t event, QueueHandle_t queue) {
     ESP_LOGI(TAG, "data state: %c", event);
     if (position < packet_buf.data_size) {
         packet_buf.data[position++] = event;
-    } else {
+    } 
+
+    if (position == packet_buf.data_size - 1) {
         xQueueSendToBack(queue, &packet_buf, pdMS_TO_TICKS(10));
         state = sync_state;
         sync_recieved = false;

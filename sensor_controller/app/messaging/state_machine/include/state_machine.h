@@ -12,4 +12,4 @@ void addr_state(uint8_t event, QueueHandle_t queue);
 void data_state(uint8_t event, QueueHandle_t queue);
 
 extern float thr_inv[6][6];
-static State state;
+extern State state;
