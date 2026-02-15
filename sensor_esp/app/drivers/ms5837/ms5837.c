@@ -21,6 +21,11 @@ static uint8_t prom[14]; //holds calibration constants and crc
  */
 void i2c_master_init(i2c_master_bus_handle_t *bus_handle, i2c_master_dev_handle_t *bar30_handle){
 
+    if(bus_handle == NULL || bar30_handle == NULL) {
+        ESP_LOGE(TAG, "Invalid argument: bus_handle and bar30_handle must not be NULL");
+        return;
+    }
+
     i2c_master_bus_config_t bus_config = {
         .i2c_port = I2C_MASTER_NUM,
         .sda_io_num = I2C_MASTER_SDA_IO,
@@ -33,6 +38,11 @@ void i2c_master_init(i2c_master_bus_handle_t *bus_handle, i2c_master_dev_handle_
     while(i2c_new_master_bus(&bus_config, bus_handle) != ESP_OK && retry_count++ < 5){
         ESP_LOGI(TAG, "Failed to initialize I2C bus, retrying... (%d/5)", retry_count + 1);
     }
+
+    if(retry_count >= 5) {
+        ESP_LOGE(TAG, "Failed to initialize I2C bus after 5 attempts");
+        return;
+    }
     
     i2c_device_config_t bar30_config = {
         .dev_addr_length = I2C_ADDR_BIT_LEN_7,
@@ -42,6 +52,11 @@ void i2c_master_init(i2c_master_bus_handle_t *bus_handle, i2c_master_dev_handle_
     retry_count = 0;
     while(i2c_master_bus_add_device(*bus_handle, &bar30_config, bar30_handle) != ESP_OK && retry_count++ < 5){
         ESP_LOGI(TAG, "Failed to add MS5837 device to I2C bus, retrying... (%d/5)", retry_count + 1);
+    }
+    
+    if(retry_count >= 5) {
+        ESP_LOGE(TAG, "Failed to add MS5837 device to I2C bus after 5 attempts");
+        return;
     }
 }
 
@@ -69,3 +84,24 @@ void bar30_setup(i2c_master_bus_handle_t bus_handle,i2c_master_dev_handle_t bar3
     ESP_LOGI(TAG, "MS5837 setup complete. Calibration coefficients read.");
 }
 
+void bar30_read(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBuffer){
+    if(bar30_handle == NULL || dataBuffer == NULL) {
+        ESP_LOGE(TAG, "Invalid argument: bar30_handle and dataBuffer must not be NULL");
+        return;
+    }
+    // Send command to start pressure conversion (using OSR=256)
+    uint8_t cmd = ADDR_CMD_CONVERT_D1_OSR256;
+    i2c_master_transmit(bar30_handle, &cmd, 1, I2C_MASTER_TIMEOUT_MS);
+    vTaskDelay(pdMS_TO_TICKS(20)); // Delay for conversion - this is as per the datasheet
+    cmd = CMD_MS58XX_READ_ADC;
+    i2c_master_transmit_receive(bar30_handle, &cmd, 1, dataBuffer, MS5837_ADC_READ_SIZE, I2C_MASTER_TIMEOUT_MS);
+    ESP_LOGI(TAG, "Pressure ADC raw data: 0x%02x%02x%02x", dataBuffer[0], dataBuffer[1], dataBuffer[2]); // 2do: remove
+    
+    // Send command to read temperature
+    cmd = ADDR_CMD_CONVERT_D2_OSR256;
+    i2c_master_transmit(bar30_handle, &cmd, 1, I2C_MASTER_TIMEOUT_MS);
+    vTaskDelay(pdMS_TO_TICKS(20)); // max delay as per the datasheet
+    cmd = CMD_MS58XX_READ_ADC;
+    i2c_master_transmit_receive(bar30_handle, &cmd, 1, dataBuffer + 3, MS5837_ADC_READ_SIZE, I2C_MASTER_TIMEOUT_MS);
+    ESP_LOGI(TAG, "Temperature ADC raw data: 0x%02x%02x%02x", dataBuffer[3], dataBuffer[4], dataBuffer[5]); // 2do: remove
+}
