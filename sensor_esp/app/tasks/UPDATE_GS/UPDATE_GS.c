@@ -8,7 +8,7 @@
 #include "ms5837.h"
 
 const static char *TAG = "UPDATE_GS Task";
-uint8_t msg_buffer[68] = {0}; // general buffer to receive slow lane messages
+uint8_t msg_buffer[68] = {0}; // buffer to hold data packet 
 
 // Private variables
 static i2c_master_bus_handle_t bus_handle;
@@ -19,12 +19,18 @@ void UPDATE_GS(void *arg)
 {
     ESP_LOGI(TAG, "Starting UPDATE_GS Task");
     uart_init();
-    i2c_master_init(&bus_handle, &bar30_handle);
+    // i2c_master_init(&bus_handle, &bar30_handle);
+    bar30_setup(bus_handle, bar30_handle);
     vTaskDelay(pdMS_TO_TICKS(1000)); // Give some time for the sensor to initialize before starting the loop
     for(;;)
     {
-        bar30_setup(bus_handle, bar30_handle);
-        vTaskDelay(pdMS_TO_TICKS(5000)); // 2Do: adjust this delay as needed
+        // 1. Read sensor data and fill the data packet
+        // 2. Serialize the data packet into msg_buffer
+        // 3. Send the data over UART
+        // 4. Delay for the desired update rate (e.g., 2000ms for 0.5Hz)
+
+        sendData(68, (const char*)msg_buffer);
+        vTaskDelay(pdMS_TO_TICKS(2000)); // 2Do: adjust this delay as needed
     }
 }
 
