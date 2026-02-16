@@ -5,28 +5,32 @@
 #include "freertos/task.h"
 #include "dataPacket.h"
 #include "driver/uart.h"
+#include "ms5837.h"
 
 const static char *TAG = "UPDATE_GS Task";
-uint8_t msg_buffer[68]; // general buffer to receive slow lane messages
+uint8_t msg_buffer[68] = {0}; // buffer to hold data packet 
+
+// Private variables
+static i2c_master_bus_handle_t bus_handle;
+static i2c_master_dev_handle_t bar30_handle;
 
 // -------------------- TASK LOOP -------------------- //
 void UPDATE_GS(void *arg)
 {
     ESP_LOGI(TAG, "Starting UPDATE_GS Task");
-    MessageBufferHandle_t slow_lane_buffer = (MessageBufferHandle_t) arg;
+    uart_init();
+    // i2c_master_init(&bus_handle, &bar30_handle);
+    bar30_setup(bus_handle, bar30_handle);
+    vTaskDelay(pdMS_TO_TICKS(1000)); // Give some time for the sensor to initialize before starting the loop
     for(;;)
     {
-        vTaskDelay(pdMS_TO_TICKS(2000)); // Delay for 2 seconds
-        xMessageBufferReceive(slow_lane_buffer, msg_buffer, 68, portMAX_DELAY);
-        uint8_t dataSize = msg_buffer[2];
-        void * data_ptr = malloc(dataSize + 4); // allocate memory for incoming data
-        if (data_ptr == NULL) {
-            ESP_LOGE(TAG, "Memory allocation failed");
-            continue; // Skip this iteration if memory allocation fails
-        }
-        memcpy(data_ptr, msg_buffer, dataSize + 4); // copy
-        sendData(dataSize + 4, (const char*)data_ptr); // send data over UART
-        free(data_ptr); // free allocated memory
+        // 1. Read sensor data and fill the data packet
+        // 2. Serialize the data packet into msg_buffer
+        // 3. Send the data over UART
+        // 4. Delay for the desired update rate (e.g., 2000ms for 0.5Hz)
+
+        sendData(68, (const char*)msg_buffer);
+        vTaskDelay(pdMS_TO_TICKS(2000)); // 2Do: adjust this delay as needed
     }
 }
 
@@ -48,13 +52,7 @@ void uart_init(void)
 
 int sendData(int size, const char* data)
 {
-    ESP_LOGI(TAG, "Data to send:");
-    for (int i = 0; i < size; i++) {
-        ESP_LOGI(TAG, "%02X ", (unsigned char)data[i]);
-    }
-    ESP_LOGI(TAG, "Sending %d bytes over UART", size);
     const int txBytes = uart_write_bytes(UART_NUM_1, data, size);
-    ESP_LOGI(TAG, "Sent %d bytes over UART", txBytes);
     return txBytes;
 }
 
