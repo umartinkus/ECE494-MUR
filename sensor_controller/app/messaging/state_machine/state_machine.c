@@ -23,7 +23,6 @@ State state = sync_state;
 
 void sync_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
-
     if (sync_recieved && (event == START_FRAMEL)) {
         ESP_LOGI(TAG, "sync state: %p", state);
         state = size_state;
@@ -35,7 +34,6 @@ void sync_state(uint8_t event, QueueHandle_t queue) {
 
 void size_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
-
     ESP_LOGI(TAG, "size state: %c", event);
     packet_buf.data_size = event;
     state = addr_state;
