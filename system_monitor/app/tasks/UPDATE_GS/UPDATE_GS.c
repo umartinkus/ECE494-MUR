@@ -21,10 +21,10 @@ void UPDATE_GS(void *arg)
     ESP_LOGI(TAG, "Starting UPDATE_GS Task");
     uart_init();
     i2c_master_init(&bus_handle, &bar30_handle);
-    bar30_setup(bus_handle, bar30_handle);
     vTaskDelay(pdMS_TO_TICKS(1000)); // Give some time for the sensor to initialize before starting the loop
     for(;;)
     {
+        bar30_setup(bus_handle, bar30_handle);
         // 1. Read sensor data and fill the data packet
         // 2. Serialize the data packet into msg_buffer
         // 3. Send the data over UART

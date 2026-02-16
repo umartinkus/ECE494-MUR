@@ -34,7 +34,7 @@ void i2c_master_init(
   i2c_master_bus_handle_t *bus_handle,
   i2c_master_dev_handle_t *bar30_handle);
 
-void bar30_setup(
+uint8_t bar30_setup(
   i2c_master_bus_handle_t bus_handle,
   i2c_master_dev_handle_t dev_handle);
 

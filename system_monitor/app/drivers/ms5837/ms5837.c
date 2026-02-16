@@ -72,28 +72,35 @@ void i2c_master_init(i2c_master_bus_handle_t *bus_handle, i2c_master_dev_handle_
  * @note Optional notes or warnings can be included here
  * @bug Optional known bugs can be listed here.
  */
-void bar30_setup(i2c_master_bus_handle_t bus_handle,i2c_master_dev_handle_t bar30_handle){
-    
-    // i2c_master_init(&bus_handle, &bar30_handle);
-    // Send reset command to the sensor
-    uint8_t cmd = CMD_MS58XX_RESET;
+uint8_t bar30_setup(i2c_master_bus_handle_t bus_handle,i2c_master_dev_handle_t bar30_handle){
+    if(bus_handle == NULL || bar30_handle == NULL) {
+        ESP_LOGE(TAG, "Invalid argument: bus_handle and bar30_handle must not be NULL");
+        return 1; // return error code
+    }
+    uint8_t cmd = CMD_MS58XX_RESET; // Send reset command to the sensor
+    uint8_t error = 0;
     i2c_master_transmit(bar30_handle, &cmd, 1, I2C_MASTER_TIMEOUT_MS);
     vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor reset - this is as per the datasheet
-
-    // Read calibration coefficients from PROM
-    uint8_t read_buffer[2];
+    uint8_t read_buffer[2]; // Read calibration coefficients from PROM
     for (uint8_t i = 0; i < 7; i++) {
         cmd = CMD_MS58XX_PROM + (i * 2);
-        ESP_LOGI(TAG, "Reading PROM word %d from address 0x%02x", i, cmd); // 2do: remove
         i2c_master_transmit_receive(bar30_handle, &cmd, 1, read_buffer, 2, I2C_MASTER_TIMEOUT_MS);
-        ESP_LOGI(TAG, "Read Prom word: %d, value: 0x%04x", i, (read_buffer[1] << 8) | read_buffer[0]); // 2do: test this and remove the debug log
-        prom[2*i] = read_buffer[1]; // LSB from bar30
-        prom[2*i+1] = read_buffer[0]; // MSB from bar30
-        ESP_LOGI(TAG, "Stored in Prom[%d]: 0x%02x%02x", 2*i, prom[2*i+1], prom[2*i]); // 2do: remove
-
-        // 2do: ERROR CHECKING
+        prom[2*i] = read_buffer[1]; 
+        prom[2*i+1] = read_buffer[0]; // storing data in 
+        
+        if(!read_buffer[0] && !read_buffer[1]){ // bar30 likes to send back zeros if its not connected properly
+            ESP_LOGE(TAG, "Error reading PROM word %d: received 0x0000, which is invalid. Check sensor connection.", i);
+            error = 1;
+        }
+        else if (i > 1 && i < 7 && prom[2*i] == prom[2*i-2] && prom[2*i+1] == prom[2*i-1]){ // sometimes it also sends the same thing for all PROM words
+            ESP_LOGE(TAG, "Error reading PROM word %d: received same value as previous word. Check sensor connection.", i);
+            error = 1;
+        }
+        if (error) break;
     }
-    ESP_LOGI(TAG, "MS5837 setup complete. Calibration coefficients read.");
+    if(!error){ESP_LOGI(TAG, "MS5837 setup complete. Calibration coefficients read.");}
+    else{ESP_LOGE(TAG, "MS5837 setup incomplete. Errors detected.");}
+    return error;
 }
 
 /**
