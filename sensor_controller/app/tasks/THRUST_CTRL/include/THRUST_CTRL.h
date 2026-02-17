@@ -6,7 +6,7 @@
 
 void THRUST_CTRL(void* params);
 void THRUST_UART_CONS(void* params);
-void vecmult(const float mat[N][N], float *vec, float *out);
-void ctrl_allocation(uint8_t *u, float *f);
+void vecmult(const double mat[N][N], double *vec, double *out);
+void ctrl_allocation(double *u, double *f);
 
 #endif // THRUST_CTRL_H

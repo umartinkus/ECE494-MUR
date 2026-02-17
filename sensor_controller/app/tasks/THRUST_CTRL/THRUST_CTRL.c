@@ -21,17 +21,17 @@ static ledc_channel_config_t pwm_channels[NUM_CHANNELS];
 static ledc_timer_config_t ledc_timer;
 
 // helper function declaration
-void scale(float *f, float max);
-void update_thruster_status(float *f);
+void scale(double *f, double max);
+void update_thruster_status(double *f);
 
-const float deadzone = 0.05;
-const float upper = 1;
+const double deadzone = 0.05;
+const double upper = 1;
 
-const float max_us = 2000;
-const float min_us = 1000;
-const float ratio_us = (max_us - min_us) / 2;
+const double max_us = 2000;
+const double min_us = 1000;
+const double ratio_us = (max_us - min_us) / 2;
 
-const float T_inv[N][N] = {
+const double T_inv[N][N] = {
     {0.00238, 0.50000, -0.00274, -0.01584, 2.96937, -3.59868},
     {-0.00238, 0.50000, 0.00274, 0.01584, -2.96937, 3.59868},
     {-0.35487, 0.00023, 0.35511, -2.34665, -1.94485, 0.00000},
@@ -58,8 +58,8 @@ void THRUST_CTRL(void* params) {
     vTaskDelay(pdMS_TO_TICKS(1000));
 
     // temp variables
-    float f[N] = {0};
-    uint8_t u[N] = {0};
+    double f[N] = {0};
+    double u[N] = {0};
     uartPacket_t packet = {0};
 
     // block until there is available data in queue
@@ -86,10 +86,10 @@ void THRUST_CTRL(void* params) {
     // vecmult(T_inv, u, f);
 }
 
-void update_thruster_status(float *f) {
+void update_thruster_status(double *f) {
     uint32_t f_rounded;
     for (int i = 0; i < NUM_CHANNELS; i++) {
-        f_rounded = (uint32_t)roundf(f[i]);
+        f_rounded = (uint32_t)round(f[i]);
         
         // update the thruster
         thruster_set_pulse_us(i, f_rounded);
@@ -97,8 +97,8 @@ void update_thruster_status(float *f) {
 }
 
 // helper function that multiplies a vector by a matrix
-void vecmult(const float mat[N][N], float *vec, float *out) {
-    float sum;
+void vecmult(const double mat[N][N], double *vec, double *out) {
+    double sum;
     for (int i = 0; i < N; i++) {
         sum = 0; 
         for (int j = 0; j < N; j++) {
@@ -110,34 +110,30 @@ void vecmult(const float mat[N][N], float *vec, float *out) {
 }
 
 // helper function to array values between upper and lower
-void scale(float *f, float max) {
-    float ratio = upper / max;
+void scale(double *f, double max) {
+    double ratio = upper / max;
     for (int i = 0; i < N; i++) {
         f[i] = f[i] * ratio;
     }
 }
 
-void scale_us(float *f) {
+void scale_us(double *f) {
     for (int i = 0; i < N; i++) {
         f[i] = (f[i] + 1) * ratio_us + min_us;
     }
 }
 
-void ctrl_allocation(uint8_t *u, float *f) {
-    // map the uint8_t value to something between 0 and 1
-    float mapped_u[6] = {0};
+void ctrl_allocation(double *u, double *f) {
     for (int i = 0; i < N; i++) {
-        mapped_u[i] = (2.0f / 255.0f) * (float)u[i] - 1.0f;
-        
         // apply a deadzone to account for controller stuff
-        if (fabs(mapped_u[i]) < deadzone) mapped_u[i] = 0;
+        if (fabs(u[i]) < deadzone) u[i] = 0;
     }
 
     // take the desired "wrench" and find the according thrust forces
-    vecmult(T_inv, mapped_u, f);
+    vecmult(T_inv, u, f);
 
     // find the max value of the array
-    float max = 0;
+    double max = 0;
     for (int i = 0; i < N; i++) {
         if (fabs(f[i]) > max) max = fabs(f[i]);
     }
@@ -151,7 +147,7 @@ void ctrl_allocation(uint8_t *u, float *f) {
     scale_us(f);
 
     for (int i = 0; i < 6; i++) {
-        ESP_LOGI("thr value", "f1[%i]: %f", i, f[i]);
+        ESP_LOGI("thr value", "f1[%i]: %f", i, u[i]);
     }
 }
 
