@@ -34,7 +34,7 @@ void sync_state(uint8_t event, QueueHandle_t queue) {
 
 void size_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
-    ESP_LOGI(TAG, "size state: %c", event);
+    ESP_LOGI(TAG, "size state: 0x%02X", event);
     packet_buf.data_size = event;
     state = addr_state;
 }
@@ -42,18 +42,18 @@ void size_state(uint8_t event, QueueHandle_t queue) {
 void addr_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
 
-    ESP_LOGI(TAG, "addr state: %c", event);
+    ESP_LOGI(TAG, "addr state: 0x%02X", event);
     packet_buf.device_address = event;
     state = data_state;
 }
 
 void data_state(uint8_t event, QueueHandle_t queue) {
-    ESP_LOGI(TAG, "data state: %c", event);
+    ESP_LOGI(TAG, "data state: 0x%02X", event);
     if (position < packet_buf.data_size) {
         packet_buf.data[position++] = event;
     } 
 
-    if (position == packet_buf.data_size - 1) {
+    if (position == packet_buf.data_size) {
         xQueueSendToBack(queue, &packet_buf, pdMS_TO_TICKS(10));
         state = sync_state;
         sync_recieved = false;

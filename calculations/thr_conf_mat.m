@@ -26,6 +26,30 @@ for i = 1:6
     T(:, i) = [normed, moment];
 end
 
-disp(T)
+disp(T);
+T_inv = inv(T);
 
-rank(T)
+print_c_array(T_inv, "T_inv")
+
+
+function print_c_array(matrix, var_name)
+    [rows, cols] = size(matrix);
+    fprintf('double %s[%d][%d] = {\n', var_name, rows, cols);
+
+    for i = 1:rows
+        fprintf('    {');
+        for j = 1:cols
+            fprintf('%.5f', matrix(i, j)); % Adjust precision as needed
+            if j < cols
+                fprintf(', ');
+            end
+        end
+        fprintf('}');
+        if i < rows
+            fprintf(',');
+        end
+        fprintf('\n');
+    end
+
+    fprintf('};\n');
+end

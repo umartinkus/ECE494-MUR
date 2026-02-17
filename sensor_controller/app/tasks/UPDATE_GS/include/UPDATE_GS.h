@@ -5,8 +5,8 @@
 
 // if you change this to the usb, make sure to change all 3
 #define UART_PORT UART_NUM_1
-#define TXD_PIN 16
-#define RXD_PIN 17
+#define TXD_PIN 21
+#define RXD_PIN 19
 
 #define RX_BUF_SIZE 1024
 #define BAUD_RATE 115200
