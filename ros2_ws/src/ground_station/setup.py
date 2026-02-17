@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'uart_talker = ground_station.uart_talker:main'
         ],
     },
-)
+) 
