@@ -34,7 +34,7 @@ void app_main(void)
     fast_lane_buff = xMessageBufferCreate(2048);
 
     // create queues
-    uart_event_queue = xQueueCreate(512, sizeof(uartPacket_t));
+    uart_event_queue = xQueueCreate(64, sizeof(uartPacket_t));
 
     uart_init();
     // xTaskCreatePinnedToCore(GET_POSE, "POSE_TASK_C0", 4096, (void*)fast_lane_buff, TASK_PRIO_5, NULL, CORE0);
