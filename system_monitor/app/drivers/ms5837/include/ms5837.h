@@ -8,6 +8,7 @@
 #define I2C_FREQ_HZ 400000
 #define I2C_MASTER_TIMEOUT_MS 1000
 #define MS5837_ADC_READ_SIZE 3
+#define MS5837_I2C_CMD_SIZE 1
 
 #define CMD_MS58XX_RESET 0x1E
 #define CMD_MS58XX_READ_ADC 0x00
@@ -38,7 +39,11 @@ uint8_t bar30_setup(
   i2c_master_bus_handle_t bus_handle,
   i2c_master_dev_handle_t dev_handle);
 
-void bar30_read_pressure(
+// void bar30_read(
+//   i2c_master_dev_handle_t dev_handle,
+//   uint8_t* dataBuffer);
+
+void bar30_read(
   i2c_master_dev_handle_t dev_handle,
   uint8_t* dataBuffer);
 
