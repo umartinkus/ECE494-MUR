@@ -91,10 +91,10 @@ uint8_t bar30_setup(i2c_master_bus_handle_t bus_handle,i2c_master_dev_handle_t b
     vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor reset - this is as per the datasheet
     // uint8_t read_buffer[2]; // Read calibration coefficients from PROM // DELETE
     for (uint8_t i = 0; i < 7; i++) {
+        uint8_t data_buffer[2] = {0};
         cmd = CMD_MS58XX_PROM + (i * 2);
-        i2c_master_transmit_receive(bar30_handle, &cmd, 1, (uint8_t *)&C[i], 2, I2C_MASTER_TIMEOUT_MS);
-        // C[2*i] = read_buffer[1]; //DELETE
-        // C[2*i+1] = read_buffer[0]; // storing data in // DELETE
+        i2c_master_transmit_receive(bar30_handle, &cmd, 1, data_buffer, 2, I2C_MASTER_TIMEOUT_MS);
+        C[i] = data_buffer[0] << 8 | data_buffer[1];
         
         if(!C[i] && !C[i+1]){ // bar30 likes to send back zeros if its not connected properly
             ESP_LOGE(TAG, "Error reading PROM word %d: received 0x0000, which is invalid. Check sensor connection.", i);
