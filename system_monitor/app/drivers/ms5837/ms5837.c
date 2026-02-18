@@ -5,13 +5,55 @@
 #include "freertos/task.h"
 
 // Private variables
-static uint16_t C[7]; //holds calibration constants and crc
+static uint16_t C[8]; // holds calibration constants and reserved word for CRC check
 const static char *TAG = "MS5837";
 
 // Private functions
 static void bar30_read_raw(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBuffer);
 static int64_t bar30_calculate_temp(uint8_t *raw_temp, int32_t *temp);
 static void bar30_calculate_pressure(int32_t *pressure, int64_t dT, uint8_t *raw_pressure);
+static uint8_t bar30_crc_ok(const uint16_t *prom);
+
+/**
+ * @brief 
+ *
+ * Perform CRC check on the PROM data.
+ * 
+ * 
+ * 
+ * @return returns 1 if CRC is valid, 0 if CRC check fails
+ * 
+ * @note Optional notes or warnings can be included here
+ * @bug Optional known bugs can be listed here.
+ */
+static uint8_t bar30_crc_ok(const uint16_t *prom){
+    uint16_t n_prom[8];
+    uint16_t n_rem = 0;
+    uint16_t crc_read;
+
+    for (uint8_t i = 0; i < 8; i++) {
+        n_prom[i] = prom[i];
+    }
+
+    crc_read = n_prom[0];
+    n_prom[0] &= 0x0FFF;
+    n_prom[7] = 0;
+
+    for (uint8_t i = 0; i < 16; i++) {
+        if (i & 1U) {
+            n_rem ^= (uint16_t)(n_prom[i >> 1] & 0x00FF);
+        } else {
+            n_rem ^= (uint16_t)(n_prom[i >> 1] >> 8);
+        }
+
+        for (uint8_t bit = 0; bit < 8; bit++) {
+            n_rem = (n_rem & 0x8000U) ? (uint16_t)((n_rem << 1) ^ 0x3000U) : (uint16_t)(n_rem << 1);
+        }
+    }
+
+    n_rem = (n_rem >> 12) & 0x000FU;
+    return (uint8_t)(n_rem == (crc_read >> 12));
+}
 
 /**
  * @brief 
@@ -71,13 +113,11 @@ void i2c_master_init(i2c_master_bus_handle_t *bus_handle, i2c_master_dev_handle_
  *
  * Initialize the bar30 and read the configs from PROM.
  * 
- * @details
- * - the bar30 clocks bytes MSB first, so prom[even] is MSB and prom[odd] is LSB
- * 
+ * @param bus_handle Pointer to I2C bus handle
+ * @param bar30_handle Pointer to bar30 device handle
  * @return returns 0 if successful, 1 if there was an error (e.g. sensor not connected or bad connection)
  * 
  * @note 
- * - the error checking could likely be completed by doing the CRC check on the PROM data. This may even be more robust
  * @bug Optional known bugs can be listed here.
  */
 uint8_t bar30_setup(i2c_master_bus_handle_t bus_handle,i2c_master_dev_handle_t bar30_handle){
@@ -89,25 +129,20 @@ uint8_t bar30_setup(i2c_master_bus_handle_t bus_handle,i2c_master_dev_handle_t b
     uint8_t error = 0;
     i2c_master_transmit(bar30_handle, &cmd, 1, I2C_MASTER_TIMEOUT_MS);
     vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor reset - this is as per the datasheet
-    // uint8_t read_buffer[2]; // Read calibration coefficients from PROM // DELETE
-    for (uint8_t i = 0; i < 7; i++) {
+    for (uint8_t i = 0; i < 8; i++) {
         uint8_t data_buffer[2] = {0};
         cmd = CMD_MS58XX_PROM + (i * 2);
         i2c_master_transmit_receive(bar30_handle, &cmd, 1, data_buffer, 2, I2C_MASTER_TIMEOUT_MS);
         C[i] = data_buffer[0] << 8 | data_buffer[1];
-        
-        if(!C[i] && !C[i+1]){ // bar30 likes to send back zeros if its not connected properly
-            ESP_LOGE(TAG, "Error reading PROM word %d: received 0x0000, which is invalid. Check sensor connection.", i);
-            error = 1;
-        }
-        else if (i > 1 && i < 7 && C[i] == C[i-1]){ // sometimes it also sends the same thing for all PROM words
-            ESP_LOGE(TAG, "Error reading PROM word %d: received same value as previous word. Check sensor connection.", i);
-            error = 1;
-        }
-        if (error) break;
     }
+
+    if (!bar30_crc_ok(C)) {
+        ESP_LOGE(TAG, "PROM CRC check failed. Check sensor connection.");
+        error = 1;
+    }
+
     if(!error){ESP_LOGI(TAG, "MS5837 setup complete. Calibration coefficients read.");}
-    else{ESP_LOGE(TAG, "MS5837 setup incomplete. Errors detected.");}
+    else{ESP_LOGE(TAG, "MS5837 setup incomplete.");}
     return error;
 }
 
@@ -148,7 +183,7 @@ static void bar30_read_raw(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBu
 /**
  * @brief 
  *
- * @return N/A
+ * @return 1 if an error has occurred, 0 if successful
  * 
  * @param bar30_handle i2c device handle
  * @param dataBuffer pointer to a buffer where the pressure/temperature data will be stored as floats
@@ -156,41 +191,62 @@ static void bar30_read_raw(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBu
  * @note Optional notes or warnings can be included here
  * @bug Optional known bugs can be listed here.
  */
-void bar30_read(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBuffer){
+uint8_t bar30_read(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBuffer){
     if(bar30_handle == NULL || dataBuffer == NULL) {
         ESP_LOGE(TAG, "Invalid argument: bar30_handle and dataBuffer must not be NULL");
-        return;
+        return 1; // return error code
     }
     uint8_t raw_buffer[6]; // buffer to hold raw ADC data (3 bytes for pressure, 3 bytes for temperature)
     int32_t temp = 0;
     int32_t pressure = 0;
     int64_t dT = 0;
+    float temp_c, pressure_bar;
+    uint8_t error = 0;
     bar30_read_raw(bar30_handle, raw_buffer);
     dT = bar30_calculate_temp(raw_buffer + 3, &temp);
     bar30_calculate_pressure(&pressure, dT, raw_buffer);
-
+    if(temp > 8500 || temp < -4000 || pressure > 300000 || pressure < 20) {
+        ESP_LOGW(TAG, "Calculated temperature or pressure out of expected range. Check sensor connection and calibration coefficients.");
+        temp_c = -999.0; // set to error value
+        pressure_bar = -999.0; // set to error value
+        error = 1;
+    }
+    else {
+        temp_c = (float)temp / 100.0f;
+        pressure_bar = (float)pressure / 10000.0f;
+    }
+    memcpy(dataBuffer, &pressure_bar, sizeof(float));
+    memcpy(dataBuffer + sizeof(float), &temp_c, sizeof(float));
+    // ESP_LOGI(TAG, "Calculated temperature: %.2f C, pressure: %.5f bar", temp_c, pressure_bar); // DELETE
+    // ESP_LOGI(TAG, "Copied temperature: %.2f C, pressure: %.5f bar", *(float*)(dataBuffer + sizeof(float)), *(float*)dataBuffer); // DELETE
+    return error;
 }
 
 /**
  * @brief 
  * 
- * @return N/A
+ * @return dT, the calculated temperature correction
+ * @param raw_temp the raw temperature read from the ms5837 ADC
+ * @param temp location where the corrected temperature is to be stored
  * 
  * @note Optional notes or warnings can be included here
  * @bug Optional known bugs can be listed here.
  */
 static int64_t bar30_calculate_temp(uint8_t *raw_temp, int32_t *temp){
-	int32_t D2_temp = (raw_temp[2] << 16) | (raw_temp[1] << 8) | raw_temp[0];
-    int64_t dT = D2_temp-((uint32_t)C[5] * 256l);
+	int32_t D2_temp = (raw_temp[0] << 16) | (raw_temp[1] << 8) | raw_temp[2];
+    int64_t dT = D2_temp-((uint32_t)C[5] << 8);
     *temp = 2000l+(int64_t)dT*C[6]/8388608LL;
     ESP_LOGI(TAG, "Calculated temperature (before scaling): %d", *temp); // DELETE
     return dT;
 }
 
 /**
- * @brief 
+ * @brief compute the first and second order pressure corrections based on ambient temperature
  * 
  * @return N/A
+ * @param pressure location where the corrected pressure is to be stored
+ * @param dT calculated temperature correction
+ * @param raw_pressure the raw pressure read from the ms5837 ADC
  * 
  * @note Optional notes or warnings can be included here
  * @bug Optional known bugs can be listed here.
@@ -198,8 +254,7 @@ static int64_t bar30_calculate_temp(uint8_t *raw_temp, int32_t *temp){
 static void bar30_calculate_pressure(int32_t *pressure, int64_t dT, uint8_t *raw_pressure){
     int64_t OFF = (C[2] << 16) + ((C[4] * dT) >> 7);
     int64_t SENS = (C[1] << 15) + ((C[3] * dT) >> 8);
-    int64_t raw_pressure_ll = (raw_pressure[2] << 16 | raw_pressure[1] << 8 | raw_pressure[0]);\
-    ESP_LOGI(TAG, "Calculated OFF: %x, SENS: %x, raw_pressure_ll: %x", OFF, SENS, raw_pressure_ll); // DELETE
+    int64_t raw_pressure_ll = (raw_pressure[0] << 16 | raw_pressure[1] << 8 | raw_pressure[2]);\
     *pressure = (((raw_pressure_ll * SENS) >> 21) - OFF) >> 13;
     ESP_LOGI(TAG, "Calculated pressure (before scaling): %d", *pressure); // DELETE
 }
