@@ -2,8 +2,11 @@
 # CMakeLists in this exact order for cmake to work correctly
 cmake_minimum_required(VERSION 3.16)
 
-# Add the root of this git repo to the component search path.
-set(EXTRA_COMPONENT_DIRS "../")
-
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-project(mpu9250_example)
+set(EXTRA_COMPONENT_DIRS
+${CMAKE_CURRENT_LIST_DIR}/drivers
+${CMAKE_CURRENT_LIST_DIR}/messaging
+${CMAKE_CURRENT_LIST_DIR}/tasks
+)
+
+project(app)
