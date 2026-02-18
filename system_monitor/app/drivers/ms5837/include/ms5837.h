@@ -39,10 +39,6 @@ uint8_t bar30_setup(
   i2c_master_bus_handle_t bus_handle,
   i2c_master_dev_handle_t dev_handle);
 
-// void bar30_read(
-//   i2c_master_dev_handle_t dev_handle,
-//   uint8_t* dataBuffer);
-
 uint8_t bar30_read(
   i2c_master_dev_handle_t dev_handle,
   uint8_t* dataBuffer);
