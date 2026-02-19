@@ -21,7 +21,7 @@ void port_listener(SerialPort &sp, ByteRing &br) {
     // setting the max size and the read timeout
     const std::size_t max_len = 4096 * 2;
     const std::chrono::milliseconds timeout(500);
-
+    
     // creating a buffer vector
     std::vector<std::uint8_t> buf(max_len);
 
@@ -78,6 +78,9 @@ int main(int argc, char * argv[]) {
     // initialize serial port obj
     SerialPort sp("/dev/ttyTHS1");
     sp.config_port(B115200);
+
+    std::uint8_t arr[4] = {0x55, 0x55, 0x55, 0x55};
+    sp.write(arr, 4);
 
     // initialize ByteRing obj
     ByteRing br(32768);

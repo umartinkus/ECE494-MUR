@@ -61,9 +61,11 @@ public:
             throw std::system_error(errno, std::generic_category(), "tcgetattr");
         }
 
+        // Put the port in raw mode and explicitly disable flow control.
+        cfmakeraw(&tty_);
+
         // ---- Input flags ----
-        tty_.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP
-                        | INLCR | IGNCR | ICRNL | IXON);
+        tty_.c_iflag &= ~(IXON | IXOFF | IXANY | INPCK);
 
         // ---- Output flags ----
         tty_.c_oflag &= ~OPOST;   // raw output
@@ -82,6 +84,9 @@ public:
 
         tty_.c_cc[VMIN]  = 0;   // non-blocking read
         tty_.c_cc[VTIME] = 0;   // no timeout (poll/select handles waiting)
+
+        // clear stale input/output data
+        tcflush(fd_, TCIOFLUSH);
 
         // apply changes now
         if (tcsetattr(fd_, TCSANOW, &tty_) != 0) {
