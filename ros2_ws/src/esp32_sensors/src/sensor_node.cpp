@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include <memory>
 
 #include "marlin_comms/data_struct.hpp"
 #include "marlin_comms/ring_buffer.hpp"
@@ -12,6 +13,7 @@
 #include "marlin_comms/uart_parser.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "sensor_msgs/msg/joy.hpp"
 
 #define BUF_SIZE 4096
 
@@ -48,32 +50,28 @@ void port_listener(SerialPort &sp, ByteRing &br) {
     }
 }
 
-class DataPublisher : public rclcpp::Node {
+class DualsenseSub : public rclcpp::Node {
 public:
-    DataPublisher() : Node("data_publisher"), count_(0) {
-        publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
-        timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(500),
-            std::bind(&DataPublisher::timer_callback, this));
+    DualsenseSub() : Node("dualsense_sub") {
+        // setting up the subscription
+        subscription_ = this->create_subscription<sensor_msgs::msg::Joy>(
+            "/joy",
+            10,
+            std::bind(&DualsenseSub::joy_callback, this, std::placeholders::_1)
+        );
+
+        RCLCPP_INFO(this->get_logger(), "Dualsense subscription started");
     }
 
 private:
-    void timer_callback() {
-        auto message = std_msgs::msg::String();
-        message.data = "Hello, world! " + std::to_string(count_++);
-        RCLCPP_INFO(this->get_logger(), "Publishing: %s", message.data.c_str());
-        publisher_->publish(message);
+    void joy_callback(const sensor_msgs::msg::Joy &msg) const {
+        std::cout << msg.axes[0] << std::endl;
     }
 
-    rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
-    size_t count_;
+    rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr subscription_;
 };
 
-int main() {
-    // create a condition_variable
-    std::condition_variable cv;
-
+int main(int argc, char * argv[]) {
     // initialize serial port obj
     SerialPort sp("/dev/ttyTHS1");
     sp.config_port(B115200);
@@ -86,7 +84,12 @@ int main() {
     std::thread producer_thread(port_listener, std::ref(sp), std::ref(br));
     std::thread consumer_thread(parser, std::ref(br));
 
-        // wait until threads are done (which never happens)
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<DualsenseSub>());
+    rclcpp::shutdown();
+
+    // wait until threads are done (which never happens)
     producer_thread.join();
     consumer_thread.join();
+    return 0;
 }

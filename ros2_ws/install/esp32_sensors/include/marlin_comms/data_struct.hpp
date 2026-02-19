@@ -1,9 +1,16 @@
 #pragma once
 #include <cstdint>
-#include <vector>
 
-struct DataContainer {
-  std::uint8_t address;
-  std::uint8_t size;
-  std::vector<std::uint8_t> raw;
-};
+#define START_FRAMEH 0X55
+#define START_FRAMEL 0X55
+
+typedef struct {
+    uint8_t start_frameH;
+    uint8_t start_frameL;
+    uint8_t data_size;
+    uint8_t device_address;
+    uint8_t data[64];
+    uint16_t crc;
+} uartPacket_t;
+
+
