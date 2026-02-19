@@ -72,6 +72,9 @@ private:
 };
 
 int main(int argc, char * argv[]) {
+    // create a condition_variable
+    std::condition_variable cv;
+
     // initialize serial port obj
     SerialPort sp("/dev/ttyTHS1");
     sp.config_port(B115200);
