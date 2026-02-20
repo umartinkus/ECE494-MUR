@@ -87,7 +87,7 @@ void THRUST_CTRL(void* params) {
 
             }
         }
-        vTaskDelay(pdMS_TO_TICKS(50));
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
     // vecmult(T_inv, u, f);
 }
@@ -156,18 +156,3 @@ void ctrl_allocation(float *u, float *f) {
         // ESP_LOGI(TAG, "ctrl[%i]=%0.3f pwm_us[%i]=%0.1f", i, u[i], i, f[i]);
     }
 }
-
-// void THRUST_UART_CONS(void* param) {
-//     QueueHandle_t cmd_queue = (QueueHandle_t)param;
-//
-//     // create a temp datapacket
-//     uartPacket_t temp_packet = {0};
-//
-//     // poll forever to get values
-//     for (;;) {
-//         if (xQueueReceive(cmd_queue, &thr_cmd, portMAX_DELAY)) {
-//             update_thruster_status();
-//         }
-//         vTaskDelay(pdMS_TO_TICKS(10));
-//     }
-//  }
