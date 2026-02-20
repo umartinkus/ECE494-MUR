@@ -124,7 +124,7 @@ int main(int argc, char * argv[]) {
     std::thread consumer_thread(parser, std::ref(br));
 
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<DualsenseSub>());
+    rclcpp::spin(std::make_shared<DualsenseSub>(sp));
     rclcpp::shutdown();
 
     // wait until threads are done (which never happens)
