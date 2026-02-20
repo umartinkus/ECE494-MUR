@@ -4,6 +4,7 @@
 #include <functional>
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <thread>
 #include <memory>
 
@@ -85,11 +86,11 @@ private:
         uart_out_.device_address = 0x67;
 
         std::vector<double> wrench(DOF);
-        wrench[0] = msg.axes[0];  // sway
+        wrench[0] = -msg.axes[0];  // sway
         wrench[1] = msg.axes[1];  // surge
         wrench[2] = (msg.axes[2] - msg.axes[5]) / 2;  // heave
-        wrench[3] = msg.axes[4];  // pitch
-        wrench[4] = msg.axes[3];  // roll
+        wrench[3] = -msg.axes[4];  // pitch
+        wrench[4] = -msg.axes[3];  // roll
 
         if (msg.buttons[4] || msg.buttons[5]) {
             wrench[5] = (msg.buttons[4] - msg.buttons[5]) * 0.3;
@@ -99,7 +100,7 @@ private:
             RCLCPP_INFO(this->get_logger(), "buh[%i]: %f", i, wrench[i]);
         }
         // write the values of the doubles into the array
-        std::copy(wrench.begin(), wrench.end(), uart_out_.data); 
+        std::memcpy(uart_out_.data, wrench.data(), DOF * sizeof(double));
 
         std::uint8_t *bytes_out = reinterpret_cast<std::uint8_t*>(&uart_out_);
         sp_.write(bytes_out, sizeof(uartPacket_t));
