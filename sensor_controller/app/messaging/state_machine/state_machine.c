@@ -4,6 +4,7 @@
 #include "freertos/projdefs.h"
 #include "include/state_machine.h"
 #include "dataPacket.h"
+#include <string.h>
 
 static const char* TAG = "state_machine";
 
@@ -24,7 +25,7 @@ State state = sync_state;
 void sync_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
     if (sync_recieved && (event == START_FRAMEL)) {
-        ESP_LOGI(TAG, "sync state: %p", state);
+        // ESP_LOGD(TAG, "frame sync detected");
         state = size_state;
 
     } else if (event == START_FRAMEH) {
@@ -34,7 +35,15 @@ void sync_state(uint8_t event, QueueHandle_t queue) {
 
 void size_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
-    ESP_LOGI(TAG, "size state: 0x%02X", event);
+    if (event > sizeof(packet_buf.data)) {
+        // ESP_LOGW(TAG, "invalid data_size=%u, resetting parser", event);
+        state = sync_state;
+        sync_recieved = false;
+        position = 0;
+        memset(&packet_buf, 0, sizeof(packet_buf));
+        return;
+    }
+
     packet_buf.data_size = event;
     state = addr_state;
 }
@@ -42,13 +51,11 @@ void size_state(uint8_t event, QueueHandle_t queue) {
 void addr_state(uint8_t event, QueueHandle_t queue) {
     (void)queue; // this is just to silence the warning
 
-    ESP_LOGI(TAG, "addr state: 0x%02X", event);
     packet_buf.device_address = event;
     state = data_state;
 }
 
 void data_state(uint8_t event, QueueHandle_t queue) {
-    ESP_LOGI(TAG, "data state: 0x%02X", event);
     if (position < packet_buf.data_size) {
         packet_buf.data[position++] = event;
     } 
@@ -59,6 +66,6 @@ void data_state(uint8_t event, QueueHandle_t queue) {
         sync_recieved = false;
         position = 0;
         memset(&packet_buf, 0, sizeof(packet_buf));
-        ESP_LOGI(TAG, "yo it worked: %d", uxQueueMessagesWaiting(queue));
+        // ESP_LOGD(TAG, "queued packet, depth=%d", uxQueueMessagesWaiting(queue));
     }
 }

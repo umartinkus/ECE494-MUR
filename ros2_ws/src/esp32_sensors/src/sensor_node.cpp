@@ -82,22 +82,22 @@ private:
         uart_out_.start_frameH = 0x55;
         uart_out_.start_frameL = 0x55;
 
-        uart_out_.data_size = sizeof(double) * DOF;  // 1 double for each DOF
+        uart_out_.data_size = sizeof(float) * DOF;  // 1 float for each DOF
         uart_out_.device_address = 0x67;
 
-        std::vector<double> wrench(DOF);
-        wrench[0] = -msg.axes[0];  // sway
-        wrench[1] = msg.axes[1];  // surge
-        wrench[2] = (msg.axes[2] - msg.axes[5]) / 2;  // heave
-        wrench[3] = -msg.axes[4];  // pitch
-        wrench[4] = -msg.axes[3];  // roll
+        std::vector<float> wrench(DOF);
+        wrench[0] = - static_cast<float>(msg.axes[0]);  // sway
+        wrench[1] = static_cast<float>(msg.axes[1]);  // surge
+        wrench[2] = static_cast<float>((msg.axes[2] - msg.axes[5]) / 2);  // heave
+        wrench[3] = - static_cast<float>(msg.axes[4]);  // pitch
+        wrench[4] = - static_cast<float>(msg.axes[3]);  // roll
 
         if (msg.buttons[4] || msg.buttons[5]) {
             wrench[5] = (msg.buttons[4] - msg.buttons[5]) * 0.3;
         }
 
-        // write the values of the doubles into the array
-        std::memcpy(uart_out_.data, wrench.data(), DOF * sizeof(double));
+        // write the values of the float into the array
+        std::memcpy(uart_out_.data, wrench.data(), DOF * sizeof(float));
 
         std::uint8_t *bytes_out = reinterpret_cast<std::uint8_t*>(&uart_out_);
         const std::size_t packet_len = 4 + uart_out_.data_size;

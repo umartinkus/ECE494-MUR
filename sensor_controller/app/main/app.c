@@ -38,6 +38,6 @@ void app_main(void)
 
     uart_init();
     // xTaskCreatePinnedToCore(GET_POSE, "POSE_TASK_C0", 4096, (void*)fast_lane_buff, TASK_PRIO_5, NULL, CORE0);
-    xTaskCreatePinnedToCore(THRUST_CTRL, "THRUST_CTRL_TASK_C0", 4096, (void*)uart_event_queue, TASK_PRIO_3, NULL, CORE0);
+    xTaskCreatePinnedToCore(THRUST_CTRL, "THRUST_CTRL_TASK_C0", 4096, (void*)uart_event_queue, TASK_PRIO_3, NULL, CORE1);
     xTaskCreatePinnedToCore(UART_LISTEN, "UART_LISTEN_TASK_C0", 4096, (void*)uart_event_queue, TASK_PRIO_4, NULL, CORE0);
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/idf_additions.h"
@@ -16,22 +17,23 @@
 
 #define THRUSTER_NEUTRAL_US (1500U)
 #define NUM_CHANNELS (6)
+static const char *TAG = "THRUST_CTRL";
 
 static ledc_channel_config_t pwm_channels[NUM_CHANNELS];
 static ledc_timer_config_t ledc_timer;
 
 // helper function declaration
-void scale(double *f, double max);
-void update_thruster_status(double *f);
+void scale(float *f, float max);
+void update_thruster_status(float *f);
 
-const double deadzone = 0.05;
-const double upper = 1;
+const float deadzone = 0.05;
+const float upper = 1;
 
-const double max_us = 2000;
-const double min_us = 1000;
-const double ratio_us = (max_us - min_us) / 2;
+const float max_us = 2000;
+const float min_us = 1000;
+const float ratio_us = (max_us - min_us) / 2;
 
-const double T_inv[N][N] = {
+const float T_inv[N][N] = {
     {0.00238, 0.50000, -0.00274, -0.01584, 2.96937, -3.59868},
     {-0.00238, 0.50000, 0.00274, 0.01584, -2.96937, 3.59868},
     {-0.35487, 0.00023, 0.35511, -2.34665, -1.94485, 0.00000},
@@ -58,8 +60,8 @@ void THRUST_CTRL(void* params) {
     vTaskDelay(pdMS_TO_TICKS(1000));
 
     // temp variables
-    double f[N] = {0};
-    double u[N] = {0};
+    float f[N] = {0};
+    float u[N] = {0};
     uartPacket_t packet = {0};
 
     // block until there is available data in queue
@@ -71,7 +73,11 @@ void THRUST_CTRL(void* params) {
                 continue;
             } else {
                 // get the data from the packet
+                memset(u, 0, sizeof(u));
                 memcpy(u, packet.data, (size_t)packet.data_size * sizeof(uint8_t));
+
+                // ESP_LOGI(TAG, "rx packet: addr=0x%02X size=%u u0=%0.3f u1=%0.3f",
+                         // packet.device_address, packet.data_size, u[0], u[1]);
 
                 // function to calculate the allocation
                 ctrl_allocation(u, f);
@@ -86,7 +92,7 @@ void THRUST_CTRL(void* params) {
     // vecmult(T_inv, u, f);
 }
 
-void update_thruster_status(double *f) {
+void update_thruster_status(float *f) {
     uint32_t f_rounded;
     for (int i = 0; i < NUM_CHANNELS; i++) {
         f_rounded = (uint32_t)round(f[i]);
@@ -97,8 +103,8 @@ void update_thruster_status(double *f) {
 }
 
 // helper function that multiplies a vector by a matrix
-void vecmult(const double mat[N][N], double *vec, double *out) {
-    double sum;
+void vecmult(const float mat[N][N], float *vec, float *out) {
+    float sum;
     for (int i = 0; i < N; i++) {
         sum = 0; 
         for (int j = 0; j < N; j++) {
@@ -110,20 +116,20 @@ void vecmult(const double mat[N][N], double *vec, double *out) {
 }
 
 // helper function to array values between upper and lower
-void scale(double *f, double max) {
-    double ratio = upper / max;
+void scale(float *f, float max) {
+    float ratio = upper / max;
     for (int i = 0; i < N; i++) {
         f[i] = f[i] * ratio;
     }
 }
 
-void scale_us(double *f) {
+void scale_us(float *f) {
     for (int i = 0; i < N; i++) {
         f[i] = (f[i] + 1) * ratio_us + min_us;
     }
 }
 
-void ctrl_allocation(double *u, double *f) {
+void ctrl_allocation(float *u, float *f) {
     for (int i = 0; i < N; i++) {
         // apply a deadzone to account for controller stuff
         if (fabs(u[i]) < deadzone) u[i] = 0;
@@ -133,7 +139,7 @@ void ctrl_allocation(double *u, double *f) {
     vecmult(T_inv, u, f);
 
     // find the max value of the array
-    double max = 0;
+    float max = 0;
     for (int i = 0; i < N; i++) {
         if (fabs(f[i]) > max) max = fabs(f[i]);
     }
@@ -147,7 +153,7 @@ void ctrl_allocation(double *u, double *f) {
     scale_us(f);
 
     for (int i = 0; i < 6; i++) {
-        ESP_LOGI("thr value", "f1[%i]: %f", i, u[i]);
+        // ESP_LOGI(TAG, "ctrl[%i]=%0.3f pwm_us[%i]=%0.1f", i, u[i], i, f[i]);
     }
 }
 
