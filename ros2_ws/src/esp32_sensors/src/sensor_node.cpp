@@ -32,7 +32,6 @@ void port_listener(SerialPort &sp, ByteRing &br) {
     // note that the buffer is a drop buffer
     for (;;) {
         n_read = sp.read(buf.data(), buf.size(), timeout);
-        std::cout << n_read << std::endl;
         br.write(buf.data(), n_read);
     }
 }
@@ -67,10 +66,6 @@ public:
     }
 
 private:
-    void get_serialport(SerialPort &sp_in) {
-
-    }
-
     void joy_callback(const sensor_msgs::msg::Joy &msg) {
         // axes[0]: LS x (sway)
         // axes[1]: LS y (surge)
