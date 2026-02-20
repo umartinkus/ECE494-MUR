@@ -100,10 +100,13 @@ private:
         std::memcpy(uart_out_.data, wrench.data(), DOF * sizeof(double));
 
         std::uint8_t *bytes_out = reinterpret_cast<std::uint8_t*>(&uart_out_);
-        for (std::size_t i = 0; i < sizeof(uartPacket_t); i++) {
-            RCLCPP_INFO(this->get_logger(), "buh[%lu]: %X02", i, bytes_out[i]);
+        const std::size_t packet_len = 4 + uart_out_.data_size;
+
+        for (std::size_t i = 0; i < packet_len; i++) {
+            RCLCPP_INFO(this->get_logger(), "%X", bytes_out[i]);
         }
-        sp_.write(bytes_out, sizeof(uartPacket_t));
+
+        sp_.write(bytes_out, packet_len);
     }
 
     SerialPort& sp_;
