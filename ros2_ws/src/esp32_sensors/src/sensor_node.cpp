@@ -84,7 +84,7 @@ private:
         uart_out_.data_size = sizeof(double) * DOF;  // 1 double for each DOF
         uart_out_.device_address = 0x67;
 
-        std::vector<double> wrench;
+        std::vector<double> wrench(DOF);
         wrench[0] = msg.axes[0];  // sway
         wrench[1] = msg.axes[1];  // surge
         wrench[2] = (msg.axes[2] - msg.axes[5]) / 2;  // heave
@@ -103,7 +103,7 @@ private:
     }
 
     SerialPort& sp_;
-    uartPacket_t uart_out_;
+    uartPacket_t uart_out_{};
     rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr subscription_;
 };
 
