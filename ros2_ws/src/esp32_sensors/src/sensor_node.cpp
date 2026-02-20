@@ -32,9 +32,11 @@ void port_listener(SerialPort &sp, ByteRing &br) {
     // note that the buffer is a drop buffer
     for (;;) {
         n_read = sp.read(buf.data(), buf.size(), timeout);
+        std::cout << n_read << std::endl;
         br.write(buf.data(), n_read);
     }
-    }
+}
+
     void parser(ByteRing &br) {
     // this is going to be a state machine
     std::vector<std::uint8_t> temp(BUF_SIZE);
@@ -52,7 +54,8 @@ void port_listener(SerialPort &sp, ByteRing &br) {
 
 class DualsenseSub : public rclcpp::Node {
 public:
-    DualsenseSub() : Node("dualsense_sub") {
+    DualsenseSub(SerialPort& sp) : Node("dualsense_sub") , sp_(sp) {
+        // get the serial port
         // setting up the subscription
         subscription_ = this->create_subscription<sensor_msgs::msg::Joy>(
             "/joy",
@@ -64,10 +67,43 @@ public:
     }
 
 private:
-    void joy_callback(const sensor_msgs::msg::Joy &msg) const {
-        std::cout << msg.axes[0] << std::endl;
+    void get_serialport(SerialPort &sp_in) {
+
     }
 
+    void joy_callback(const sensor_msgs::msg::Joy &msg) {
+        // axes[0]: LS x (sway)
+        // axes[1]: LS y (surge)
+        // axes[2]: LT (heave down)
+        // axes[3]: RS x (roll)
+        // axes[4]: RS y (pitch)
+        // axes[5]: RT (heave up)
+        // buttons[4]: LB (yaw negative)
+        // buttons[5]: RB (yaw positive)
+        
+        // set start bits
+        uart_out_.start_frameH = 0x55;
+        uart_out_.start_frameL = 0x55;
+
+        uart_out_.data_size = sizeof(double) * 6;  // 1 double for each DOF
+        uart_out_.device_address = 0x67;
+
+        uart_out_.data[0] = msg.axes[0];  // sway
+        uart_out_.data[1] = msg.axes[1];  // surge
+        uart_out_.data[2] = (msg.axes[2] - msg.axes[5]) / 2;  // heave
+        uart_out_.data[3] = msg.axes[4];  // pitch
+        uart_out_.data[4] = msg.axes[3];  // roll
+
+        if (msg.buttons[4] || msg.buttons[5]) {
+            uart_out_.data[5] = (msg.buttons[4] - msg.buttons[5]) * 0.3;
+        }
+
+        std::uint8_t *bytes_out = reinterpret_cast<std::uint8_t*>(&uart_out_);
+        sp_.write(bytes_out, sizeof(uartPacket_t));
+    }
+
+    SerialPort& sp_;
+    uartPacket_t uart_out_;
     rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr subscription_;
 };
 
@@ -78,9 +114,6 @@ int main(int argc, char * argv[]) {
     // initialize serial port obj
     SerialPort sp("/dev/ttyTHS1");
     sp.config_port(B115200);
-
-    std::uint8_t arr[4] = {0x55, 0x55, 0x55, 0x55};
-    sp.write(arr, 4);
 
     // initialize ByteRing obj
     ByteRing br(32768);
