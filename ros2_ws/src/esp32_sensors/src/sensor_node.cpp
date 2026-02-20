@@ -16,6 +16,7 @@
 #include "sensor_msgs/msg/joy.hpp"
 
 #define BUF_SIZE 4096
+#define DOF 6
 
 void port_listener(SerialPort &sp, ByteRing &br) {
     // setting the max size and the read timeout
@@ -80,18 +81,22 @@ private:
         uart_out_.start_frameH = 0x55;
         uart_out_.start_frameL = 0x55;
 
-        uart_out_.data_size = sizeof(double) * 6;  // 1 double for each DOF
+        uart_out_.data_size = sizeof(double) * DOF;  // 1 double for each DOF
         uart_out_.device_address = 0x67;
 
-        uart_out_.data[0] = msg.axes[0];  // sway
-        uart_out_.data[1] = msg.axes[1];  // surge
-        uart_out_.data[2] = (msg.axes[2] - msg.axes[5]) / 2;  // heave
-        uart_out_.data[3] = msg.axes[4];  // pitch
-        uart_out_.data[4] = msg.axes[3];  // roll
+        std::vector<double> wrench;
+        wrench[0] = msg.axes[0];  // sway
+        wrench[1] = msg.axes[1];  // surge
+        wrench[2] = (msg.axes[2] - msg.axes[5]) / 2;  // heave
+        wrench[3] = msg.axes[4];  // pitch
+        wrench[4] = msg.axes[3];  // roll
 
         if (msg.buttons[4] || msg.buttons[5]) {
-            uart_out_.data[5] = (msg.buttons[4] - msg.buttons[5]) * 0.3;
+            wrench[5] = (msg.buttons[4] - msg.buttons[5]) * 0.3;
         }
+
+        // write the values of the doubles into the array
+        std::copy(wrench.begin(), wrench.end(), uart_out_.data); 
 
         std::uint8_t *bytes_out = reinterpret_cast<std::uint8_t*>(&uart_out_);
         sp_.write(bytes_out, sizeof(uartPacket_t));
