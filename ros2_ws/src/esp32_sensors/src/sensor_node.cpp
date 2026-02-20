@@ -96,13 +96,13 @@ private:
             wrench[5] = (msg.buttons[4] - msg.buttons[5]) * 0.3;
         }
 
-        for (int i = 0; i < DOF; i++) {
-            RCLCPP_INFO(this->get_logger(), "buh[%i]: %f", i, wrench[i]);
-        }
         // write the values of the doubles into the array
         std::memcpy(uart_out_.data, wrench.data(), DOF * sizeof(double));
 
         std::uint8_t *bytes_out = reinterpret_cast<std::uint8_t*>(&uart_out_);
+        for (std::size_t i = 0; i < sizeof(uartPacket_t); i++) {
+            RCLCPP_INFO(this->get_logger(), "buh[%lu]: %X02", i, bytes_out[i]);
+        }
         sp_.write(bytes_out, sizeof(uartPacket_t));
     }
 
