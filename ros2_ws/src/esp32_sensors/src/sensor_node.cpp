@@ -95,6 +95,9 @@ private:
             wrench[5] = (msg.buttons[4] - msg.buttons[5]) * 0.3;
         }
 
+        for (int i = 0; i < DOF; i++) {
+            RCLCPP_INFO(this->get_logger(), "buh[%i]: %f", i, wrench[i]);
+        }
         // write the values of the doubles into the array
         std::copy(wrench.begin(), wrench.end(), uart_out_.data); 
 
