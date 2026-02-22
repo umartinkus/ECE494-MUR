@@ -78,10 +78,7 @@ void THRUST_CTRL(void* params) {
 
                 // ESP_LOGI(TAG, "rx packet: u0=%0.3f u1=%0.3f", u[0], u[1]);
 
-                for (int i = 0; i < 6; i++) {
-                    ESP_LOGI(TAG, "u[%i]: %f", i, u[i]);
-                }
-                // function to calculate the allocation
+               // function to calculate the allocation
                 ctrl_allocation(u, f);
 
                 // update all the thrusters with the corresponding values
@@ -145,7 +142,6 @@ void ctrl_allocation(float *u, float *f) {
     for (int i = 0; i < N; i++) {
         if (fabsf(f[i]) > max) max = fabsf(f[i]);
     }
-    ESP_LOGI(TAG, "ctrl=%0.3f pwm_us=%0.1f", u[0], f[0]);
 
     // check if the current values are out of range [-1, 1] and scale if so
     if ( max > upper ) {

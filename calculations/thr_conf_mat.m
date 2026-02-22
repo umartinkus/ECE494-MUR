@@ -29,7 +29,9 @@ end
 disp(T);
 T_inv = inv(T);
 
-print_c_array(T_inv, "T_inv")
+T * [0;0;1;1;-1;-1]
+
+% print_c_array(T_inv, "T_inv")
 
 
 function print_c_array(matrix, var_name)
