@@ -88,7 +88,7 @@ private:
         std::vector<float> wrench(DOF);
         wrench[0] = - static_cast<float>(msg.axes[0]);  // sway
         wrench[1] = static_cast<float>(msg.axes[1]);  // surge
-        wrench[2] = static_cast<float>((msg.axes[4] - msg.axes[5]) / 2);  // heave
+        wrench[2] = static_cast<float>(msg.axes[4] - msg.axes[5]);  // heave
         wrench[3] = - static_cast<float>(msg.axes[3]);  // pitch
         wrench[4] = - static_cast<float>(msg.axes[2]);  // roll
 
