@@ -102,8 +102,8 @@ private:
         std::uint8_t *bytes_out = reinterpret_cast<std::uint8_t*>(&uart_out_);
         const std::size_t packet_len = 4 + uart_out_.data_size;
 
-        for (std::size_t i = 0; i < 6; i++) {
-            RCLCPP_INFO(this->get_logger(), "%f", wrench[i]);
+        for (int i = 0; i < 6; i++) {
+            RCLCPP_INFO(this->get_logger(), "u[%i]: %f", i, wrench[i]);
         }
 
         sp_.write(bytes_out, packet_len);
