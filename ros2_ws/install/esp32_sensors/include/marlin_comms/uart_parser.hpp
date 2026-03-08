@@ -23,15 +23,17 @@ private:
         std::cout << std::hex << static_cast<unsigned int>(b) << " ";
         switch (state_) {
             case State::WAIT_SYNC:
-                if (first_sync_ && b == 0xFF) {
+                if (first_sync_ && b == 0x55) {
 
                     // both conditions met, move to next state
                     state_ = State::READ_SIZE;
                     first_sync_ = false;
                     idx_ = 0;
 
-                } else if (b == 0xFF) {
+                } else if (b == 0x55) {
                     first_sync_ = true;
+                } else {
+                    first_sync_ = false;
                 }
                 break;
 
@@ -47,7 +49,7 @@ private:
                 break;
 
             case State::READ_DATA:
-                uart_packet_.data[idx_] = b;
+                uart_packet_.data[idx_++] = b;
                 if (idx_ == data_size_) {
                     state_ = State::WAIT_SYNC;
                     std::cout << std::endl;
