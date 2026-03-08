@@ -14,15 +14,16 @@
 
 // other needed includes
 #include "dataPacket.h" // might need to move this somewhere else later
+#include "packet_checks.h"
 
 #define CORE0 0
 #define CORE1 1
 #define TASK_PRIO_3 3
 #define TASK_PRIO_4 4
 #define TASK_PRIO_5 5
+static const char* TAG = "state_machine";
 
 // Global Message Buffers
-static MessageBufferHandle_t slow_lane_buff;
 static MessageBufferHandle_t fast_lane_buff;
 
 //  Event Queues
@@ -30,9 +31,11 @@ static QueueHandle_t uart_event_queue;
 
 void app_main(void)
 {
-    slow_lane_buff = xMessageBufferCreate(1024);
     fast_lane_buff = xMessageBufferCreate(2048);
-    uart_event_queue = xQueueCreate(512, sizeof(uint8_t));
+
+    // create queues
+    uart_event_queue = xQueueCreate(64, sizeof(uartPacket_t));
+
     uart_init();
     xTaskCreatePinnedToCore(GET_POSE, "POSE_TASK_C0", 4096, (void*)fast_lane_buff, TASK_PRIO_5, NULL, CORE0);
     xTaskCreatePinnedToCore(UPDATE_GS, "UPDATE_GS_TASK_C0", 4096, (void*)slow_lane_buff, TASK_PRIO_4, NULL, CORE1);

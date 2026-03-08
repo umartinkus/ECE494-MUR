@@ -1,4 +1,6 @@
+#include <stdint.h>
 #include <stdio.h>
+#include <math.h>
 #include "pwm.h"
 #include "driver/ledc.h"
 #include "esp_err.h"
@@ -31,6 +33,30 @@ void init_timer(ledc_timer_config_t* ledc_timer){
         .clk_cfg          = LEDC_AUTO_CLK
     };
     ESP_ERROR_CHECK(ledc_timer_config(ledc_timer));
+}
+
+float map_ctrl_value(uint8_t ctrl_value, float deadzone) {
+    // returns a value between -1 and 1 based on control input
+    float mapped = (float)ctrl_value * (2.0f / 255.0f) - 1.0f;
+
+    // apply deadzone
+    if (fabsf(mapped) < deadzone) {
+        return 0.0f;
+    } else {
+        return mapped;
+    }
+}
+
+uint32_t mapped_to_duty(float ctrl_value) {
+    if (ctrl_value > 1) {
+        ctrl_value = 1;
+    } else if (ctrl_value < -1) {
+        ctrl_value = -1;
+    }
+
+    float us = 500.0f * ctrl_value + 1500.0f;
+    return (uint32_t)us * LEDC_MAX_DUTY / LEDC_PERIOD_US;
+    
 }
 
 uint32_t pwm_us_to_duty(uint32_t pulse_us)

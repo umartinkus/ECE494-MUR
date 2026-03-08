@@ -11,17 +11,18 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
-add_executable(sensor_node src/sensor_node.cpp)
-ament_target_dependencies(sensor_node rclcpp std_msgs)
+add_executable(jetson_node src/sensor_node.cpp)
+ament_target_dependencies(jetson_node rclcpp std_msgs sensor_msgs)
 
-target_include_directories(sensor_node
+target_include_directories(jetson_node
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>)
 
 install(TARGETS
-  sensor_node
+  jetson_node
   DESTINATION lib/${PROJECT_NAME})
 
 install(
