@@ -76,10 +76,9 @@ void THRUST_CTRL(void* params) {
                 memset(u, 0, sizeof(u));
                 memcpy(u, packet.data, (size_t)packet.data_size * sizeof(uint8_t));
 
-                // ESP_LOGI(TAG, "rx packet: addr=0x%02X size=%u u0=%0.3f u1=%0.3f",
-                         // packet.device_address, packet.data_size, u[0], u[1]);
+                // ESP_LOGI(TAG, "rx packet: u0=%0.3f u1=%0.3f", u[0], u[1]);
 
-                // function to calculate the allocation
+               // function to calculate the allocation
                 ctrl_allocation(u, f);
 
                 // update all the thrusters with the corresponding values
@@ -132,7 +131,7 @@ void scale_us(float *f) {
 void ctrl_allocation(float *u, float *f) {
     for (int i = 0; i < N; i++) {
         // apply a deadzone to account for controller stuff
-        if (fabs(u[i]) < deadzone) u[i] = 0;
+        if (fabsf(u[i]) < deadzone) u[i] = 0;
     }
 
     // take the desired "wrench" and find the according thrust forces
@@ -141,7 +140,7 @@ void ctrl_allocation(float *u, float *f) {
     // find the max value of the array
     float max = 0;
     for (int i = 0; i < N; i++) {
-        if (fabs(f[i]) > max) max = fabs(f[i]);
+        if (fabsf(f[i]) > max) max = fabsf(f[i]);
     }
 
     // check if the current values are out of range [-1, 1] and scale if so
@@ -152,7 +151,4 @@ void ctrl_allocation(float *u, float *f) {
     // scale the values to be in us between max_us and min_us
     scale_us(f);
 
-    for (int i = 0; i < 6; i++) {
-        // ESP_LOGI(TAG, "ctrl[%i]=%0.3f pwm_us[%i]=%0.1f", i, u[i], i, f[i]);
-    }
 }

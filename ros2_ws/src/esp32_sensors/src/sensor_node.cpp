@@ -88,12 +88,12 @@ private:
         std::vector<float> wrench(DOF);
         wrench[0] = - static_cast<float>(msg.axes[0]);  // sway
         wrench[1] = static_cast<float>(msg.axes[1]);  // surge
-        wrench[2] = static_cast<float>((msg.axes[2] - msg.axes[5]) / 2);  // heave
-        wrench[3] = - static_cast<float>(msg.axes[4]);  // pitch
-        wrench[4] = - static_cast<float>(msg.axes[3]);  // roll
+        wrench[2] = static_cast<float>(msg.axes[4] - msg.axes[5]);  // heave
+        wrench[3] = - static_cast<float>(msg.axes[3]);  // pitch
+        wrench[4] = - static_cast<float>(msg.axes[2]);  // roll
 
-        if (msg.buttons[4] || msg.buttons[5]) {
-            wrench[5] = (msg.buttons[4] - msg.buttons[5]) * 0.3;
+        if (msg.buttons[9] || msg.buttons[10]) {
+            wrench[5] = (msg.buttons[9] - msg.buttons[10]) * 0.3;
         }
 
         // write the values of the float into the array
@@ -101,10 +101,6 @@ private:
 
         std::uint8_t *bytes_out = reinterpret_cast<std::uint8_t*>(&uart_out_);
         const std::size_t packet_len = 4 + uart_out_.data_size;
-
-        for (std::size_t i = 0; i < packet_len; i++) {
-            RCLCPP_INFO(this->get_logger(), "%X", bytes_out[i]);
-        }
 
         sp_.write(bytes_out, packet_len);
     }
