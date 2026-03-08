@@ -1,2 +1,10 @@
 idf_component_register(SRCS "app.c"
-                    INCLUDE_DIRS ".")
+                            "setup.c"
+                    INCLUDE_DIRS "."
+                                "include"
+                                "../common"
+                    PRIV_REQUIRES "esp_driver_i2c"
+                                "freertos"
+                                "SENSOR"
+                                "HEALTH_MONITOR"
+                                "COMMS")

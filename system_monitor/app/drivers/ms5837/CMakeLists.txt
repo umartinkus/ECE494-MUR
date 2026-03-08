@@ -1,3 +1,3 @@
-idf_component_register(SRCS "ms5837.c"
-                    INCLUDE_DIRS "include"
-                    PRIV_REQUIRES esp_driver_i2c)
+# idf_component_register(SRCS "ms5837.c"
+#                     INCLUDE_DIRS "include" "../../common"
+#                     REQUIRES i2c)

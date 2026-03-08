@@ -5,23 +5,28 @@
 #include "freertos/idf_additions.h"
 #include "freertos/task.h"
 #include "FreeRTOSConfig.h"
-#include "dataPacket.h"
+#include "setup.h"
+#include "configuration.h"
+#include "SENSOR.h"
+#include "HEALTH_MONITOR.h"
 
-// Tasks
-#include "UPDATE_GS.h"
-#define CORE0 0
-#define CORE1 1
-#define TASK_PRIO_4 4
-
-// Global Buffers
-QueueHandle_t data_queue; // Queue for sending data from sensor reading task to UART task
+// Task contexts
+sensor_config_t sensor_task_ctxt; 
+subsystem_status_t health_monitor_ctxt; 
 
 void app_main(void)
 {
-    data_queue = xQueueCreate(10, sizeof(uartPacket_t)); // Create a queue to hold uartPacket_t structures
-    if(data_queue == NULL) {
-        ESP_LOGE("APP_MAIN", "Failed to create data_queue");
-        return;
-    }
-    xTaskCreatePinnedToCore(UPDATE_GS, "UPDATE_GS_TASK_C0", 4096, (void*)data_queue, TASK_PRIO_4, NULL, CORE1);
+    subsystem_init_default(&health_monitor_ctxt); // setting subsystem status to default vals (health monitor task)
+    // setup spi
+
+    // setup i2c
+    health_monitor_ctxt.i2c_bus_status = i2c1_master_init(&sensor_task_ctxt.i2c1_bus_handle);
+    health_monitor_ctxt.temp1_status = i2c1_master_add_device(TEMP1_ADDR, &sensor_task_ctxt.temp1_handle, &sensor_task_ctxt.i2c1_bus_handle);
+    health_monitor_ctxt.temp2_status = i2c1_master_add_device(TEMP2_ADDR, &sensor_task_ctxt.temp2_handle, &sensor_task_ctxt.i2c1_bus_handle);
+
+    // create tasks
+
+    // create buffers
+
+
 }

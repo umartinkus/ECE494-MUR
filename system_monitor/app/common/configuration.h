@@ -1,0 +1,14 @@
+#pragma once
+#define I2C1_MASTER_SCL_IO 21
+#define I2C1_MASTER_SDA_IO 22
+#define I2C1_MASTER_NUM 0
+#define I2C1_FREQ_HZ 400000
+#define I2C1_MASTER_TIMEOUT_MS 1000
+
+#define SPI3_CS_PIN 5
+#define SPI3_CLK_PIN 18
+#define SPI3_MOSI_PIN 23
+#define SPI3_MISO_PIN 19
+
+#define TEMP1_ADDR 0x18
+#define TEMP2_ADDR 0x19
