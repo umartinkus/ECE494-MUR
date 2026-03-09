@@ -13,6 +13,7 @@
 #include <vector>
 #include <functional>
 
+#include "jetson/crc.hpp"
 #include "jetson/data_struct.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "custom_interfaces/msg/spi.hpp"
@@ -132,6 +133,7 @@ private:
         spi1_.transfer(spi_out, spi_in);
 
         // need to do a little bit of state machine stuff just in case
+        RCLCPP_INFO(this->get_logger(), "msg size: %lu", sizeof(msg));
     }
 
     void step_(std::uint8_t b) {
