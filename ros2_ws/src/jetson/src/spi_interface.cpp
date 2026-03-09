@@ -103,7 +103,7 @@ public:
         publisher_ = this->create_publisher<custom_interfaces::msg::SPI>("spi_receive", 10);
 
         RCLCPP_INFO(this->get_logger(), "SPI Node Started");
-        std::cout << sizeof(uart_out_.data);
+        RCLCPP_INFO(this->get_logger(), "size: %lu", sizeof(uart_out_.data));
     }
 private:
     void spi_callback(const custom_interfaces::msg::SPI &msg) {
