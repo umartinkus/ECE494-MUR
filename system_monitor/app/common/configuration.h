@@ -1,4 +1,5 @@
 #pragma once
+
 #define I2C1_MASTER_SCL_IO 21
 #define I2C1_MASTER_SDA_IO 22
 #define I2C1_MASTER_NUM 0
@@ -9,6 +10,9 @@
 #define SPI3_CLK_PIN 18
 #define SPI3_MOSI_PIN 23
 #define SPI3_MISO_PIN 19
+#define SPI3_MODE 0
+#define SPI3_SLAVE_QUEUE_SIZE 4
+#define SPI3_MAX_TRANSFER_SZ 4096
 
 #define TEMP1_ADDR 0x18
 #define TEMP2_ADDR 0x19

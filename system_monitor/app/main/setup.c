@@ -82,3 +82,4 @@ I2C_ERR_t i2c1_master_add_device(uint8_t dev_addr,
     }
     return I2C_OK;
 }
+

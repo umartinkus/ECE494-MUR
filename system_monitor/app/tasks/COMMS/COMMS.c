@@ -1,10 +1,20 @@
 #include <stdio.h>
 #include "COMMS.h"
 
-void func(void)
+void COMMS(void *args)
 {
 
 }
+
+
+
+
+
+
+
+
+
+
 
 // -------------------- FROM DATA_PACKET.c -------------------- //
 // #include <stdio.h>

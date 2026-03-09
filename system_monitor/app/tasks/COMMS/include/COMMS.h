@@ -1,4 +1,6 @@
-void func(void);
+#include "spi_setup.h"
+
+void COMMS(void *arg);
 
 // --- from datapacket.h
 

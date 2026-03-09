@@ -8,4 +8,16 @@ typedef struct{
     i2c_master_dev_handle_t temp2_handle;
 } sensor_config_t;
 
-void func(void);
+typedef struct{
+    float temp1;
+    float temp2;
+    float leak1;
+    float leak2;
+    float batt1;
+    float batt2;
+} sensor_data_t;
+
+sensor_config_t* get_sensor_config(void);
+
+
+void SENSOR(void*);

@@ -9,24 +9,28 @@
 #include "configuration.h"
 #include "SENSOR.h"
 #include "HEALTH_MONITOR.h"
+#include "system_state.h"
 
-// Task contexts
-sensor_config_t sensor_task_ctxt; 
-subsystem_status_t health_monitor_ctxt; 
-
+#define DEFAULT_PRIORITY 5
 void app_main(void)
 {
-    subsystem_init_default(&health_monitor_ctxt); // setting subsystem status to default vals (health monitor task)
-    // setup spi
+    // setup spi, create comms task
 
-    // setup i2c
-    health_monitor_ctxt.i2c_bus_status = i2c1_master_init(&sensor_task_ctxt.i2c1_bus_handle);
-    health_monitor_ctxt.temp1_status = i2c1_master_add_device(TEMP1_ADDR, &sensor_task_ctxt.temp1_handle, &sensor_task_ctxt.i2c1_bus_handle);
-    health_monitor_ctxt.temp2_status = i2c1_master_add_device(TEMP2_ADDR, &sensor_task_ctxt.temp2_handle, &sensor_task_ctxt.i2c1_bus_handle);
+    // start health monitor task
 
-    // create tasks
-
-    // create buffers
-
-
+    // Get the sensor_config struct containing the i2c bus and dev handles
+    // 2DO: utilize the return values of these I2C functions
+    // 2DO: move this to sensor task? This code is tied to setup.c/setup.h, so those need to
+    // be moved too
+    sensor_config_t* sensor_config = get_sensor_config();
+    i2c1_master_init(&(sensor_config->i2c1_bus_handle));// init bus 
+    i2c1_master_add_device(TEMP1_ADDR,
+        &(sensor_config->temp1_handle),
+        &(sensor_config->i2c1_bus_handle));
+    i2c1_master_add_device(TEMP2_ADDR,
+        &(sensor_config->temp2_handle),
+        &(sensor_config->i2c1_bus_handle));
+    
+      // create sensor task 
+      xTaskCreate(SENSOR,"sensor_task", 4096, NULL, DEFAULT_PRIORITY, NULL);
 }

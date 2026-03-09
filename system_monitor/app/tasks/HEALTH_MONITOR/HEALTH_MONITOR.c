@@ -4,6 +4,7 @@
 #include "freertos/task.h"
 
 const char* TAG = "HEALTH_MONITOR";
+const uint8_t TASK_PERIOD_MS = 20; // 50Hz polling rate 
 
 void subsystem_init_default(subsystem_status_t *status)
 {
@@ -15,9 +16,10 @@ void subsystem_init_default(subsystem_status_t *status)
 
 void HEALTH_MONITOR(void *pvParameters)
 {
-    subsystem_status_t subsystem_status = (subsystem_status_t)pvParameters;
+    subsystem_status_t *subsystem_status = (subsystem_status_t *)pvParameters;
     for(;;) 
     {
+
 
     }
 }
