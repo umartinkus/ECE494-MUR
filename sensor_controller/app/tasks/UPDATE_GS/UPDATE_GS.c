@@ -41,9 +41,9 @@ void uart_init(void)
         .source_clk = UART_SCLK_DEFAULT,
     };
     // We won't use a buffer for sending data.
-    uart_param_config(UART_NUM_1, &uart_config);
-    uart_set_pin(UART_NUM_1, TXD_PIN, RXD_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);    
-    uart_driver_install(UART_NUM_1, RX_BUF_SIZE * 2, 0, 0, NULL, 0);
+    uart_param_config(UART_PORT, &uart_config);
+    uart_set_pin(UART_PORT, TXD_PIN, RXD_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);    
+    uart_driver_install(UART_PORT, RX_BUF_SIZE * 2, 0, 0, NULL, 0);
 }
 
 int sendData(int size, const char* data)
@@ -53,7 +53,7 @@ int sendData(int size, const char* data)
         ESP_LOGI(TAG, "%02X ", (unsigned char)data[i]);
     }
     ESP_LOGI(TAG, "Sending %d bytes over UART", size);
-    const int txBytes = uart_write_bytes(UART_NUM_1, data, size);
+    const int txBytes = uart_write_bytes(UART_PORT, data, size);
     ESP_LOGI(TAG, "Sent %d bytes over UART", txBytes);
     return txBytes;
 }

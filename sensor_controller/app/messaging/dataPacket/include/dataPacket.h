@@ -1,6 +1,6 @@
 #ifndef DATAPACKET_H
 #define DATAPACKET_H
-#endif // DATAPACKET_H
+#include <stdint.h>
 
 #define START_FRAMEH 0X55
 #define START_FRAMEL 0X55
@@ -11,4 +11,7 @@ typedef struct {
     uint8_t data_size;
     uint8_t device_address;
     uint8_t data[64];
+    uint16_t crc;
 } uartPacket_t;
+
+#endif // DATAPACKET_H

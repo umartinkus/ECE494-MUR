@@ -1,8 +1,13 @@
 #ifndef UPDATE_GS_H
 #define UPDATE_GS_H
 
-#define TXD_PIN 32
-#define RXD_PIN 35
+#include "driver/uart.h"
+
+// if you change this to the usb, make sure to change all 3
+#define UART_PORT UART_NUM_1
+#define TXD_PIN 19
+#define RXD_PIN 18
+
 #define RX_BUF_SIZE 1024
 #define BAUD_RATE 115200
 
@@ -11,4 +16,3 @@ int sendData(int size, const char* data);
 void uart_init(void);
 
 #endif // UPDATE_GS_H
-
