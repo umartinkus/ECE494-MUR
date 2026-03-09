@@ -10,17 +10,18 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(custom_interfaces REQUIRED)
 
-add_executable(unit_tests src/testing.cpp)
-ament_target_dependencies(unit_tests rclcpp std_msgs sensor_msgs)
+add_executable(spi_interface src/spi_interface.cpp)
+ament_target_dependencies(spi_interface rclcpp std_msgs sensor_msgs custom_interfaces)
 
-target_include_directories(unit_tests
+target_include_directories(spi_interface
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>)
 
 install(TARGETS
-  unit_tests
+  spi_interface
   DESTINATION lib/${PROJECT_NAME})
 
 install(
