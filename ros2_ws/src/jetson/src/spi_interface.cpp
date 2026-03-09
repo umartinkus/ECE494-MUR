@@ -78,7 +78,7 @@ public:
         tr.bits_per_word = bits_per_word_;
 
         if (::ioctl(fd_, SPI_IOC_MESSAGE(1), &tr) < 1) {
-            throw std::runtime_error("SPI transfer failed: " + std::string(std::strerror(errno)));
+            throwstd::runtime_error("SPI transfer failed: " + std::string(std::strerror(errno)));
         }
     }
 
@@ -124,25 +124,8 @@ private:
 
 
 int main(int argc, char* argv[]) {
-  const std::string device = (argc > 1) ? argv[1] : "/dev/spidev0.0";
-
-  try {
-    SpiDevice spi;
-    spi.openPort(device, 1000000);
-
-    std::vector<uint8_t> tx{0xAA, 0x01, 0x02, 0x03};
-    std::vector<uint8_t> rx;
-    spi.transfer(tx, rx);
-
-    std::cout << "RX:";
-    for (const auto byte : rx) {
-      std::cout << " 0x" << std::hex << static_cast<int>(byte);
-    }
-    std::cout << std::dec << '\n';
-  } catch (const std::exception& e) {
-    std::cerr << e.what() << '\n';
-    return 1;
-  }
-
-  return 0;
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<SPI_Interface>());
+    rclcpp::shutdown();
+    return 0;
 }
