@@ -78,7 +78,7 @@ public:
         tr.bits_per_word = bits_per_word_;
 
         if (::ioctl(fd_, SPI_IOC_MESSAGE(1), &tr) < 1) {
-            throwstd::runtime_error("SPI transfer failed: " + std::string(std::strerror(errno)));
+            throw std::runtime_error("SPI transfer failed: " + std::string(std::strerror(errno)));
         }
     }
 
