@@ -1,3 +1,4 @@
+#include <custom_interfaces/msg/detail/spi__struct.hpp>
 #include <fcntl.h>
 #include <linux/spi/spidev.h>
 #include <sys/ioctl.h>
@@ -130,8 +131,79 @@ private:
 
         spi1_.transfer(spi_out, spi_in);
 
-        RCLCPP_INFO(this->get_logger(), "sent spi message");
+        // need to do a little bit of state machine stuff just in case
     }
+
+    void step_(std::uint8_t b) {
+        std::cout << std::hex << static_cast<unsigned int>(b) << " ";
+        switch (state_) {
+            case State::WAIT_SYNC:
+                if (first_sync_ && b == 0x55) {
+
+                    // both conditions met, move to next state
+                    state_ = State::READ_SIZE;
+                    first_sync_ = false;
+                    idx_ = 0;
+
+                } else if (b == 0x55) {
+                    first_sync_ = true;
+                } else {
+                    first_sync_ = false;
+                }
+                break;
+
+            case State::READ_SIZE:
+                data_size_ = static_cast<std::size_t>(b);
+                msg_out.size = b;
+                state_ = State::READ_ADDR;
+                break;
+
+            case State::READ_ADDR:
+                msg_out.address = b;
+                state_ = State::READ_DATA;
+                break;
+
+            case State::READ_DATA:
+                msg_out.data[idx_++] = b;
+                if (idx_ == data_size_) {
+                    state_ = State::CHECK_CRC;
+                    std::cout << std::endl;
+                    }
+                // add some sort of callback to handle the data payload
+                break;
+
+            case State::CHECK_CRC:
+                if (first_crc_) {
+                    first_crc_ = false;
+                    crc_vector[0] = b;
+                } else {
+                    first_crc_ = true;
+                    crc_vector[1] = b;
+                    msg_out.crc = *reinterpret_cast<std::uint16_t*>(crc_vector.data());
+                    this->publisher_->publish(msg_out);
+                    state_ = State::WAIT_SYNC;
+                    // add a function to do the crc
+                }
+                break;
+        }
+    }
+
+    enum class State {
+        WAIT_SYNC,
+        READ_SIZE,
+        READ_ADDR,
+        READ_DATA,
+        CHECK_CRC
+    };
+
+    // state machine values
+    State state_{State::WAIT_SYNC};
+    custom_interfaces::msg::SPI msg_out;
+    bool first_sync_{false};
+    bool first_crc_{true};
+    std::size_t data_size_{0};
+    std::size_t idx_{0};
+    std::vector<std::uint8_t> crc_vector;
 
     uartPacket_t uart_out_{};
     SpiDevice spi1_;
