@@ -96,6 +96,10 @@ private:
             wrench[5] = (msg.buttons[9] - msg.buttons[10]) * 0.3;
         }
 
+        for (float& val : wrench) {
+            val = 0.2 * val;
+        }
+
         // write the values of the float into the array
         std::memcpy(uart_out_.data, wrench.data(), DOF * sizeof(float));
 
