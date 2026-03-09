@@ -103,7 +103,6 @@ public:
         publisher_ = this->create_publisher<custom_interfaces::msg::SPI>("spi_receive", 10);
 
         RCLCPP_INFO(this->get_logger(), "SPI Node Started");
-        RCLCPP_INFO(this->get_logger(), "size: %lu", sizeof(uart_out_.data));
     }
 private:
     void spi_callback(const custom_interfaces::msg::SPI &msg) {
@@ -113,6 +112,18 @@ private:
         uart_out_.data_size = msg.size;
         uart_out_.device_address = msg.address;
         uart_out_.crc = msg.crc;
+
+        std::memcpy(uart_out_.data, msg.data.data(), sizeof(uart_out_.data));
+
+        // nifty trick to cast the struct into a vector
+        std::vector<uint8_t> spi_out(
+            reinterpret_cast<uint8_t*>(&uart_out_),
+            reinterpret_cast<uint8_t*>(&uart_out_) + sizeof(uart_out_)
+        );
+
+        std::vector<uint8_t> spi_in;
+
+        spi1_.transfer(spi_out, spi_in);
     }
 
     uartPacket_t uart_out_{};
