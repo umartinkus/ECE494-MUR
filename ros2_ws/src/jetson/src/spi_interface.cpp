@@ -30,8 +30,8 @@ public:
   SpiDevice(const SpiDevice&) = delete;
   SpiDevice& operator=(const SpiDevice&) = delete;
 
-  int openPort(const std::string& device, uint32_t speed_hz, uint8_t mode = SPI_MODE_0,
-                uint8_t bits_per_word = 8) {
+  uint32_t openPort(const std::string& device, uint32_t speed_hz, uint8_t mode = SPI_MODE_0,
+                    uint8_t bits_per_word = 8) {
         if (fd_ >= 0) {
             ::close(fd_);
             fd_ = -1;
@@ -58,8 +58,7 @@ public:
             throw std::runtime_error("Failed to set/get max speed: " + std::string(std::strerror(errno)));
         }
 
-        int result = ioctl(fd_, SPI_IOC_RD_MAX_SPEED_HZ, &speed_hz_);
-        return result;
+        return speed_hz_;
   }
 
     void transfer(const std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) const {
@@ -95,8 +94,8 @@ private:
 class SPI_Interface : public rclcpp::Node {
 public:
     SPI_Interface() : Node("spi_interface") {
-        int speed = spi1_.openPort("/dev/spidev0.0", 20000);
-        RCLCPP_INFO(this->get_logger(), "%i", speed);
+        const uint32_t speed_hz = spi1_.openPort("/dev/spidev0.0", 20000);
+        RCLCPP_INFO(this->get_logger(), "Configured SPI max speed: %u Hz", speed_hz);
         
         subscription_ = this->create_subscription<custom_interfaces::msg::SPI>(
             "spi_send", 
