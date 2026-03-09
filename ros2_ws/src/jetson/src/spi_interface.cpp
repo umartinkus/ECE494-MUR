@@ -11,6 +11,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <array>
 #include <functional>
 
 #include "jetson/crc.hpp"
@@ -132,6 +133,14 @@ private:
 
         spi1_.transfer(spi_out, spi_in);
 
+        if (std::all_of(spi_in.begin(), spi_in.end(), [](std::uint8_t i) { return i == 0; })) {
+            RCLCPP_INFO(this->get_logger(), "Received SPI Message was all zeros");
+        } else {
+            for (std::uint8_t &word : spi_in) {
+                step_(word);
+            }
+        }
+
         // need to do a little bit of state machine stuff just in case
         RCLCPP_INFO(this->get_logger(), "msg size: %lu", sizeof(msg));
     }
@@ -156,6 +165,8 @@ private:
 
             case State::READ_SIZE:
                 data_size_ = static_cast<std::size_t>(b);
+                msg_out.synch = 0x55;
+                msg_out.syncl = 0x55;
                 msg_out.size = b;
                 state_ = State::READ_ADDR;
                 break;
@@ -181,10 +192,16 @@ private:
                 } else {
                     first_crc_ = true;
                     crc_vector[1] = b;
-                    msg_out.crc = *reinterpret_cast<std::uint16_t*>(crc_vector.data());
-                    this->publisher_->publish(msg_out);
+
+                    // convert the two crc bytes into a single uint16_t
+                    msg_out.crc = static_cast<std::uint16_t>(crc_vector[0])
+                        | (static_cast<std::uint16_t>(crc_vector[1]) << 8);
                     state_ = State::WAIT_SYNC;
-                    // add a function to do the crc
+
+                    // check crc
+                    if (check_crc16(msg_out)) {
+                        this->publisher_->publish(msg_out);
+                    }
                 }
                 break;
         }
@@ -205,7 +222,7 @@ private:
     bool first_crc_{true};
     std::size_t data_size_{0};
     std::size_t idx_{0};
-    std::vector<std::uint8_t> crc_vector;
+    std::array<std::uint8_t, 2> crc_vector{};
 
     uartPacket_t uart_out_{};
     SpiDevice spi1_;

@@ -5,4 +5,5 @@
 #include "rclcpp/rclcpp.hpp"
 #include "custom_interfaces/msg/spi.hpp"
 
-std::size_t encode_crc16(custom_interfaces::msg::SPI &msg);
+void encode_crc16(custom_interfaces::msg::SPI &msg);
+bool check_crc16(const custom_interfaces::msg::SPI &msg);
