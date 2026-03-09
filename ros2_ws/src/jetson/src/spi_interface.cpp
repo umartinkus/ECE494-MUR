@@ -50,11 +50,13 @@ public:
             throw std::runtime_error("Failed to set/get SPI mode: " + std::string(std::strerror(errno)));
         }
 
-        if (::ioctl(fd_, SPI_IOC_WR_BITS_PER_WORD, &bits_per_word_) < 0 || ::ioctl(fd_, SPI_IOC_RD_BITS_PER_WORD, &bits_per_word_) < 0) {
+        if (::ioctl(fd_, SPI_IOC_WR_BITS_PER_WORD, &bits_per_word_) < 0 
+            || ::ioctl(fd_, SPI_IOC_RD_BITS_PER_WORD, &bits_per_word_) < 0) {
             throw std::runtime_error("Failed to set/get bits per word: " + std::string(std::strerror(errno)));
         }
 
-        if (::ioctl(fd_, SPI_IOC_WR_MAX_SPEED_HZ, &speed_hz_) < 0 || ::ioctl(fd_, SPI_IOC_RD_MAX_SPEED_HZ, &speed_hz_) < 0) {
+        if (::ioctl(fd_, SPI_IOC_WR_MAX_SPEED_HZ, &speed_hz_) < 0 
+            || ::ioctl(fd_, SPI_IOC_RD_MAX_SPEED_HZ, &speed_hz_) < 0) {
             throw std::runtime_error("Failed to set/get max speed: " + std::string(std::strerror(errno)));
         }
 
@@ -94,7 +96,7 @@ private:
 class SPI_Interface : public rclcpp::Node {
 public:
     SPI_Interface() : Node("spi_interface") {
-        const uint32_t speed_hz = spi1_.openPort("/dev/spidev0.0", 20000);
+        const uint32_t speed_hz = spi1_.openPort("/dev/spidev0.0", 5000000);
         RCLCPP_INFO(this->get_logger(), "Configured SPI max speed: %u Hz", speed_hz);
         
         subscription_ = this->create_subscription<custom_interfaces::msg::SPI>(
