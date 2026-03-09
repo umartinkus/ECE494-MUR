@@ -124,6 +124,8 @@ private:
         std::vector<uint8_t> spi_in;
 
         spi1_.transfer(spi_out, spi_in);
+
+        RCLCPP_INFO(this->get_logger(), "sent spi message");
     }
 
     uartPacket_t uart_out_{};
