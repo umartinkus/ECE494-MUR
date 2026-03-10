@@ -16,3 +16,5 @@
 
 #define TEMP1_ADDR 0x18
 #define TEMP2_ADDR 0x19
+
+#define PACKET_SIZE 64
