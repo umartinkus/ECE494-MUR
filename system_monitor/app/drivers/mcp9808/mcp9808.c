@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include "esp_log.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "driver/i2c_master.h"
+
+#include "mcp9808.h"
+
+// Constants
+#define MCP9808_REG_TEMP        0x05
+#define MCP9808_REG_MANUF_ID    0x06
+#define MCP9808_EXPECTED_ID     0x0054 // Microchip's Manufacturer ID
+#define I2C_TIMEOUT_MS          1000
+
+static const char *TAG = "MCP9808";
+// verify this conversion facotr
+static const float conversion = 0.0625; // binary to celsius factor: 1/16
+
+// Private function prototypes
+static esp_err_t mcp9808_read_raw(
+	  i2c_master_dev_handle_t dev_handle,
+	  uint8_t* dataBuffer);
+static float mcp9808_calculate_temp(uint8_t *raw_temp);
+
+/**
+ * @brief Initialize the MCP9808 and verify communication.
+ * * @details Reads the manufacturer ID register to ensure the sensor is connected
+ * and responding correctly before proceeding.
+ * * @return 0 if successful, 1 if there was an error.
+ */
+uint8_t mcp9808_setup(i2c_master_bus_handle_t bus_handle, i2c_master_dev_handle_t dev_handle) {
+    if (bus_handle == NULL || dev_handle == NULL) {
+        ESP_LOGE(TAG, "Invalid argument: bus_handle and dev_handle must not be NULL");
+        return 1; 
+    }
+
+    uint8_t reg = MCP9808_REG_MANUF_ID;
+    uint8_t data_buffer[2] = {0};
+
+    // Read the 16-bit manufacturer ID
+    esp_err_t err = i2c_master_transmit_receive(dev_handle, &reg, 1, data_buffer, 2, I2C_TIMEOUT_MS);
+    
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to communicate with MCP9808. Check wiring and pull-up resistors.");
+        return 1;
+    }
+
+    // Combine bytes (MSB first)
+    uint16_t manuf_id = (data_buffer[0] << 8) | data_buffer[1];
+
+    if (manuf_id != MCP9808_EXPECTED_ID) {
+        ESP_LOGE(TAG, "Invalid Manufacturer ID: received 0x%04x, expected 0x%04x", manuf_id, MCP9808_EXPECTED_ID);
+        return 1;
+    }
+
+    ESP_LOGI(TAG, "MCP9808 setup complete. Sensor verified.");
+    return 0;
+}
+
+/**
+ * @brief Read raw temperature bytes from the sensor.
+ */
+static esp_err_t mcp9808_read_raw(i2c_master_dev_handle_t dev_handle, uint8_t* dataBuffer) {
+    uint8_t reg = MCP9808_REG_TEMP;
+    
+    // Transmit the register address we want to read, then receive 2 bytes
+    return i2c_master_transmit_receive(dev_handle, &reg, 1, dataBuffer, 2, I2C_TIMEOUT_MS);
+}
+
+/**
+ * @brief Calculate the floating-point temperature from raw bytes.
+ */
+static float mcp9808_calculate_temp(uint8_t *raw_temp) {
+    // Combine the 2 bytes into a 16-bit integer (MSB first)
+    uint16_t t16 = (raw_temp[0] << 8) | raw_temp[1];
+    
+    // Mask out the alert flags and divide by 16 to get Celsius
+    float temp = (t16 & 0x0FFF) * conversion;
+    
+    // Check the sign bit for negative temperatures
+    if (t16 & 0x1000) {
+        temp -= 256.0;
+    }
+    
+    return temp;
+}
+
+/**
+ * @brief Public function to read the temperature.
+ * * @param dev_handle I2C device handle for the MCP9808
+ * @param temperature Pointer to a float where the final temperature will be stored
+ */
+void mcp9808_read(i2c_master_dev_handle_t dev_handle, float *temperature) {
+    if (dev_handle == NULL || temperature == NULL) {
+        ESP_LOGE(TAG, "Invalid argument: dev_handle and temperature must not be NULL");
+        return;
+    }
+
+    uint8_t raw_buffer[2] = {0};
+    
+    // Get raw data
+    if (mcp9808_read_raw(dev_handle, raw_buffer) == ESP_OK) {
+        // Calculate and assign to the output pointer
+        *temperature = mcp9808_calculate_temp(raw_buffer);
+    } else {
+        ESP_LOGE(TAG, "Failed to read raw temperature data.");
+    }
+}
