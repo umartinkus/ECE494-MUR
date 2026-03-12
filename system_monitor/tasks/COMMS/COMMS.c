@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "COMMS.h"
 #include "freertos/idf_additions.h"
+#include "packet.h"
 #include "spi.h"
 #include "configuration.h"
 #include "esp_err.h"
@@ -18,14 +19,7 @@ void COMMS(void *args)
     }
 
     for (;;) {
-        uint8_t tx_buf[PACKET_SIZE] = {85, 2, 3, 4};
-        uint8_t rx_buf[PACKET_SIZE] = {0};
-
-        ESP_LOGI(TAG, "Waiting for SPI transaction");
-
-        esp_err_t ret = spi_transaction(tx_buf, rx_buf, sizeof(tx_buf));
-        if (ret != ESP_OK) {
-            ESP_LOGE(TAG, "SPI transaction failed: %s", esp_err_to_name(ret));
-        }
+        uint8_t test_data[] = {1, 2, 3, 4};
+        transfer_packet(4, 0x67, test_data, packet_queue);
     }
 }
