@@ -3,7 +3,7 @@
 typedef enum error_code{
     STATUS_OK = 0,
     STATUS_ERROR = 1,
-    STATUS_UNITIALIZED = 2,
+    STATUS_UNINITIALIZED = 2,
     STATUS_UNKNOWN = 99
 } error_code_t;
 
