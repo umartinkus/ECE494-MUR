@@ -20,6 +20,7 @@ esp_err_t spi3_slave_init(void)
         .flags = SPICOMMON_BUSFLAG_SLAVE,
         .isr_cpu_id = ESP_INTR_CPU_AFFINITY_AUTO,
         .intr_flags = 0,
+        .data_io_default_level = true
     };
 
     spi_slave_interface_config_t slave_cfg = {
@@ -45,7 +46,7 @@ esp_err_t spi_transaction(uint8_t* tx_buf, uint8_t* rx_buf, size_t len) {
         return ESP_ERR_INVALID_SIZE;
     }
 
-    spi_slave_transaction_t t;
+    spi_slave_transaction_t t = {0};
     t.length = len * 8;  // number of bits to send
     t.tx_buffer = tx_buf;
     t.rx_buffer = rx_buf;
