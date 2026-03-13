@@ -1,2 +1,2 @@
-idf_component_register(SRCS "dataPacket.c"
+idf_component_register(SRCS "drivers.c"
                     INCLUDE_DIRS "include")
