@@ -19,6 +19,16 @@
 #include "rclcpp/rclcpp.hpp"
 #include "custom_interfaces/msg/spi.hpp"
 
+#define SYNCH_POS 0
+#define SYNCL_POS 1
+#define SIZE_POS 2
+#define ADDR_POS 3
+#define DATA_POS 4
+#define CRC1_POS 62
+#define CRC2_POS 63
+
+#define SPI_PACKET_SIZE 64
+
 // class that owns the SPI port 
 class SpiDevice {
 public:
@@ -66,12 +76,14 @@ public:
         return speed_hz_;
   }
 
-    void transfer(const std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) const {
+    void transfer(std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) const {
         if (fd_ < 0) {
             throw std::runtime_error("SPI port is not open. Call openPort() first.");
         }
-        if (tx.empty()) {
-            rx.clear();
+
+        // make sure it is sending 64 bytes
+        if (tx.size() < SPI_PACKET_SIZE) {
+            tx.resize(SPI_PACKET_SIZE);
         return;
         }
 
@@ -80,7 +92,7 @@ public:
         spi_ioc_transfer tr{};
         tr.tx_buf = reinterpret_cast<uint64_t>(tx.data());
         tr.rx_buf = reinterpret_cast<uint64_t>(rx.data());
-        tr.len = static_cast<uint32_t>(tx.size());
+        tr.len = SPI_PACKET_SIZE;
         tr.speed_hz = speed_hz_;
         tr.bits_per_word = bits_per_word_;
 
@@ -119,7 +131,8 @@ private:
         uart_out_.start_frameL = msg.syncl;
         uart_out_.data_size = msg.size;
         uart_out_.device_address = msg.address;
-        uart_out_.crc = msg.crc;
+        uart_out_.crc = encode_crc16(msg);
+
 
         std::memcpy(uart_out_.data, msg.data.data(), sizeof(uart_out_.data));
 
@@ -133,96 +146,115 @@ private:
 
         spi1_.transfer(spi_out, spi_in);
 
-        if (std::all_of(spi_in.begin(), spi_in.end(), [](std::uint8_t i) { return i == 0; })) {
-            RCLCPP_INFO(this->get_logger(), "Received SPI Message was all zeros");
-        } else {
-            for (std::uint8_t &word : spi_in) {
-                step_(word);
-            }
+        // if (std::all_of(spi_in.begin(), spi_in.end(), [](std::uint8_t i) { return i == 0; })) {
+        //     RCLCPP_INFO(this->get_logger(), "Received SPI Message was all zeros");
+        // } else {
+        //     for (std::uint8_t &word : spi_in) {
+        //         step_(word);
+        //     }
+        // }
+
+        auto msg_out = custom_interfaces::msg::SPI();
+        msg_out.synch = spi_in[SYNCH_POS];
+        msg_out.syncl = spi_in[SYNCL_POS];
+
+        if (msg_out.synch != START_FRAMEH || msg_out.syncl != START_FRAMEL) {
+            RCLCPP_INFO(this->get_logger(), "Bad sync bytes");
+            return;
         }
 
-        // need to do a little bit of state machine stuff just in case
-        RCLCPP_INFO(this->get_logger(), "msg size: %lu", sizeof(msg));
-    }
+        msg_out.size = spi_in[SIZE_POS];
+        msg_out.address = spi_in[ADDR_POS];
+        std::copy(spi_in.begin() + DATA_POS, spi_in.begin() + DATA_POS + msg_out.size, msg_out.data.begin());
+        msg_out.crc = (spi_in[CRC1_POS] << sizeof(std::uint8_t)) | spi_in[CRC2_POS];
 
-    void step_(std::uint8_t b) {
-        std::cout << std::hex << static_cast<unsigned int>(b) << " ";
-        switch (state_) {
-            case State::WAIT_SYNC:
-                if (first_sync_ && b == 0x55) {
-
-                    // both conditions met, move to next state
-                    state_ = State::READ_SIZE;
-                    first_sync_ = false;
-                    idx_ = 0;
-
-                } else if (b == 0x55) {
-                    first_sync_ = true;
-                } else {
-                    first_sync_ = false;
-                }
-                break;
-
-            case State::READ_SIZE:
-                data_size_ = static_cast<std::size_t>(b);
-                msg_out.synch = 0x55;
-                msg_out.syncl = 0x55;
-                msg_out.size = b;
-                state_ = State::READ_ADDR;
-                break;
-
-            case State::READ_ADDR:
-                msg_out.address = b;
-                state_ = State::READ_DATA;
-                break;
-
-            case State::READ_DATA:
-                msg_out.data[idx_++] = b;
-                if (idx_ == data_size_) {
-                    state_ = State::CHECK_CRC;
-                    std::cout << std::endl;
-                    }
-                // add some sort of callback to handle the data payload
-                break;
-
-            case State::CHECK_CRC:
-                if (first_crc_) {
-                    first_crc_ = false;
-                    crc_vector[0] = b;
-                } else {
-                    first_crc_ = true;
-                    crc_vector[1] = b;
-
-                    // convert the two crc bytes into a single uint16_t
-                    msg_out.crc = static_cast<std::uint16_t>(crc_vector[0])
-                        | (static_cast<std::uint16_t>(crc_vector[1]) << 8);
-                    state_ = State::WAIT_SYNC;
-
-                    // check crc
-                    if (check_crc16(msg_out)) {
-                        this->publisher_->publish(msg_out);
-                    }
-                }
-                break;
+        if (!check_crc16(msg_out)) {
+            RCLCPP_INFO(this->get_logger(), "Bad crc");
+            return;
         }
+
+        publisher_->publish(msg_out);
+        return;
     }
 
-    enum class State {
-        WAIT_SYNC,
-        READ_SIZE,
-        READ_ADDR,
-        READ_DATA,
-        CHECK_CRC
-    };
+    // void step_(std::uint8_t b) {
+    //     std::cout << std::hex << static_cast<unsigned int>(b) << " ";
+    //     switch (state_) {
+    //         case State::WAIT_SYNC:
+    //             if (first_sync_ && b == 0x55) {
+    //
+    //                 // both conditions met, move to next state
+    //                 state_ = State::READ_SIZE;
+    //                 first_sync_ = false;
+    //                 idx_ = 0;
+    //
+    //             } else if (b == 0x55) {
+    //                 first_sync_ = true;
+    //             } else {
+    //                 first_sync_ = false;
+    //             }
+    //             break;
+    //
+    //         case State::READ_SIZE:
+    //             data_size_ = static_cast<std::size_t>(b);
+    //             msg_out.synch = 0x55;
+    //             msg_out.syncl = 0x55;
+    //             msg_out.size = b;
+    //             state_ = State::READ_ADDR;
+    //             break;
+    //
+    //         case State::READ_ADDR:
+    //             msg_out.address = b;
+    //             state_ = State::READ_DATA;
+    //             break;
+    //
+    //         case State::READ_DATA:
+    //             msg_out.data[idx_++] = b;
+    //             if (idx_ == data_size_) {
+    //                 state_ = State::CHECK_CRC;
+    //                 std::cout << std::endl;
+    //                 }
+    //             // add some sort of callback to handle the data payload
+    //             break;
+    //
+    //         case State::CHECK_CRC:
+    //             if (first_crc_) {
+    //                 first_crc_ = false;
+    //                 crc_vector[0] = b;
+    //             } else {
+    //                 first_crc_ = true;
+    //                 crc_vector[1] = b;
+    //
+    //                 // convert the two crc bytes into a single uint16_t
+    //                 msg_out.crc = static_cast<std::uint16_t>(crc_vector[0])
+    //                     | (static_cast<std::uint16_t>(crc_vector[1]) << 8);
+    //                 state_ = State::WAIT_SYNC;
+    //
+    //                 // check crc
+    //                 if (check_crc16(msg_out)) {
+    //                     this->publisher_->publish(msg_out);
+    //                 }
+    //             }
+    //             break;
+    //     }
+    // }
+
+    // enum class State {
+    //     WAIT_SYNC,
+    //     READ_SIZE,
+    //     READ_ADDR,
+    //     READ_DATA,
+    //     CHECK_CRC
+    // };
 
     // state machine values
-    State state_{State::WAIT_SYNC};
+    // State state_{State::WAIT_SYNC};
     custom_interfaces::msg::SPI msg_out;
-    bool first_sync_{false};
-    bool first_crc_{true};
-    std::size_t data_size_{0};
-    std::size_t idx_{0};
-    std::array<std::uint8_t, 2> crc_vector{};
+    // bool first_sync_{false};
+    // bool first_crc_{true};
+    // std::size_t data_size_{0};
+    // std::size_t idx_{0};
+    // std::array<std::uint8_t, 2> crc_vector{};
 
     uartPacket_t uart_out_{};
     SpiDevice spi1_;

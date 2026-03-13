@@ -1,7 +1,7 @@
 #include "crc.hpp"
 #include "jetson/crc_lookup.hpp"
 
- void encode_crc16(custom_interfaces::msg::SPI &msg) {
+std::uint16_t encode_crc16(const custom_interfaces::msg::SPI &msg) {
     std::uint16_t crc = 0;
     std::uint8_t div = 0;
 
@@ -17,7 +17,7 @@
         div = (crc >> 8) ^ value;
         crc = (crc << 8) ^ lookup_bytes[div];
     }
-    msg.crc = crc;
+    return crc;
 }
 
 bool check_crc16(const custom_interfaces::msg::SPI &msg) {
