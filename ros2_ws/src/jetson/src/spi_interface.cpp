@@ -142,7 +142,7 @@ private:
             reinterpret_cast<uint8_t*>(&uart_out_) + sizeof(uart_out_)
         );
 
-        RCLCPP_INFO(this->get_logger(), "first sync byte: %X", spi_out[0]);
+        RCLCPP_INFO(this->get_logger(), "first sync byte: %X, %X", spi_out[0], spi_out[1]);
 
         std::vector<uint8_t> spi_in;
 
