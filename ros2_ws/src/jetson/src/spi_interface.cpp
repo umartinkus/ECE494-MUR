@@ -142,6 +142,8 @@ private:
             reinterpret_cast<uint8_t*>(&uart_out_) + sizeof(uart_out_)
         );
 
+        RCLCPP_INFO(this->get_logger(), "first sync byte: %X", spi_out[0]);
+
         std::vector<uint8_t> spi_in;
 
         spi1_.transfer(spi_out, spi_in);
