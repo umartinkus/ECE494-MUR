@@ -6,40 +6,27 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <string.h>
+
 #include "adc.h"
 #include "configuration.h"
-#include "esp_adc/adc_oneshot.h"
+#include "esp_err.h"
 #include "esp_adc/adc_cali.h"
 #include "esp_adc/adc_cali_scheme.h"
+#include "esp_adc/adc_oneshot.h"
 
-#define ADC_DRIVER_MAX_INPUTS 8
+#define ADC_DRIVER_MAX_INPUTS 8U
 
-/*Helper Functions*/
-static error_code_t adc_validate_cfg(const adc_input_cfg_t *cfg);
-static adc_unit_state_t *adc_get_unit_state(adc_drv_unit_t unit);
-static adc_unit_t adc_map_unit(adc_drv_unit_t unit);
-static adc_channel_t adc_map_channel(adc_drv_channel_t channel);
-static adc_atten_t adc_map_atten(adc_drv_atten_t attenuation);
-static bool adc_cali_supported(void);
-static esp_err_t adc_create_calibration(const adc_input_cfg_t *cfg,
-                                        adc_cali_handle_t *out_handle);
-static void adc_destroy_input_calibration(adc_input_state_t *input_state);
-static void adc_cleanup_driver(void);
-static adc_input_state_t *adc_find_input_state(const adc_input_cfg_t *input_cfg);
-
-
-/*Private Structs*/
 typedef struct {
     bool initialized;
     adc_oneshot_unit_handle_t handle;
-} adc_unit_state_t; // hold status of a one shot unit and its handle
+} adc_unit_state_t;
 
 typedef struct {
     bool configured;
     adc_input_cfg_t cfg;
-    bool calibration_enabled; // disable if you only want raw vals; it will be less accurate
+    bool calibration_enabled;
     adc_cali_handle_t cali_handle;
-} adc_input_state_t; 
+} adc_input_state_t;
 
 typedef struct {
     bool initialized;
@@ -47,9 +34,20 @@ typedef struct {
     adc_unit_state_t adc2;
     adc_input_state_t inputs[ADC_DRIVER_MAX_INPUTS];
     size_t input_count;
-} adc_driver_state_t; // status of ADC driver that contains both adcs
+} adc_driver_state_t;
 
-/*Public Functions*/
+static error_code_t adc_validate_cfg(const adc_input_cfg_t *cfg);
+static adc_unit_state_t *adc_get_unit_state(adc_drv_unit_t unit);
+static adc_unit_t adc_map_unit(adc_drv_unit_t unit);
+static adc_channel_t adc_map_channel(adc_drv_channel_t channel);
+static adc_atten_t adc_map_atten(adc_drv_atten_t attenuation);
+static adc_input_state_t *adc_find_input_state(const adc_input_cfg_t *input_cfg);
+static esp_err_t adc_create_calibration(const adc_input_cfg_t *cfg, adc_cali_handle_t *out_handle);
+static void adc_destroy_input_calibration(adc_input_state_t *input_state);
+static void adc_cleanup_driver(void);
+
+static adc_driver_state_t s_adc_driver;
+
 error_code_t adc_driver_init(const adc_input_cfg_t *cfg_table, size_t cfg_count)
 {
     size_t i;
@@ -95,9 +93,11 @@ error_code_t adc_driver_init(const adc_input_cfg_t *cfg_table, size_t cfg_count)
         chan_cfg.atten = adc_map_atten(cfg->attenuation);
         chan_cfg.bitwidth = ADC_BITWIDTH_12;
 
-        err = adc_oneshot_config_channel(unit_state->handle,
-                                         adc_map_channel(cfg->channel),
-                                         &chan_cfg);
+        err = adc_oneshot_config_channel(
+            unit_state->handle,
+            adc_map_channel(cfg->channel),
+            &chan_cfg
+        );
         if (err != ESP_OK) {
             adc_cleanup_driver();
             return STATUS_ERROR;
@@ -130,8 +130,12 @@ error_code_t adc_driver_read_raw(const adc_input_cfg_t *input_cfg, int *raw_valu
     adc_unit_state_t *unit_state;
     esp_err_t err;
 
-    if ((!s_adc_driver.initialized) || (input_cfg == NULL) || (raw_value == NULL)) {
+    if (!s_adc_driver.initialized) {
         return STATUS_UNINITIALIZED;
+    }
+
+    if ((input_cfg == NULL) || (raw_value == NULL)) {
+        return STATUS_ERROR;
     }
 
     if (adc_validate_cfg(input_cfg) != STATUS_OK) {
@@ -143,9 +147,7 @@ error_code_t adc_driver_read_raw(const adc_input_cfg_t *input_cfg, int *raw_valu
         return STATUS_ERROR;
     }
 
-    err = adc_oneshot_read(unit_state->handle,
-                           adc_map_channel(input_cfg->channel),
-                           raw_value);
+    err = adc_oneshot_read(unit_state->handle, adc_map_channel(input_cfg->channel), raw_value);
     if (err != ESP_OK) {
         return STATUS_ERROR;
     }
@@ -184,6 +186,54 @@ error_code_t adc_driver_read_mv(const adc_input_cfg_t *input_cfg, int *mv_value)
     return STATUS_OK;
 }
 
+error_code_t adc_driver_deinit(void)
+{
+    adc_cleanup_driver();
+    return STATUS_OK;
+}
+
+static error_code_t adc_validate_cfg(const adc_input_cfg_t *cfg)
+{
+    if (cfg == NULL) {
+        return STATUS_ERROR;
+    }
+
+    if ((cfg->unit != ADC_DRV_UNIT_1) && (cfg->unit != ADC_DRV_UNIT_2)) {
+        return STATUS_ERROR;
+    }
+
+    if ((cfg->attenuation != ADC_DRV_ATTEN_DB_0) &&
+        (cfg->attenuation != ADC_DRV_ATTEN_DB_2P5) &&
+        (cfg->attenuation != ADC_DRV_ATTEN_DB_6) &&
+        (cfg->attenuation != ADC_DRV_ATTEN_DB_12)) {
+        return STATUS_ERROR;
+    }
+
+    if (cfg->unit == ADC_DRV_UNIT_1) {
+        if (cfg->channel > ADC_DRV_CHANNEL_7) {
+            return STATUS_ERROR;
+        }
+    } else {
+        if (cfg->channel > ADC_DRV_CHANNEL_9) {
+            return STATUS_ERROR;
+        }
+    }
+
+    return STATUS_OK;
+}
+
+static adc_unit_state_t *adc_get_unit_state(adc_drv_unit_t unit)
+{
+    switch (unit) {
+    case ADC_DRV_UNIT_1:
+        return &s_adc_driver.adc1;
+    case ADC_DRV_UNIT_2:
+        return &s_adc_driver.adc2;
+    default:
+        return NULL;
+    }
+}
+
 static adc_unit_t adc_map_unit(adc_drv_unit_t unit)
 {
     switch (unit) {
@@ -192,28 +242,28 @@ static adc_unit_t adc_map_unit(adc_drv_unit_t unit)
     case ADC_DRV_UNIT_2:
         return ADC_UNIT_2;
     default:
-        return ADC_UNIT_1; /* unreachable after validation */
+        return ADC_UNIT_1;
     }
 }
 
-static esp_err_t adc_create_calibration(const adc_input_cfg_t *cfg,
-                                        adc_cali_handle_t *out_handle)
+static adc_channel_t adc_map_channel(adc_drv_channel_t channel)
 {
-    adc_cali_line_fitting_config_t cali_cfg = {
-        .unit_id = adc_map_unit(cfg->unit),
-        .atten = adc_map_atten(cfg->attenuation),
-        .bitwidth = ADC_BITWIDTH_12,
-    };
-
-    return adc_cali_create_scheme_line_fitting(&cali_cfg, out_handle);
+    return (adc_channel_t)channel;
 }
 
-static void adc_destroy_input_calibration(adc_input_state_t *input_state)
+static adc_atten_t adc_map_atten(adc_drv_atten_t attenuation)
 {
-    if ((input_state != NULL) && input_state->calibration_enabled) {
-        adc_cali_delete_scheme_line_fitting(input_state->cali_handle);
-        input_state->cali_handle = NULL;
-        input_state->calibration_enabled = false;
+    switch (attenuation) {
+    case ADC_DRV_ATTEN_DB_0:
+        return ADC_ATTEN_DB_0;
+    case ADC_DRV_ATTEN_DB_2P5:
+        return ADC_ATTEN_DB_2_5;
+    case ADC_DRV_ATTEN_DB_6:
+        return ADC_ATTEN_DB_6;
+    case ADC_DRV_ATTEN_DB_12:
+        return ADC_ATTEN_DB_12;
+    default:
+        return ADC_ATTEN_DB_0;
     }
 }
 
@@ -237,4 +287,50 @@ static adc_input_state_t *adc_find_input_state(const adc_input_cfg_t *input_cfg)
     }
 
     return NULL;
+}
+
+static esp_err_t adc_create_calibration(const adc_input_cfg_t *cfg, adc_cali_handle_t *out_handle)
+{
+    adc_cali_line_fitting_config_t cali_cfg = {
+        .unit_id = adc_map_unit(cfg->unit),
+        .atten = adc_map_atten(cfg->attenuation),
+        .bitwidth = ADC_BITWIDTH_12,
+    };
+
+    return adc_cali_create_scheme_line_fitting(&cali_cfg, out_handle);
+}
+
+static void adc_destroy_input_calibration(adc_input_state_t *input_state)
+{
+    if ((input_state != NULL) && input_state->calibration_enabled) {
+        adc_cali_delete_scheme_line_fitting(input_state->cali_handle);
+        input_state->cali_handle = NULL;
+        input_state->calibration_enabled = false;
+    }
+}
+
+static void adc_cleanup_driver(void)
+{
+    size_t i;
+
+    for (i = 0; i < ADC_DRIVER_MAX_INPUTS; i++) {
+        adc_destroy_input_calibration(&s_adc_driver.inputs[i]);
+        s_adc_driver.inputs[i].configured = false;
+        memset(&s_adc_driver.inputs[i].cfg, 0, sizeof(s_adc_driver.inputs[i].cfg));
+    }
+
+    if (s_adc_driver.adc1.initialized) {
+        (void)adc_oneshot_del_unit(s_adc_driver.adc1.handle);
+        s_adc_driver.adc1.handle = NULL;
+        s_adc_driver.adc1.initialized = false;
+    }
+
+    if (s_adc_driver.adc2.initialized) {
+        (void)adc_oneshot_del_unit(s_adc_driver.adc2.handle);
+        s_adc_driver.adc2.handle = NULL;
+        s_adc_driver.adc2.initialized = false;
+    }
+
+    s_adc_driver.input_count = 0U;
+    s_adc_driver.initialized = false;
 }

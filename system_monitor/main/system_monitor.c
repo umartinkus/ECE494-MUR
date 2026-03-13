@@ -10,5 +10,5 @@
 void app_main(void)
 {
     xTaskCreate(SENSOR,"sensor_task", 4096, NULL, DEFAULT_PRIORITY, NULL);
-    xTaskCreate(COMMS, "comms_task", 4096, NULL, DEFAULT_PRIORITY, NULL);
+    // xTaskCreate(COMMS, "comms_task", 4096, NULL, DEFAULT_PRIORITY, NULL);
 }
