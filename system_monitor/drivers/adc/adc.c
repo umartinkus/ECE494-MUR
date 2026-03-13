@@ -14,7 +14,6 @@
 
 #define ADC_DRIVER_MAX_INPUTS 8
 
-
 /*Helper Functions*/
 static error_code_t adc_validate_cfg(const adc_input_cfg_t *cfg);
 static adc_unit_state_t *adc_get_unit_state(adc_drv_unit_t unit);
