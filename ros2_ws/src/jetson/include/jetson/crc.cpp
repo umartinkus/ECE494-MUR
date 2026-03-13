@@ -5,7 +5,6 @@ std::uint16_t encode_crc16(const custom_interfaces::msg::SPI &msg) {
     std::uint16_t crc = 0;
     std::uint8_t div = 0;
     const auto payload_size = static_cast<std::size_t>(msg.size);
-
     std::vector<std::uint8_t> packet_bytes;
     packet_bytes.reserve(4 + payload_size);
     packet_bytes.push_back(msg.synch);
