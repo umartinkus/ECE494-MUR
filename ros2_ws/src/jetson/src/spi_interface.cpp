@@ -13,6 +13,7 @@
 #include <vector>
 #include <array>
 #include <functional>
+#include <algorithm>
 
 #include "jetson/crc.hpp"
 #include "jetson/data_struct.hpp"
@@ -129,12 +130,12 @@ private:
         // send all the data into a single contiguous struct
         uart_out_.start_frameH = msg.synch;
         uart_out_.start_frameL = msg.syncl;
-        uart_out_.data_size = msg.size;
+        uart_out_.data_size = std::min<std::size_t>(msg.size, sizeof(uart_out_.data));
         uart_out_.device_address = msg.address;
         uart_out_.crc = encode_crc16(msg);
 
-
-        std::memcpy(uart_out_.data, msg.data.data(), sizeof(uart_out_.data));
+        std::fill(std::begin(uart_out_.data), std::end(uart_out_.data), 0);
+        std::memcpy(uart_out_.data, msg.data.data(), uart_out_.data_size);
 
         // nifty trick to cast the struct into a vector
         std::vector<uint8_t> spi_out(
@@ -167,6 +168,12 @@ private:
 
         msg_out.size = spi_in[SIZE_POS];
         msg_out.address = spi_in[ADDR_POS];
+        if (msg_out.size > msg_out.data.size()) {
+            RCLCPP_INFO(this->get_logger(), "Payload too large: %u", msg_out.size);
+            return;
+        }
+
+        std::fill(msg_out.data.begin(), msg_out.data.end(), 0);
         std::copy(spi_in.begin() + DATA_POS, spi_in.begin() + DATA_POS + msg_out.size, msg_out.data.begin());
         msg_out.crc = (spi_in[CRC1_POS] << sizeof(std::uint8_t)) | spi_in[CRC2_POS];
 
