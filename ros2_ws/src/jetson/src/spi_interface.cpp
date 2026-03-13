@@ -128,19 +128,21 @@ public:
 private:
     void spi_callback(const custom_interfaces::msg::SPI &msg) {
         // send all the data into a single contiguous struct
-        uart_out_.start_frameH = msg.synch;
-        uart_out_.start_frameL = msg.syncl;
-        uart_out_.data_size = std::min<std::size_t>(msg.size, sizeof(uart_out_.data));
-        uart_out_.device_address = msg.address;
-        uart_out_.crc = encode_crc16(msg);
+        spi_out_.start_frameH = msg.synch;
+        spi_out_.start_frameL = msg.syncl;
+        spi_out_.data_size = std::min<std::size_t>(msg.size, sizeof(spi_out_.data));
+        spi_out_.device_address = msg.address;
+        spi_out_.crc = encode_crc16(msg);
+        
+        RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
 
-        std::fill(std::begin(uart_out_.data), std::end(uart_out_.data), 0);
-        std::memcpy(uart_out_.data, msg.data.data(), uart_out_.data_size);
+        std::fill(std::begin(spi_out_.data), std::end(spi_out_.data), 0);
+        std::memcpy(spi_out_.data, msg.data.data(), spi_out_.data_size);
 
         // nifty trick to cast the struct into a vector
         std::vector<uint8_t> spi_out(
-            reinterpret_cast<uint8_t*>(&uart_out_),
-            reinterpret_cast<uint8_t*>(&uart_out_) + sizeof(uart_out_)
+            reinterpret_cast<uint8_t*>(&spi_out_),
+            reinterpret_cast<uint8_t*>(&spi_out_) + sizeof(spi_out_)
         );
 
         RCLCPP_INFO(this->get_logger(), "first sync byte: %X, %X", spi_out[0], spi_out[1]);
@@ -265,7 +267,7 @@ private:
     // std::size_t idx_{0};
     // std::array<std::uint8_t, 2> crc_vector{};
 
-    packet_t uart_out_{};
+    packet_t spi_out_{};
     SpiDevice spi1_;
     rclcpp::Subscription<custom_interfaces::msg::SPI>::SharedPtr subscription_;
     rclcpp::Publisher<custom_interfaces::msg::SPI>::SharedPtr publisher_;
