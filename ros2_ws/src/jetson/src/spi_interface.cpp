@@ -265,7 +265,7 @@ private:
     // std::size_t idx_{0};
     // std::array<std::uint8_t, 2> crc_vector{};
 
-    uartPacket_t uart_out_{};
+    packet_t uart_out_{};
     SpiDevice spi1_;
     rclcpp::Subscription<custom_interfaces::msg::SPI>::SharedPtr subscription_;
     rclcpp::Publisher<custom_interfaces::msg::SPI>::SharedPtr publisher_;

@@ -11,6 +11,6 @@ typedef struct {
     uint8_t device_address;
     uint8_t data[58];
     uint16_t crc;
-} uartPacket_t;
+} packet_t;
 
 
