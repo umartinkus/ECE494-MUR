@@ -186,7 +186,7 @@ private:
                     | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
 
 	for (int i = 0; i < 64; i++) {
-		RCLCPP_INFO(this->get_logger(), "\ni: %d, val: %X", i, spi_in[i]);
+		RCLCPP_INFO(this->get_logger(), "\ni: %d, in: %X, out %X", i, spi_in[i], spi_out[i]);
 	}
 
         if (!check_crc16(msg_out)) {
