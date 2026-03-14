@@ -41,16 +41,22 @@ void SENSOR(void*){
     { .unit = ADC_DRV_UNIT_1, .channel = ADC_DRV_CHANNEL_6, .attenuation = ADC_DRV_ATTEN_DB_12, .use_calibration = true },
     { .unit = ADC_DRV_UNIT_1, .channel = ADC_DRV_CHANNEL_7, .attenuation = ADC_DRV_ATTEN_DB_12, .use_calibration = true },
     };
-    adc_driver_init(adc_inputs,ADC_COUNT);
+    if(adc_driver_init(adc_inputs,ADC_COUNT) == STATUS_OK){
+        system_status_t sys_update = {STATUS_UNINITIALIZED};
+        get_system_status(&sys_update);
+        sys_update.leak1_status = STATUS_OK;
+        sys_update.leak2_status = STATUS_OK; 
+        update_system_status(sys_update);
+    };
     for(;;){
         if(adc_driver_read_mv(&adc_inputs[LEAK1_ADC_INPUT], &sensor_data.leak1) != STATUS_OK){
             // UPDATE SYS STATUS WITH LEAK1 DETECTION ERROR/MALFUNCTION
         }
         if(sensor_data.leak1 > LEAK_THRESHOLD_MV){
-            system_status_t *sys_update = {0};
-            get_system_status(sys_update);
-            sys_update->leak1_status = STATUS_LEAK_DETECTED;
-            update_system_status(*sys_update);
+            system_status_t sys_update = {STATUS_UNINITIALIZED};
+            get_system_status(&sys_update);
+            sys_update.leak1_status = STATUS_LEAK_DETECTED;
+            update_system_status(sys_update);
         }
         
         if(adc_driver_read_mv(&adc_inputs[LEAK2_ADC_INPUT], &sensor_data.leak2) != STATUS_OK){
@@ -58,10 +64,10 @@ void SENSOR(void*){
         }
 
         if(sensor_data.leak2 > LEAK_THRESHOLD_MV){
-            system_status_t *sys_update = {0};
-            get_system_status(sys_update);
-            sys_update->leak2_status = STATUS_LEAK_DETECTED;
-            update_system_status(*sys_update);
+            system_status_t sys_update = {STATUS_UNINITIALIZED};
+            get_system_status(&sys_update);
+            sys_update.leak2_status = STATUS_LEAK_DETECTED;
+            update_system_status(sys_update);
         }
 
         if(adc_driver_read_mv(&adc_inputs[BATT1_ADC_INPUT], &sensor_data.batt1) != STATUS_OK){

@@ -1,11 +1,16 @@
 #pragma once
 
-typedef enum error_code{
-    STATUS_UNINITIALIZED = 0,
-    STATUS_OK = 1,
-    STATUS_ERROR = 2,
-    STATUS_LEAK_DETECTED = 3,
-    STATUS_UNKNOWN = 99
+#define ERROR_CODE_LIST(X) \
+    X(STATUS_UNINITIALIZED, 0) \
+    X(STATUS_OK, 1) \
+    X(STATUS_ERROR, 2) \
+    X(STATUS_LEAK_DETECTED, 3) \
+    X(STATUS_UNKNOWN, 99)
+
+typedef enum {
+    #define X(name, value) name = value,
+    ERROR_CODE_LIST(X)
+    #undef X
 } error_code_t;
 
 typedef struct{
