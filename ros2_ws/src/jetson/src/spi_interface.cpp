@@ -132,18 +132,23 @@ private:
         spi_out_.start_frameL = msg.syncl;
         spi_out_.data_size = std::min<std::size_t>(msg.size, sizeof(spi_out_.data));
         spi_out_.device_address = msg.address;
-        spi_out_.crc = encode_crc16(msg);
         
-        RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
-
         std::fill(std::begin(spi_out_.data), std::end(spi_out_.data), 0);
         std::memcpy(spi_out_.data, msg.data.data(), spi_out_.data_size);
+
+        auto crc_msg = msg;
+        crc_msg.size = spi_out_.data_size;
+        spi_out_.crc = encode_crc16(crc_msg);
+
+        RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
 
         // nifty trick to cast the struct into a vector
         std::vector<uint8_t> spi_out(
             reinterpret_cast<uint8_t*>(&spi_out_),
             reinterpret_cast<uint8_t*>(&spi_out_) + sizeof(spi_out_)
         );
+        spi_out[CRC1_POS] = static_cast<std::uint8_t>(spi_out_.crc & 0xFF);
+        spi_out[CRC2_POS] = static_cast<std::uint8_t>((spi_out_.crc >> 8) & 0xFF);
 
         RCLCPP_INFO(this->get_logger(), "first sync byte: %X, %X", spi_out[0], spi_out[1]);
 
@@ -177,7 +182,8 @@ private:
 
         std::fill(msg_out.data.begin(), msg_out.data.end(), 0);
         std::copy(spi_in.begin() + DATA_POS, spi_in.begin() + DATA_POS + msg_out.size, msg_out.data.begin());
-        msg_out.crc = (spi_in[CRC1_POS] << sizeof(std::uint8_t)) | spi_in[CRC2_POS];
+        msg_out.crc = static_cast<std::uint16_t>(spi_in[CRC1_POS])
+                    | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
 
 	for (int i = 0; i < 64; i++) {
 		RCLCPP_INFO(this->get_logger(), "\ni: %d, val: %X", i, spi_in[i]);
