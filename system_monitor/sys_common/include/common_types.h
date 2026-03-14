@@ -4,6 +4,7 @@ typedef enum error_code{
     STATUS_UNINITIALIZED = 0,
     STATUS_OK = 1,
     STATUS_ERROR = 2,
+    STATUS_LEAK_DETECTED = 3,
     STATUS_UNKNOWN = 99
 } error_code_t;
 

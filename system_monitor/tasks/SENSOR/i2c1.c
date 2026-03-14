@@ -16,10 +16,13 @@
  */
 void i2c1_master_init(i2c_master_bus_handle_t *bus_handle){
     if(bus_handle == NULL) {
-        //  2DO
         // 1. pull the system state,
         // 2. update the i2c bus member in sys state
-        // 3. push the updated sys state to the global state
+        // 3. push the updated sys state to the global
+        system_status_t *sys_update = {0}; 
+        get_system_status(sys_update);
+        sys_update->i2c_bus_status = STATUS_ERROR;
+        update_system_status(*sys_update);
         return;
     }
     const i2c_master_bus_config_t bus_config = {
@@ -34,10 +37,13 @@ void i2c1_master_init(i2c_master_bus_handle_t *bus_handle){
     while(i2c_new_master_bus(&bus_config, bus_handle) != ESP_OK && retry_count++ < 5){
     }
     if(retry_count >= 5) {
-                //  2DO
         // 1. pull the system state,
         // 2. update the i2c bus member in sys state
         // 3. push the updated sys state to the global state
+        system_status_t *sys_update = {0}; 
+        get_system_status(sys_update);
+        sys_update->i2c_bus_status = STATUS_ERROR;
+        update_system_status(*sys_update);
     }
 }
 
