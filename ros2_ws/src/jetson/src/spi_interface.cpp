@@ -190,7 +190,7 @@ private:
 	}
 
         if (!check_crc16(msg_out)) {
-            // RCLCPP_INFO(this->get_logger(), "Bad crc: %X");
+            RCLCPP_INFO(this->get_logger(), "Bad crc: %X", msg_out.crc);
             return;
         }
 
