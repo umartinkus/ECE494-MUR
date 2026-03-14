@@ -47,6 +47,7 @@ esp_err_t spi_transaction(uint8_t* tx_buf, uint8_t* rx_buf, size_t len) {
     }
 
     spi_slave_transaction_t t = {0};
+    t.flags = SPI_SLAVE_TRANS_DMA_BUFFER_ALIGN_AUTO;
     t.length = len * 8;  // number of bits to send
     t.tx_buffer = tx_buf;
     t.rx_buffer = rx_buf;
