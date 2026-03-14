@@ -19,7 +19,7 @@ void COMMS(void *args)
     }
 
     for (;;) {
-        uint8_t test_data[] = {1, 2, 3, 4};
-        transfer_packet(4, 0x67, test_data, packet_queue);
+        uint8_t test_data[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        transfer_packet(10, 1, test_data, packet_queue);
     }
 }
