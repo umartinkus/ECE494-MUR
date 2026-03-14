@@ -179,8 +179,12 @@ private:
         std::copy(spi_in.begin() + DATA_POS, spi_in.begin() + DATA_POS + msg_out.size, msg_out.data.begin());
         msg_out.crc = (spi_in[CRC1_POS] << sizeof(std::uint8_t)) | spi_in[CRC2_POS];
 
+	for (int i = 0; i < 64; i++) {
+		RCLCPP_INFO(this->get_logger(), "\ni: %d, val: %X", i, spi_in[i]);
+	}
+
         if (!check_crc16(msg_out)) {
-            RCLCPP_INFO(this->get_logger(), "Bad crc");
+            // RCLCPP_INFO(this->get_logger(), "Bad crc: %X");
             return;
         }
 
