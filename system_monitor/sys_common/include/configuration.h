@@ -1,5 +1,5 @@
 #pragma once
-
+// #define DEBUG
 // I2C1 Configuration
 
 #define I2C1_MASTER_SCL_IO 21
