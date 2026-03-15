@@ -1,6 +1,7 @@
 #include "spi.h"
 #include "configuration.h"
 #include "esp_err.h"
+#include "freertos/projdefs.h"
 #include "portmacro.h"
 static spi_host_device_t s_host = SPI3_HOST;
 
@@ -52,6 +53,6 @@ esp_err_t spi_transaction(uint8_t* tx_buf, uint8_t* rx_buf, size_t len) {
     t.tx_buffer = tx_buf;
     t.rx_buffer = rx_buf;
 
-    esp_err_t ret = spi_slave_transmit(SPI3_HOST, &t, portMAX_DELAY);
+    esp_err_t ret = spi_slave_transmit(SPI3_HOST, &t, pdMS_TO_TICKS(TRANSFER_PERIOD));
     return ret;
 }

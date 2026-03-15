@@ -16,6 +16,7 @@
 #define SPI3_MODE 0
 #define SPI3_SLAVE_QUEUE_SIZE 4
 #define SPI3_MAX_TRANSFER_SZ 4096
+#define TRANSFER_PERIOD 500
 
 // Temp sensor 1 configuration
 #define TEMP1_ADDR 0x18

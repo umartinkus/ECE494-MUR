@@ -1,3 +1,4 @@
+#include "common_types.h"
 #include "configuration.h"
 #include "packet.h"
 #include "freertos/idf_additions.h"
@@ -12,7 +13,7 @@
 static DMA_ATTR WORD_ALIGNED_ATTR uint8_t s_tx_buf[PACKET_SIZE];
 static DMA_ATTR WORD_ALIGNED_ATTR uint8_t s_rx_buf[PACKET_SIZE];
 
-esp_err_t transfer_packet(uint8_t size, uint8_t address, uint8_t* data, QueueHandle_t queue) {
+esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, QueueHandle_t queue) {
     if (size > MAX_DATA_SIZE) {
         return ESP_ERR_INVALID_SIZE;
     }
@@ -48,9 +49,11 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, uint8_t* data, QueueHan
             xQueueSendToBack(queue, &rx_packet, pdMS_TO_TICKS(10));
         } else {
             ESP_LOGI(PACKET_TAG, "packet failed crc");
+            return ESP_ERR_INVALID_CRC;
         }
     } else {
         ESP_LOGI(PACKET_TAG, "packet had no sync bytes");
+        return ESP_ERR_INVALID_RESPONSE;
     }
 
     return ESP_OK;

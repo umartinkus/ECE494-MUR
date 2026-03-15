@@ -1,13 +1,15 @@
 #pragma once
+#include <stdint.h>
 
 #define ERROR_CODE_LIST(X) \
     X(STATUS_UNINITIALIZED, 0) \
     X(STATUS_OK, 1) \
     X(STATUS_ERROR, 2) \
     X(STATUS_LEAK_DETECTED, 3) \
+    X(STATUS_CRC_FAILED, 4) \
     X(STATUS_UNKNOWN, 99)
 
-typedef enum {
+typedef enum : uint8_t {
     #define X(name, value) name = value,
     ERROR_CODE_LIST(X)
     #undef X
