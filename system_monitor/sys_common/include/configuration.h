@@ -1,11 +1,14 @@
 #pragma once
 
+// I2C1 Configuration
+
 #define I2C1_MASTER_SCL_IO 21
 #define I2C1_MASTER_SDA_IO 22
 #define I2C1_MASTER_NUM 0
 #define I2C1_FREQ_HZ 400000
 #define I2C1_MASTER_TIMEOUT_MS 1000
 
+// SPI3 Configuration
 #define SPI3_CS_PIN 5
 #define SPI3_CLK_PIN 18
 #define SPI3_MOSI_PIN 23
@@ -14,7 +17,10 @@
 #define SPI3_SLAVE_QUEUE_SIZE 4
 #define SPI3_MAX_TRANSFER_SZ 4096
 
+// Temp sensor 1 configuration
 #define TEMP1_ADDR 0x18
+
+// Temp sensor 2 configuration
 #define TEMP2_ADDR 0x19
 
 #define PACKET_SIZE 64

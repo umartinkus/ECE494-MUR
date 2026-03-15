@@ -16,10 +16,10 @@ void init_system_state(){
     sensor_data_mutex = xSemaphoreCreateMutex();
     //Initialize sensor status
     xSemaphoreTake(system_status_mutex, portMAX_DELAY);
-    system_status.i2c_bus_status = STATUS_UNITIALIZED;
-    system_status.temp1_status = STATUS_UNITIALIZED;
-    system_status.temp2_status = STATUS_UNITIALIZED;
-    system_status.spi_bus_status = STATUS_UNITIALIZED;
+    system_status.i2c_bus_status = STATUS_UNINITIALIZED;
+    system_status.temp1_status = STATUS_UNINITIALIZED;
+    system_status.temp2_status = STATUS_UNINITIALIZED;
+    system_status.spi_bus_status = STATUS_UNINITIALIZED;
     // QUESTION: is there a way to do this programatically? So i dont need to repeat?
     xSemaphoreGive(system_status_mutex);
 }
