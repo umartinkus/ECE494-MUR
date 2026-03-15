@@ -9,7 +9,7 @@
     X(STATUS_CRC_FAILED, 4) \
     X(STATUS_UNKNOWN, 99)
 
-typedef enum : uint8_t {
+typedef enum  {
     #define X(name, value) name = value,
     ERROR_CODE_LIST(X)
     #undef X
