@@ -1,5 +1,5 @@
 #include <stdio.h>
-// #include "SENSOR.h"
+#include "SENSOR.h"
 #include "COMMS.h"
 #include "sys_common.h"
 #include "freertos/FreeRTOS.h"
