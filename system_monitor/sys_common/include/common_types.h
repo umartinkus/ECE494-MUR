@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+// #define DEBUG
 
 #define ERROR_CODE_LIST(X) \
     X(STATUS_UNINITIALIZED, 0) \
