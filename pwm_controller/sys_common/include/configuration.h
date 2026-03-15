@@ -18,10 +18,4 @@
 #define SPI3_MAX_TRANSFER_SZ 4096
 #define TRANSFER_PERIOD 500
 
-// Temp sensor 1 configuration
-#define TEMP1_ADDR 0x18
-
-// Temp sensor 2 configuration
-#define TEMP2_ADDR 0x19
-
 #define PACKET_SIZE 64
