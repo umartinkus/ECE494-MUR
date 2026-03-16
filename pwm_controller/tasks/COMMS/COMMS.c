@@ -16,6 +16,8 @@
 #define STATUS_ADDRESS 0
 #define DATA_ADDRESS 1
 
+#define DEBUG;
+
 #ifdef DEBUG
 const static char *TAG = "COMMS";
 #endif

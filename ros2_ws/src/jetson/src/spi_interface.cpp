@@ -1,6 +1,7 @@
 #include <custom_interfaces/msg/detail/spi__struct.hpp>
 #include <fcntl.h>
 #include <linux/spi/spidev.h>
+#include <memory>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
@@ -111,8 +112,8 @@ private:
 
 class SPI_Interface : public rclcpp::Node {
 public:
-    SPI_Interface() : Node("spi_interface") {
-        const uint32_t speed_hz = spi1_.openPort("/dev/spidev0.0", 1000000);
+    SPI_Interface(std::string port) : Node("spi_interface") {
+        const uint32_t speed_hz = spi1_.openPort(port, 1000000);
         RCLCPP_INFO(this->get_logger(), "Configured SPI max speed: %u Hz", speed_hz);
         
         subscription_ = this->create_subscription<custom_interfaces::msg::SPI>(
@@ -227,7 +228,8 @@ private:
 
 int main(int argc, char* argv[]) {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<SPI_Interface>());
+    rclcpp::spin(std::make_shared<SPI_Interface>("/dev/spidev0.0"));
+    rclcpp::spin(std::make_shared<SPI_Interface>("/dev/spidev1.0"));
     rclcpp::shutdown();
     return 0;
 }
