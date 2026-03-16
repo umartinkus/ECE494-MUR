@@ -1,41 +1,90 @@
 #include <stdio.h>
 #include "SENSOR.h"
+#include "driver/i2c_types.h"
 #include "i2c1.h"
-#include "adc.h"
+#include "ms5837.h"
+#include "mpu9250.h"
+
 #include "common_types.h"
 #include "configuration.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include "sys_common.h"
 
 /*Constants*/
 // #define DEBUG
+#define TAG "Sensors"
 
 /*Private variables*/
-static sensor_data_t sensor_data;
-static i2c_config_t i2c1_config;
+static sensor_data_t sensor_data = {0};
+static i2c_master_bus_handle_t bus1;
+static i2c_master_dev_handle_t imu1;
+static i2c_master_dev_handle_t imu2;
+static i2c_master_dev_handle_t ps;
+
+static mpu9250_data_t imu1_data = {0};
+static mpu9250_data_t imu2_data = {0};
+
 #ifdef DEBUG
 const static char *TAG = "SENSOR";
 #endif
 
 /*Private Functions*/
-// static error_code_t check_leak(adc_input_cfg_t *leak_sensor);
+static void sensor_init(void);
+
+static void sensor_init(void)
+{
+    system_status_t sys_status = {0};
+
+    get_system_status(&sys_status);
+
+    i2c1_master_init(&bus1);
+    sys_status.i2c_bus_status = STATUS_OK;
+
+    i2c1_master_add_device(MPU9250_I2C_ADDRESS0, &imu1, &bus1);
+    i2c1_master_add_device(MPU9250_I2C_ADDRESS1, &imu2, &bus1);
+    i2c1_master_add_device(ADDR_I2C_MS5837, &ps, &bus1);
+
+    if (mpu9250_register_write_byte(imu1, PWR_MGMT_1, 0x00) == ESP_OK) {
+        mpu9250_set_default_config(imu1);
+        sys_status.imu1_status = STATUS_OK;
+    } else {
+        sys_status.imu1_status = STATUS_ERROR;
+    }
+
+    if (mpu9250_register_write_byte(imu2, PWR_MGMT_1, 0x00) == ESP_OK) {
+        mpu9250_set_default_config(imu2);
+        sys_status.imu2_status = STATUS_OK;
+    } else {
+        sys_status.imu2_status = STATUS_ERROR;
+    }
+
+    sys_status.ps_status = (bar30_setup(bus1, ps) == 0U) ? STATUS_OK : STATUS_ERROR;
+    update_system_status(sys_status);
+}
 
 void SENSOR(void* params){
-    // 0. Initialize sensor data variable
-    // 1. Create and configure I2C1 with temp sensors
-    i2c1_master_init(&i2c1_config.bus_handle);
-    i2c1_master_add_device(TEMP1_ADDR, &i2c1_config.temp1_handle, &i2c1_config.bus_handle);
-    i2c1_master_add_device(TEMP2_ADDR, &i2c1_config.temp2_handle, &i2c1_config.bus_handle);
+    uint8_t bar30_buffer[BAR30_READ_BUFFER_SIZE] = {0};
+    float bar30_pressure = 0.0f;
+    float bar30_temp = 0.0f;
+    (void)params;
+
+    sensor_init();
 
     // main sensor polling task
     for(;;){
-        // 1. 2do read from temp1
-        sensor_data.temp1 = 0.0f; 
-        // 2. 2do read from temp2
-        sensor_data.temp2 = 0.0f; 
+        mpu9250_get_pose(imu1, &imu1_data);
+        mpu9250_get_pose(imu2, &imu2_data);
 
-        // put everything into global sensor_data variable
+        bar30_read(ps, bar30_buffer);
+
+        sensor_data.imu1 = imu1_data;
+        sensor_data.imu2 = imu2_data;
+        memcpy(sensor_data.bar30_data, bar30_buffer, sizeof(bar30_buffer));
+        
+        ESP_LOGI(TAG, "size: %d", sizeof(sensor_data));
+
         update_sensor_data(sensor_data);
         vTaskDelay(pdMS_TO_TICKS(500));
     }

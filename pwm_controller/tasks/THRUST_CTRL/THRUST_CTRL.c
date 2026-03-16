@@ -1,7 +1,6 @@
 #include <math.h>
 #include <string.h>
 #include "THRUST_CTRL.h"
-#include "esp_err.h"
 #include "packet.h"
 #include "pwm.h"
 #include "configuration.h"

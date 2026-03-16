@@ -1,12 +1,12 @@
 #pragma once
 
 // I2C1 Configuration
-
-#define I2C1_MASTER_SCL_IO 21
-#define I2C1_MASTER_SDA_IO 22
+#define I2C1_MASTER_SCL_IO 32
+#define I2C1_MASTER_SDA_IO 33
 #define I2C1_MASTER_NUM 0
 #define I2C1_FREQ_HZ 400000
 #define I2C1_MASTER_TIMEOUT_MS 1000
+
 
 // SPI3 Configuration
 #define SPI3_CS_PIN 5

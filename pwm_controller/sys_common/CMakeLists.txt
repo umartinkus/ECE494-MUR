@@ -1,3 +1,3 @@
 idf_component_register(SRCS "sys_common.c"
                     INCLUDE_DIRS "include"
-                    REQUIRES freertos)
+                    REQUIRES freertos mpu9250)

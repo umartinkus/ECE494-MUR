@@ -1,5 +1,8 @@
 #pragma once
 #include <stdint.h>
+#include "mpu9250.h"
+
+#define BAR30_READ_BUFFER_SIZE (sizeof(float) * 2U)
 
 #define ERROR_CODE_LIST(X) \
     X(STATUS_UNINITIALIZED, 0) \
@@ -18,8 +21,9 @@ typedef enum {
 } error_code_t;
 
 typedef struct{
-    float temp1;
-    float temp2;
+    mpu9250_data_t imu1;
+    mpu9250_data_t imu2;
+    uint8_t bar30_data[BAR30_READ_BUFFER_SIZE];
 } sensor_data_t;
 
 typedef struct system_status{
