@@ -180,9 +180,9 @@ private:
         const auto expected_crc = encode_crc16(msg_out);
         msg_out.crc = crc_le;
 
-        for (int i = 0; i < 64; i++) {
-            RCLCPP_INFO(this->get_logger(), "\ni: %d, in: %X, out %X", i, spi_in[i], spi_out[i]);
-        }
+        // for (int i = 0; i < 64; i++) {
+        //     RCLCPP_INFO(this->get_logger(), "\ni: %d, in: %X, out %X", i, spi_in[i], spi_out[i]);
+        // }
 
         if (expected_crc != crc_le && expected_crc != crc_be) {
             RCLCPP_INFO(
