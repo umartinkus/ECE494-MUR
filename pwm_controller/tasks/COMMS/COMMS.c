@@ -59,24 +59,24 @@ void COMMS(void *args)
             ESP_LOGW(TAG, "SPI transfer failed: %s", esp_err_to_name(transfer_status));
             #endif
         }
-        /* 2. Read sensor data and transmit over SPI*/
-        get_sensor_data(&sensor_data);
-        transfer_status = transfer_packet(sizeof(sensor_data_t), DATA_ADDRESS, (uint8_t*)&sensor_data, packet_queue);
-        if (transfer_status == ESP_OK) {
-            sys_stat.spi_bus_status = STATUS_OK;
-        } else if (transfer_status == ESP_ERR_TIMEOUT) {
-            sys_stat.spi_bus_status = STATUS_ERROR;
-            #ifdef DEBUG
-            ESP_LOGW(TAG, "SPI transfer timed out waiting for master");
-            #endif
-        } else if (transfer_status == ESP_ERR_INVALID_CRC) {
-            sys_stat.spi_bus_status = STATUS_CRC_FAILED;
-        } else {
-            sys_stat.spi_bus_status = STATUS_ERROR;
-            #ifdef DEBUG
-            ESP_LOGW(TAG, "SPI transfer failed: %s", esp_err_to_name(transfer_status));
-            #endif
-        }
+        // /* 2. Read sensor data and transmit over SPI*/
+        // get_sensor_data(&sensor_data);
+        // transfer_status = transfer_packet(sizeof(sensor_data_t), DATA_ADDRESS, (uint8_t*)&sensor_data, packet_queue);
+        // if (transfer_status == ESP_OK) {
+        //     sys_stat.spi_bus_status = STATUS_OK;
+        // } else if (transfer_status == ESP_ERR_TIMEOUT) {
+        //     sys_stat.spi_bus_status = STATUS_ERROR;
+        //     #ifdef DEBUG
+        //     ESP_LOGW(TAG, "SPI transfer timed out waiting for master");
+        //     #endif
+        // } else if (transfer_status == ESP_ERR_INVALID_CRC) {
+        //     sys_stat.spi_bus_status = STATUS_CRC_FAILED;
+        // } else {
+        //     sys_stat.spi_bus_status = STATUS_ERROR;
+        //     #ifdef DEBUG
+        //     ESP_LOGW(TAG, "SPI transfer failed: %s", esp_err_to_name(transfer_status));
+        //     #endif
+        // }
         
         /* 3. Update global system status*/
         update_system_status(sys_stat);
