@@ -13,6 +13,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <chrono>
 #include <array>
 #include <functional>
 #include <algorithm>
@@ -217,6 +218,7 @@ private:
         std::vector<uint8_t> spi_in;
 
         spi1_.transfer(spi_out, prime_rx);
+        ::usleep(1000);
         spi1_.transfer(spi_out, spi_in);
 
         auto msg_out = custom_interfaces::msg::SPI();
