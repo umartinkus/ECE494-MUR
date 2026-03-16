@@ -216,7 +216,7 @@ private:
         std::vector<uint8_t> spi_in;
 
         spi1_.transfer(spi_out, prime_rx);
-        ::usleep(1000);
+        ::usleep(5000);
         spi1_.transfer(spi_out, spi_in);
 
         auto msg_out = custom_interfaces::msg::SPI();
