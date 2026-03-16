@@ -128,13 +128,12 @@ public:
         RCLCPP_INFO(this->get_logger(), "SPI Node Started");
     }
 private:
-    void spi_callback(const custom_interfaces::msg::SPI &msg) {
-        // send all the data into a single contiguous struct
+    std::vector<uint8_t> build_tx_packet(const custom_interfaces::msg::SPI &msg) {
         spi_out_.start_frameH = msg.synch;
         spi_out_.start_frameL = msg.syncl;
         spi_out_.data_size = std::min<std::size_t>(msg.size, sizeof(spi_out_.data));
         spi_out_.device_address = msg.address;
-        
+
         std::fill(std::begin(spi_out_.data), std::end(spi_out_.data), 0);
         std::memcpy(spi_out_.data, msg.data.data(), spi_out_.data_size);
 
@@ -142,44 +141,34 @@ private:
         crc_msg.size = spi_out_.data_size;
         spi_out_.crc = encode_crc16(crc_msg);
 
-        RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
-
-        // nifty trick to cast the struct into a vector
         std::vector<uint8_t> spi_out(
             reinterpret_cast<uint8_t*>(&spi_out_),
             reinterpret_cast<uint8_t*>(&spi_out_) + sizeof(spi_out_)
         );
         spi_out[CRC1_POS] = static_cast<std::uint8_t>(spi_out_.crc & 0xFF);
         spi_out[CRC2_POS] = static_cast<std::uint8_t>((spi_out_.crc >> 8) & 0xFF);
+        return spi_out;
+    }
 
-        RCLCPP_INFO(this->get_logger(), "first sync byte: %X, %X", spi_out[0], spi_out[1]);
-
-        std::vector<uint8_t> spi_in;
-
-        spi1_.transfer(spi_out, spi_in);
-
-        // if (std::all_of(spi_in.begin(), spi_in.end(), [](std::uint8_t i) { return i == 0; })) {
-        //     RCLCPP_INFO(this->get_logger(), "Received SPI Message was all zeros");
-        // } else {
-        //     for (std::uint8_t &word : spi_in) {
-        //         step_(word);
-        //     }
-        // }
-
-        auto msg_out = custom_interfaces::msg::SPI();
+    bool decode_rx_packet(
+        const std::vector<uint8_t>& spi_in,
+        const std::vector<uint8_t>& spi_out,
+        custom_interfaces::msg::SPI& msg_out
+    ) {
+        msg_out = custom_interfaces::msg::SPI();
         msg_out.synch = spi_in[SYNCH_POS];
         msg_out.syncl = spi_in[SYNCL_POS];
 
         if (msg_out.synch != START_FRAMEH || msg_out.syncl != START_FRAMEL) {
             RCLCPP_INFO(this->get_logger(), "Bad sync bytes");
-            return;
+            return false;
         }
 
         msg_out.size = spi_in[SIZE_POS];
         msg_out.address = spi_in[ADDR_POS];
         if (msg_out.size > msg_out.data.size()) {
             RCLCPP_INFO(this->get_logger(), "Payload too large: %u", msg_out.size);
-            return;
+            return false;
         }
 
         std::fill(msg_out.data.begin(), msg_out.data.end(), 0);
@@ -203,7 +192,7 @@ private:
                 crc_be,
                 expected_crc
             );
-            return;
+            return false;
         }
 
         if (expected_crc == crc_be && expected_crc != crc_le) {
@@ -212,6 +201,26 @@ private:
                 this->get_logger(),
                 "Received CRC matched only after byte swap; sender is using opposite byte order"
             );
+        }
+
+        return true;
+    }
+
+    void spi_callback(const custom_interfaces::msg::SPI &msg) {
+        std::vector<uint8_t> spi_out = build_tx_packet(msg);
+
+        RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
+        RCLCPP_INFO(this->get_logger(), "first sync byte: %X, %X", spi_out[0], spi_out[1]);
+
+        std::vector<uint8_t> prime_rx;
+        std::vector<uint8_t> spi_in;
+
+        spi1_.transfer(spi_out, prime_rx);
+        spi1_.transfer(spi_out, spi_in);
+
+        auto msg_out = custom_interfaces::msg::SPI();
+        if (!decode_rx_packet(spi_in, spi_out, msg_out)) {
+            return;
         }
 
         publisher_->publish(msg_out);

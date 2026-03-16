@@ -21,6 +21,6 @@ typedef struct {
 
 _Static_assert(sizeof(packet_t) == PACKET_SIZE, "packet_t must match PACKET_SIZE");
 
-esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, QueueHandle_t queue);
+esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, QueueHandle_t queue, packet_t* rx_packet_out);
 void encode_crc16(packet_t* packet);
 int check_crc16(packet_t* packet);

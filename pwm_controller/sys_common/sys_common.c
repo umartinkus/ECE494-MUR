@@ -72,6 +72,17 @@ void update_system_status(system_status_t new_status){
     xSemaphoreGive(system_status_mutex);
 }
 
+void update_spi_bus_status(error_code_t new_status){
+    ensure_system_state_initialized();
+    if (system_status_mutex == NULL) {
+        return;
+    }
+
+    xSemaphoreTake(system_status_mutex, portMAX_DELAY);
+    system_status.spi_bus_status = new_status;
+    xSemaphoreGive(system_status_mutex);
+}
+
 // will be used by health monitor task to update the system status
 void get_sensor_data(sensor_data_t* data_out){
     ensure_system_state_initialized();
