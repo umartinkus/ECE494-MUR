@@ -112,7 +112,7 @@ private:
 class SPI_Interface : public rclcpp::Node {
 public:
     SPI_Interface() : Node("spi_interface") {
-        const uint32_t speed_hz = spi1_.openPort("/dev/spidev0.0", 5000000);
+        const uint32_t speed_hz = spi1_.openPort("/dev/spidev0.0", 1000000);
         RCLCPP_INFO(this->get_logger(), "Configured SPI max speed: %u Hz", speed_hz);
         
         subscription_ = this->create_subscription<custom_interfaces::msg::SPI>(

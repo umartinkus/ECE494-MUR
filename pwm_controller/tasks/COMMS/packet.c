@@ -35,6 +35,19 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
     memcpy(s_tx_buf, &packet, sizeof(packet));
     memset(s_rx_buf, 0, sizeof(s_rx_buf));
 
+    ESP_LOGI(
+        PACKET_TAG,
+        "tx hdr size=%u addr=%u crc=%04X bytes[0..15]=%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X crc_bytes=%02X %02X",
+        packet.data_size,
+        packet.device_address,
+        packet.crc,
+        s_tx_buf[0], s_tx_buf[1], s_tx_buf[2], s_tx_buf[3],
+        s_tx_buf[4], s_tx_buf[5], s_tx_buf[6], s_tx_buf[7],
+        s_tx_buf[8], s_tx_buf[9], s_tx_buf[10], s_tx_buf[11],
+        s_tx_buf[12], s_tx_buf[13], s_tx_buf[14], s_tx_buf[15],
+        s_tx_buf[62], s_tx_buf[63]
+    );
+
     esp_err_t ret = spi_transaction(s_tx_buf, s_rx_buf, PACKET_SIZE);
 
     if (ret != ESP_OK) {
