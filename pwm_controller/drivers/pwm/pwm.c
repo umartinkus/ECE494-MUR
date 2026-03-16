@@ -31,6 +31,10 @@ error_code_t init_pwm_array(ledc_channel_config_t *pwm_arr, int num_channels)
 
 error_code_t init_timer(ledc_timer_config_t *ledc_timer)
 {
+    if (ledc_timer == NULL) {
+        return STATUS_CONFIG_ERR;
+    }
+
     *ledc_timer = (ledc_timer_config_t) {
         .speed_mode = LEDC_MODE,
         .duty_resolution = LEDC_DUTY_RES,

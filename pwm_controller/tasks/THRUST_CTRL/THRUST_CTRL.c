@@ -51,12 +51,10 @@ void THRUST_CTRL(void *params)
     system_status_t sys_stat = {0};
     get_system_status(&sys_stat);
 
-    if (tmr_res == STATUS_CONFIG_ERR || pwm_res == STATUS_CONFIG_ERR) {
+    if (tmr_res != STATUS_OK || pwm_res != STATUS_OK) {
         sys_stat.pwm_status = STATUS_CONFIG_ERR;
-    } else if (tmr_res == STATUS_OK && pwm_res == STATUS_OK) {
-        sys_stat.pwm_status = STATUS_OK;
     } else {
-        sys_stat.pwm_status = STATUS_UNKNOWN;
+        sys_stat.pwm_status = STATUS_OK;
     }
 
     update_system_status(sys_stat);

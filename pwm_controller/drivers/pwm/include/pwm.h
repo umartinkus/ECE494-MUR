@@ -7,7 +7,7 @@
 #include "common_types.h"
 
 #define LEDC_TIMER          LEDC_TIMER_0
-#define LEDC_MODE           LEDC_HIGH_SPEED_MODE
+#define LEDC_MODE           LEDC_LOW_SPEED_MODE
 #define LEDC_DUTY_RES       LEDC_TIMER_13_BIT
 #define LEDC_FREQUENCY      (200)
 #define LEDC_MAX_DUTY       ((1U << LEDC_DUTY_RES) - 1U)
