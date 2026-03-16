@@ -16,7 +16,21 @@ add_executable(spi_interface
   src/spi_interface.cpp
   include/jetson/crc.cpp
 )
-ament_target_dependencies(spi_interface rclcpp std_msgs sensor_msgs custom_interfaces)
+ament_target_dependencies(spi_interface
+    rclcpp 
+    std_msgs 
+    sensor_msgs 
+    custom_interfaces)
+
+
+add_executable(comms 
+    src/comms.cpp)
+
+amend_target_dependencies(comms 
+    rclcpp 
+    std_msgs 
+    sensor_msgs 
+    custom_interfaces)
 
 target_include_directories(spi_interface
     PUBLIC
