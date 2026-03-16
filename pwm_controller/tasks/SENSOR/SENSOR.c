@@ -46,19 +46,8 @@ static void sensor_init(void)
     i2c1_master_add_device(MPU9250_I2C_ADDRESS1, &imu2, &bus1);
     i2c1_master_add_device(ADDR_I2C_MS5837, &ps, &bus1);
 
-    if (mpu9250_register_write_byte(imu1, PWR_MGMT_1, 0x00) == ESP_OK) {
-        mpu9250_set_default_config(imu1);
-        sys_status.imu1_status = STATUS_OK;
-    } else {
-        sys_status.imu1_status = STATUS_ERROR;
-    }
-
-    if (mpu9250_register_write_byte(imu2, PWR_MGMT_1, 0x00) == ESP_OK) {
-        mpu9250_set_default_config(imu2);
-        sys_status.imu2_status = STATUS_OK;
-    } else {
-        sys_status.imu2_status = STATUS_ERROR;
-    }
+    mpu9250_set_default_config(imu1);
+    mpu9250_set_default_config(imu2);
 
     sys_status.ps_status = (bar30_setup(bus1, ps) == 0U) ? STATUS_OK : STATUS_ERROR;
     update_system_status(sys_status);

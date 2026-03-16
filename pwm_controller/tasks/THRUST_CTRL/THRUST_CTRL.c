@@ -27,17 +27,6 @@ static const float T_inv[N][N] = {
     {0.35535f, 0.00024f, 0.35200f, -2.36740f, 1.94485f, 0.00000f}
 };
 
-typedef struct {
-    uint8_t ls_x;
-    uint8_t ls_y;
-    uint8_t rs_x;
-    uint8_t rs_y;
-    uint8_t lt;
-    uint8_t rt;
-    uint8_t lb;
-    uint8_t rb;
-} thruster_command_t;
-
 static ledc_channel_config_t pwm_channels[NUM_CHANNELS];
 static ledc_timer_config_t ledc_timer;
 
@@ -74,8 +63,6 @@ void THRUST_CTRL(void *params)
 
     set_thrusters_neutral();
     vTaskDelay(pdMS_TO_TICKS(3000));
-    thruster_command_t command = {0};
-    
 
     for (;;) {
         get_system_status(&sys_stat);
