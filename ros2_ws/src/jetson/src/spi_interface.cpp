@@ -167,7 +167,6 @@ private:
 
         msg_out.size = spi_in[SIZE_POS];
         msg_out.address = spi_in[ADDR_POS];
-        address_ = !address_;
         if (msg_out.size > msg_out.data.size()) {
             RCLCPP_INFO(this->get_logger(), "Payload too large: %u", msg_out.size);
             return false;
