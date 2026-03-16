@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <linux/spi/spidev.h>
 #include <memory>
+#include <rclcpp/executors/multi_threaded_executor.hpp>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
@@ -228,8 +229,16 @@ private:
 
 int main(int argc, char* argv[]) {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<SPI_Interface>("/dev/spidev0.0", "spi_send"));
-    rclcpp::spin(std::make_shared<SPI_Interface>("/dev/spidev1.0", "spi_monitor"));
+    std::shared_ptr<rclcpp::Node> node1 = std::make_shared<SPI_Interface>("/dev/spidev0.0", "spi_send");
+    std::shared_ptr<rclcpp::Node> node2 = std::make_shared<SPI_Interface>("/dev/spidev1.0", "spi_monitor");
+    
+    rclcpp::executors::MultiThreadedExecutor executor;
+
+    executor.add_node(node1);
+    executor.add_node(node2);
+
+    executor.spin();
+
     rclcpp::shutdown();
     return 0;
 }
