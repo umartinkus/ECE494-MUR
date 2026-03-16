@@ -31,13 +31,12 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
 
     // do that crc mf
     encode_crc16(&packet);
-    ESP_LOGI(PACKET_TAG, "crc out: %X", packet.crc);
 
     memcpy(s_tx_buf, &packet, sizeof(packet));
     memset(s_rx_buf, 0, sizeof(s_rx_buf));
 
-
     esp_err_t ret = spi_transaction(s_tx_buf, s_rx_buf, PACKET_SIZE);
+
     if (ret != ESP_OK) {
         if (ret == ESP_ERR_TIMEOUT) {
             #ifdef DEBUG
@@ -50,6 +49,8 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
         }
         return ret;
     }
+
+    ESP_LOGI(PACKET_TAG, "crc out: %X", packet.crc);
 
     packet_t rx_packet = {0};
     memcpy(&rx_packet, s_rx_buf, sizeof(rx_packet));
