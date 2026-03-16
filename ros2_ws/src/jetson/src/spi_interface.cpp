@@ -14,6 +14,7 @@
 #include <array>
 #include <functional>
 #include <algorithm>
+#include <sstream>
 
 #include "jetson/crc.hpp"
 #include "jetson/data_struct.hpp"
@@ -185,9 +186,11 @@ private:
         msg_out.crc = static_cast<std::uint16_t>(spi_in[CRC1_POS])
                     | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
 
-	for (int i = 0; i < 64; i++) {
-		RCLCPP_INFO(this->get_logger(), "\ni: %d, in: %X, out %X", i, spi_in[i], spi_out[i]);
-	}
+        std::stringstream ss;
+        for (int i = 0; i < 64; i++) {
+            ss << "i: " << i << " in: " << std::hex << spi_in[i] << " out: " << std::hex << spi_out[i] << std::endl;
+        }
+        RCLCPP_INFO(this->get_logger(), ss.str().c_str());
 
         if (!check_crc16(msg_out)) {
             RCLCPP_INFO(this->get_logger(), "Bad crc: %X", msg_out.crc);

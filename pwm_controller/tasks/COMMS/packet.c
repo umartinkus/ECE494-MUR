@@ -50,11 +50,12 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
         return ret;
     }
 
-    ESP_LOGI(PACKET_TAG, "crc out: %X", packet.crc);
 
     packet_t rx_packet = {0};
     memcpy(&rx_packet, s_rx_buf, sizeof(rx_packet));
-    // ESP_LOGI(PACKET_TAG, "rx sync bytes: %X", rx_packet.crc);
+
+    ESP_LOGI(PACKET_TAG, "crc out: %X", packet.crc);
+    ESP_LOGI(PACKET_TAG, "rx sync bytes: %X", rx_packet.crc);
 
     // check the sync
     // check the crc
