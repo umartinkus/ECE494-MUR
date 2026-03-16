@@ -14,7 +14,6 @@
 #include <array>
 #include <functional>
 #include <algorithm>
-#include <sstream>
 
 #include "jetson/crc.hpp"
 #include "jetson/data_struct.hpp"
@@ -186,11 +185,9 @@ private:
         msg_out.crc = static_cast<std::uint16_t>(spi_in[CRC1_POS])
                     | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
 
-        std::stringstream ss;
         for (int i = 0; i < 64; i++) {
-            ss << "i: " << i << " in: " << std::hex << spi_in[i] << " out: " << std::hex << spi_out[i] << std::endl;
+            RCLCPP_INFO(this->get_logger(), "\ni: %d, in: %X, out %X", i, spi_in[i], spi_out[i]);
         }
-        RCLCPP_INFO(this->get_logger(), ss.str().c_str());
 
         if (!check_crc16(msg_out)) {
             RCLCPP_INFO(this->get_logger(), "Bad crc: %X", msg_out.crc);
@@ -200,85 +197,7 @@ private:
         publisher_->publish(msg_out);
         return;
     }
-
-    // void step_(std::uint8_t b) {
-    //     std::cout << std::hex << static_cast<unsigned int>(b) << " ";
-    //     switch (state_) {
-    //         case State::WAIT_SYNC:
-    //             if (first_sync_ && b == 0x55) {
-    //
-    //                 // both conditions met, move to next state
-    //                 state_ = State::READ_SIZE;
-    //                 first_sync_ = false;
-    //                 idx_ = 0;
-    //
-    //             } else if (b == 0x55) {
-    //                 first_sync_ = true;
-    //             } else {
-    //                 first_sync_ = false;
-    //             }
-    //             break;
-    //
-    //         case State::READ_SIZE:
-    //             data_size_ = static_cast<std::size_t>(b);
-    //             msg_out.synch = 0x55;
-    //             msg_out.syncl = 0x55;
-    //             msg_out.size = b;
-    //             state_ = State::READ_ADDR;
-    //             break;
-    //
-    //         case State::READ_ADDR:
-    //             msg_out.address = b;
-    //             state_ = State::READ_DATA;
-    //             break;
-    //
-    //         case State::READ_DATA:
-    //             msg_out.data[idx_++] = b;
-    //             if (idx_ == data_size_) {
-    //                 state_ = State::CHECK_CRC;
-    //                 std::cout << std::endl;
-    //                 }
-    //             // add some sort of callback to handle the data payload
-    //             break;
-    //
-    //         case State::CHECK_CRC:
-    //             if (first_crc_) {
-    //                 first_crc_ = false;
-    //                 crc_vector[0] = b;
-    //             } else {
-    //                 first_crc_ = true;
-    //                 crc_vector[1] = b;
-    //
-    //                 // convert the two crc bytes into a single uint16_t
-    //                 msg_out.crc = static_cast<std::uint16_t>(crc_vector[0])
-    //                     | (static_cast<std::uint16_t>(crc_vector[1]) << 8);
-    //                 state_ = State::WAIT_SYNC;
-    //
-    //                 // check crc
-    //                 if (check_crc16(msg_out)) {
-    //                     this->publisher_->publish(msg_out);
-    //                 }
-    //             }
-    //             break;
-    //     }
-    // }
-
-    // enum class State {
-    //     WAIT_SYNC,
-    //     READ_SIZE,
-    //     READ_ADDR,
-    //     READ_DATA,
-    //     CHECK_CRC
-    // };
-
-    // state machine values
-    // State state_{State::WAIT_SYNC};
     custom_interfaces::msg::SPI msg_out;
-    // bool first_sync_{false};
-    // bool first_crc_{true};
-    // std::size_t data_size_{0};
-    // std::size_t idx_{0};
-    // std::array<std::uint8_t, 2> crc_vector{};
 
     packet_t spi_out_{};
     SpiDevice spi1_;

@@ -22,28 +22,38 @@ ament_target_dependencies(spi_interface
     sensor_msgs 
     custom_interfaces)
 
+target_include_directories(spi_interface
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>)
 
-add_executable(comms 
-    src/comms.cpp)
+add_executable(dualsense
+    src/dualsense.cpp)
 
-amend_target_dependencies(comms 
+ament_target_dependencies(dualsense
     rclcpp 
     std_msgs 
     sensor_msgs 
     custom_interfaces)
 
-target_include_directories(spi_interface
+target_include_directories(dualsense
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>)
 
 install(TARGETS
   spi_interface
+  dualsense
   DESTINATION lib/${PROJECT_NAME})
 
 install(
   DIRECTORY include/
   DESTINATION include
+)
+
+install(
+  DIRECTORY launch/
+  DESTINATION share/${PROJECT_NAME}/launch
 )
 
 if(BUILD_TESTING)

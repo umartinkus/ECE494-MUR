@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'spi_monitor = ground_station.spi_monitor:main',
         ],
     },
 )
