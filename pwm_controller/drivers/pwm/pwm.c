@@ -7,13 +7,17 @@ int thruster_gpio_array[6] = {16, 17, 21, 25, 26, 27};
 
 error_code_t init_pwm_array(ledc_channel_config_t *pwm_arr, int num_channels)
 {
+    if (pwm_arr == NULL || num_channels < 1 || num_channels > 6) {
+        return STATUS_CONFIG_ERR;
+    }
+
     error_code_t pwm_err = STATUS_OK;
     for (int i = 0; i < num_channels; i++) {
         pwm_arr[i] = (ledc_channel_config_t) {
             .gpio_num = thruster_gpio_array[i],
-            .speed_mode = LEDC_LOW_SPEED_MODE,
-            .channel = i,
-            .timer_sel = LEDC_TIMER_0,
+            .speed_mode = LEDC_MODE,
+            .channel = (ledc_channel_t)i,
+            .timer_sel = LEDC_TIMER,
             .intr_type = LEDC_INTR_DISABLE,
             .duty = 0,
             .hpoint = 0
@@ -49,7 +53,7 @@ uint32_t pwm_us_to_duty(uint32_t pulse_us)
     return (pulse_us * LEDC_MAX_DUTY) / LEDC_PERIOD_US;
 }
 
-error_code_t thruster_set_pulse_us(ledc_channel_t channel, uint32_t pulse_us)
+esp_err_t thruster_set_pulse_us(ledc_channel_t channel, uint32_t pulse_us)
 {
     uint32_t duty = pwm_us_to_duty(pulse_us);
     esp_err_t err = ledc_set_duty(LEDC_MODE, channel, duty);

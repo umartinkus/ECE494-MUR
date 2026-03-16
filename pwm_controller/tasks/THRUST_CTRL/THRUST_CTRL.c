@@ -44,22 +44,26 @@ void THRUST_CTRL(void *params)
     float u[N] = {0};
     float f[N] = {0};
 
-    esp_err_t tmr_res = init_timer(&ledc_timer);
-    esp_err_t pwm_res = init_pwm_array(pwm_channels, NUM_CHANNELS);
+    error_code_t tmr_res = init_timer(&ledc_timer);
+    error_code_t pwm_res = init_pwm_array(pwm_channels, NUM_CHANNELS);
     
     // get and update system status based off of pwm initializtion
     system_status_t sys_stat = {0};
     get_system_status(&sys_stat);
 
-    if (tmr_res == ESP_ERR_INVALID_ARG) {
+    if (tmr_res == STATUS_CONFIG_ERR || pwm_res == STATUS_CONFIG_ERR) {
         sys_stat.pwm_status = STATUS_CONFIG_ERR;
-    } else if (tmr_res == ESP_OK) {
+    } else if (tmr_res == STATUS_OK && pwm_res == STATUS_OK) {
         sys_stat.pwm_status = STATUS_OK;
     } else {
         sys_stat.pwm_status = STATUS_UNKNOWN;
     }
 
     update_system_status(sys_stat);
+
+    if (sys_stat.pwm_status != STATUS_OK) {
+        vTaskDelete(NULL);
+    }
 
     set_thrusters_neutral();
     vTaskDelay(pdMS_TO_TICKS(3000));
@@ -154,7 +158,7 @@ static error_code_t update_thruster_status(const float *f) {
     error_code_t pwm_err = STATUS_OK;
     for (int i = 0; i < NUM_CHANNELS; i++) {
         uint32_t pulse_us = (uint32_t)lroundf(f[i]);
-        if (thruster_set_pulse_us(i, pulse_us) != STATUS_OK) {
+        if (thruster_set_pulse_us(i, pulse_us) != ESP_OK) {
             pwm_err = STATUS_ERROR;
         }
     }
