@@ -166,7 +166,7 @@ private:
         }
 
         msg_out.size = spi_in[SIZE_POS];
-        msg_out.address = address_;
+        msg_out.address = spi_in[ADDR_POS];
         address_ = !address_;
         if (msg_out.size > msg_out.data.size()) {
             RCLCPP_INFO(this->get_logger(), "Payload too large: %u", msg_out.size);
@@ -206,7 +206,10 @@ private:
         return true;
     }
 
-    void spi_callback(const custom_interfaces::msg::SPI &msg) {
+    void spi_callback(custom_interfaces::msg::SPI &msg) {
+        msg.address = address_;
+        address_ = !address_;
+
         std::vector<uint8_t> spi_out = build_tx_packet(msg);
 
         RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
