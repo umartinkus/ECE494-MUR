@@ -189,10 +189,8 @@ private:
         if (expected_crc != crc_le && expected_crc != crc_be) {
             RCLCPP_INFO(
                 this->get_logger(),
-                "Bad crc: received_le=%X received_be=%X expected=%X",
-                crc_le,
-                crc_be,
-                expected_crc
+                "Bad crc: received_le=%X",
+                crc_le
             );
             return false;
         }
