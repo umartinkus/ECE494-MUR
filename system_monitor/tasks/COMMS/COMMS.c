@@ -16,6 +16,8 @@
 #define STATUS_ADDRESS 0
 #define DATA_ADDRESS 1
 
+#define DEBUG;
+
 #ifdef DEBUG
 const static char *TAG = "COMMS";
 #endif
@@ -41,6 +43,17 @@ void COMMS(void *args)
     for(;;){
         /* 1. Read system status and transmit over SPI*/
         get_system_status(&sys_stat); // accessing the global system state and copying it by value
+        ESP_LOGI(TAG, "system stat: %i, %i, %i, %i, %i, %i, %i, %i, %i",
+                 sys_stat.i2c_bus_status,
+                 sys_stat.spi_bus_status,
+                 sys_stat.adc_status,
+                 sys_stat.leak1_status,
+                 sys_stat.leak2_status,
+                 sys_stat.batt1_status,
+                 sys_stat.batt2_status,
+                 sys_stat.temp1_status,
+                 sys_stat.temp2_status);
+
         transfer_status = transfer_packet(sizeof(system_status_t), STATUS_ADDRESS, (uint8_t*)&sys_stat, packet_queue);
         if (transfer_status == ESP_OK) {
             sys_stat.spi_bus_status = STATUS_OK;

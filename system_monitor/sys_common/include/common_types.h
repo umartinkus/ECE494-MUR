@@ -33,6 +33,6 @@ typedef struct system_status{
     error_code_t leak2_status;
     error_code_t batt1_status;
     error_code_t batt2_status;
-    error_code_t temp2_status;
     error_code_t temp1_status;
+    error_code_t temp2_status;
 } system_status_t;
