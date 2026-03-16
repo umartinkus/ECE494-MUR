@@ -206,7 +206,8 @@ private:
         return true;
     }
 
-    void spi_callback(custom_interfaces::msg::SPI &msg) {
+    void spi_callback(const custom_interfaces::msg::SPI &msg_in) {
+        custom_interfaces::msg::SPI msg = msg_in;
         msg.address = address_;
         address_ = !address_;
 
