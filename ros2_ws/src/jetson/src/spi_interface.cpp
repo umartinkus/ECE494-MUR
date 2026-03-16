@@ -112,12 +112,12 @@ private:
 
 class SPI_Interface : public rclcpp::Node {
 public:
-    SPI_Interface(std::string port) : Node("spi_interface") {
+    SPI_Interface(std::string port, std::string spi_topic) : Node("spi_interface") {
         const uint32_t speed_hz = spi1_.openPort(port, 1000000);
         RCLCPP_INFO(this->get_logger(), "Configured SPI max speed: %u Hz", speed_hz);
         
         subscription_ = this->create_subscription<custom_interfaces::msg::SPI>(
-            "spi_send", 
+            spi_topic, 
             10,
             std::bind(&SPI_Interface::spi_callback, this, std::placeholders::_1)
         );
@@ -228,8 +228,8 @@ private:
 
 int main(int argc, char* argv[]) {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<SPI_Interface>("/dev/spidev0.0"));
-    rclcpp::spin(std::make_shared<SPI_Interface>("/dev/spidev1.0"));
+    rclcpp::spin(std::make_shared<SPI_Interface>("/dev/spidev0.0", "spi_send"));
+    rclcpp::spin(std::make_shared<SPI_Interface>("/dev/spidev1.0", "spi_monitor"));
     rclcpp::shutdown();
     return 0;
 }
