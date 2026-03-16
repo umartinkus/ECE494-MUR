@@ -31,6 +31,12 @@ void update_sensor_data(sensor_data_t new_data){
     xSemaphoreGive(sensor_data_mutex);
 }
 
+void update_spi_bus_status(error_code_t new_status){
+    xSemaphoreTake(system_status_mutex, portMAX_DELAY);
+    system_status.spi_bus_status = new_status;
+    xSemaphoreGive(system_status_mutex);
+}
+
 // used by health monitor task
 void update_system_status(system_status_t new_status){
     xSemaphoreTake(system_status_mutex, portMAX_DELAY);
