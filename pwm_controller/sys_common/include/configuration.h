@@ -1,0 +1,24 @@
+#pragma once
+
+// I2C1 Configuration
+#define I2C1_MASTER_SCL_IO 32
+#define I2C1_MASTER_SDA_IO 33
+#define I2C1_MASTER_NUM 0
+#define I2C1_FREQ_HZ 400000
+#define I2C1_MASTER_TIMEOUT_MS 1000
+
+
+// SPI3 Configuration
+#define SPI3_CS_PIN 5
+#define SPI3_CLK_PIN 18
+#define SPI3_MOSI_PIN 23
+#define SPI3_MISO_PIN 19
+#define SPI3_MODE 0
+#define SPI3_SLAVE_QUEUE_SIZE 4
+#define SPI3_MAX_TRANSFER_SZ 4096
+#define TRANSFER_PERIOD 500
+
+#define THRUSTER_COMMAND_ADDRESS 2
+#define THRUST_COMMAND_TIMEOUT_MS 250
+
+#define PACKET_SIZE 64

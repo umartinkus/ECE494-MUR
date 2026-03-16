@@ -1,0 +1,23 @@
+#ifndef PWM_H
+#define PWM_H
+
+#include <stdint.h>
+#include "driver/ledc.h"
+#include "esp_err.h"
+#include "common_types.h"
+
+#define LEDC_TIMER          LEDC_TIMER_0
+#define LEDC_MODE           LEDC_LOW_SPEED_MODE
+#define LEDC_DUTY_RES       LEDC_TIMER_13_BIT
+#define LEDC_FREQUENCY      (200)
+#define LEDC_MAX_DUTY       ((1U << LEDC_DUTY_RES) - 1U)
+#define LEDC_PERIOD_US      (1000000U / LEDC_FREQUENCY)
+
+extern int thruster_gpio_array[6];
+
+error_code_t init_pwm_array(ledc_channel_config_t *pwm_arr, int num_channels);
+error_code_t init_timer(ledc_timer_config_t *ledc_timer);
+uint32_t pwm_us_to_duty(uint32_t pulse_us);
+error_code_t thruster_set_pulse_us(ledc_channel_t channel, uint32_t pulse_us);
+
+#endif

@@ -3,15 +3,10 @@
 #include "driver/i2c_types.h"
 #include <stdbool.h>
 #include <stdint.h>
+#include "configuration.h"
 
-// ESP32 I2C Parameters
-#define I2C_MASTER_SCL_IO           22       /*!< GPIO number used for I2C master clock */
-#define I2C_MASTER_SDA_IO           21      /*!< GPIO number used for I2C master data  */
-#define I2C_MASTER_NUM              0                   /*!< I2C port number for master dev */
-#define I2C_MASTER_FREQ_HZ          400000 /*!< I2C master clock frequency */
-#define I2C_MASTER_TX_BUF_DISABLE   0                           /*!< I2C master doesn't need buffer */
-#define I2C_MASTER_RX_BUF_DISABLE   0                           /*!< I2C master doesn't need buffer */
-#define I2C_MASTER_TIMEOUT_MS       1000
+#define MPU9250_I2C_ADDRESS0 0x68
+#define MPU9250_I2C_ADDRESS1 0x69
 
 // MPU9250 Default Configuration Values
 #define MPU9250_DEFAULT_LPF_CONFIG 0x03  // DLPF_CFG = 3; Fs = 8kHz, BW = 44Hz
@@ -137,9 +132,6 @@
 #define ZA_OFFSET_H      0x7D
 #define ZA_OFFSET_L      0x7E
 #define INT_BYPASS_ENABLE 0X02 // Enable I2C bypass to access magnetometer
-#define MPU9250_ADDRESS0 0x68  // Device address when ADO = 0
-#define MPU9250_ADDRESS1 0x69  // Device address when ADO = 1
-
 typedef struct {
     bool gyro_enabled;
     bool accel_enabled;
@@ -161,12 +153,6 @@ typedef struct
     mpu9250_axis3_i16_t mag;
     int16_t temp;
 } mpu9250_data_t;
-
-
-void i2c_master_init(
-  i2c_master_bus_handle_t *bus_handle,
-  i2c_master_dev_handle_t *imu1_handle,
-  i2c_master_dev_handle_t *imu2_handle);
 
 esp_err_t mpu9250_register_read(
   i2c_master_dev_handle_t dev_handle,
@@ -206,4 +192,3 @@ void mpu9250_read_mag(
 // void mpu9250_read_temp(
 //   i2c_master_dev_handle_t dev_handle,
 //   int16_t *temp_data);
-

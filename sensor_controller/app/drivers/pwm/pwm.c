@@ -6,7 +6,7 @@
 #include "esp_err.h"
 #include "hal/ledc_types.h"
 
-int thruster_gpio_array[6] = {15, 2, 0, 4, 16, 17};
+int thruster_gpio_array[6] = {16, 17, 21, 25, 26, 27};
 
 void init_pwm_array(ledc_channel_config_t* pwm_arr, int num_channels) {
     for (int i = 0; i < num_channels; i++) {
