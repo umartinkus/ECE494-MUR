@@ -14,14 +14,25 @@ void init_system_state(){
     // Initialize mutexes
     system_status_mutex = xSemaphoreCreateMutex();
     sensor_data_mutex = xSemaphoreCreateMutex();
-    //Initialize sensor status
-    xSemaphoreTake(system_status_mutex, portMAX_DELAY);
-    system_status.i2c_bus_status = STATUS_UNINITIALIZED;
-    system_status.temp1_status = STATUS_UNINITIALIZED;
-    system_status.temp2_status = STATUS_UNINITIALIZED;
-    system_status.spi_bus_status = STATUS_UNINITIALIZED;
-    // QUESTION: is there a way to do this programatically? So i dont need to repeat?
-    xSemaphoreGive(system_status_mutex);
+
+    if (system_status_mutex != NULL) {
+        xSemaphoreTake(system_status_mutex, portMAX_DELAY);
+        system_status = (system_status_t){
+            .i2c_bus_status = STATUS_UNINITIALIZED,
+            .spi_bus_status = STATUS_UNINITIALIZED,
+            .pwm_status = STATUS_UNINITIALIZED,
+            .imu1_status = STATUS_UNINITIALIZED,
+            .imu2_status = STATUS_UNINITIALIZED,
+            .ps_status = STATUS_UNINITIALIZED,
+        };
+        xSemaphoreGive(system_status_mutex);
+    }
+
+    if (sensor_data_mutex != NULL) {
+        xSemaphoreTake(sensor_data_mutex, portMAX_DELAY);
+        sensor_data = (sensor_data_t){0};
+        xSemaphoreGive(sensor_data_mutex);
+    }
 }
 
 //used by SENSOR task

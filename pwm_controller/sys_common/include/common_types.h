@@ -7,16 +7,19 @@
     X(STATUS_ERROR, 2) \
     X(STATUS_LEAK_DETECTED, 3) \
     X(STATUS_CRC_FAILED, 4) \
+    X(STATUS_CONFIG_ERR, 5) \
+    X(STATUS_TIMEOUT, 6) \
     X(STATUS_UNKNOWN, 99)
 
-typedef enum : uint8_t {
+typedef enum {
     #define X(name, value) name = value,
     ERROR_CODE_LIST(X)
     #undef X
 } error_code_t;
 
 typedef struct{
-    
+    float temp1;
+    float temp2;
 } sensor_data_t;
 
 typedef struct system_status{

@@ -1,6 +1,7 @@
 #include <math.h>
 #include <string.h>
 #include "THRUST_CTRL.h"
+#include "esp_err.h"
 #include "packet.h"
 #include "pwm.h"
 #include "configuration.h"
@@ -41,96 +42,65 @@ typedef struct {
 static ledc_channel_config_t pwm_channels[NUM_CHANNELS];
 static ledc_timer_config_t ledc_timer;
 
-static float map_axis(uint8_t raw);
-static float map_trigger_pair(uint8_t lt, uint8_t rt);
-static float map_button_pair(uint8_t negative, uint8_t positive);
-static void decode_command(const thruster_command_t *command, float *u);
 static void vecmult(const float mat[N][N], const float *vec, float *out);
 static void scale(float *f, float max);
 static void scale_us(float *f);
 static void ctrl_allocation(float *u, float *f);
-static void set_thrusters_neutral(void);
-static void update_thruster_status(const float *f);
+static error_code_t set_thrusters_neutral(void);
+static error_code_t update_thruster_status(const float *f);
 
 void THRUST_CTRL(void *params)
 {
-    QueueHandle_t spi_events = (QueueHandle_t)params;
+    QueueHandle_t thrust_cmd_queue = (QueueHandle_t)params;
     packet_t packet = {0};
     float u[N] = {0};
     float f[N] = {0};
 
-    init_timer(&ledc_timer);
-    init_pwm_array(pwm_channels, NUM_CHANNELS);
+    esp_err_t tmr_res = init_timer(&ledc_timer);
+    esp_err_t pwm_res = init_pwm_array(pwm_channels, NUM_CHANNELS);
+    
+    // get and update system status based off of pwm initializtion
+    system_status_t sys_stat = {0};
+    get_system_status(&sys_stat);
+
+    if (tmr_res == ESP_ERR_INVALID_ARG) {
+        sys_stat.pwm_status = STATUS_CONFIG_ERR;
+    } else if (tmr_res == ESP_OK) {
+        sys_stat.pwm_status = STATUS_OK;
+    } else {
+        sys_stat.pwm_status = STATUS_UNKNOWN;
+    }
+
+    update_system_status(sys_stat);
+
     set_thrusters_neutral();
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(3000));
+    thruster_command_t command = {0};
+    
 
     for (;;) {
-        if (xQueueReceive(spi_events, &packet, pdMS_TO_TICKS(THRUST_COMMAND_TIMEOUT_MS)) != pdTRUE) {
+        get_system_status(&sys_stat);
+        if (xQueueReceive(thrust_cmd_queue, &packet, pdMS_TO_TICKS(THRUST_COMMAND_TIMEOUT_MS)) != pdTRUE) {
             set_thrusters_neutral();
+            sys_stat.pwm_status = STATUS_TIMEOUT;
+            update_system_status(sys_stat);
             continue;
         }
 
-        if (packet.device_address != THRUSTER_COMMAND_ADDRESS || packet.data_size < sizeof(thruster_command_t)) {
-            continue;
-        }
+        // get the control values into an array of float
+        memset(u, 0, sizeof(u));
+        memcpy(u, packet.data, sizeof(u));
 
-        thruster_command_t command = {0};
-        memcpy(&command, packet.data, sizeof(command));
-        decode_command(&command, u);
+        // do the control allocation and update the thruster pwm
         ctrl_allocation(u, f);
-        update_thruster_status(f);
+        error_code_t update_res = update_thruster_status(f);
 
-        system_status_t sys_update = {0};
-        get_system_status(&sys_update);
-        sys_update.spi_bus_status = STATUS_OK;
-        update_system_status(sys_update);
+        // report any errors
+        if (update_res != STATUS_OK) {
+            sys_stat.pwm_status = update_res;
+            update_system_status(sys_stat);
+        }
     }
-}
-
-static float map_axis(uint8_t raw)
-{
-    float mapped = ((float)raw * (2.0f / 255.0f)) - 1.0f;
-    if (fabsf(mapped) < deadzone) {
-        return 0.0f;
-    }
-
-    return mapped;
-}
-
-static float map_trigger_pair(uint8_t lt, uint8_t rt)
-{
-    float mapped = ((float)rt - (float)lt) / 255.0f;
-    if (fabsf(mapped) < deadzone) {
-        return 0.0f;
-    }
-
-    return mapped;
-}
-
-static float map_button_pair(uint8_t negative, uint8_t positive)
-{
-    float mapped = 0.0f;
-
-    if (positive != 0) {
-        mapped += 1.0f;
-    }
-    if (negative != 0) {
-        mapped -= 1.0f;
-    }
-
-    return mapped;
-}
-
-static void decode_command(const thruster_command_t *command, float *u)
-{
-    memset(u, 0, sizeof(float) * N);
-
-    u[0] = -map_axis(command->ls_y);
-    u[1] = map_axis(command->ls_x);
-    u[2] = map_trigger_pair(command->lt, command->rt);
-    u[3] = map_button_pair(command->lb, command->rb);
-    u[4] = -map_axis(command->rs_y);
-    u[5] = map_axis(command->rs_x);
 }
 
 static void vecmult(const float mat[N][N], const float *vec, float *out)
@@ -183,17 +153,24 @@ static void ctrl_allocation(float *u, float *f)
     scale_us(f);
 }
 
-static void set_thrusters_neutral(void)
-{
+static error_code_t set_thrusters_neutral(void) {
+    error_code_t pwm_err = STATUS_OK;
     for (int i = 0; i < NUM_CHANNELS; i++) {
-        ESP_ERROR_CHECK(thruster_set_pulse_us(i, THRUSTER_NEUTRAL_US));
+         if (thruster_set_pulse_us(i, THRUSTER_NEUTRAL_US) != ESP_OK) {
+            pwm_err = STATUS_ERROR;
+        }
     }
+    return pwm_err;
+
 }
 
-static void update_thruster_status(const float *f)
-{
+static error_code_t update_thruster_status(const float *f) {
+    error_code_t pwm_err = STATUS_OK;
     for (int i = 0; i < NUM_CHANNELS; i++) {
         uint32_t pulse_us = (uint32_t)lroundf(f[i]);
-        ESP_ERROR_CHECK(thruster_set_pulse_us(i, pulse_us));
+        if (thruster_set_pulse_us(i, pulse_us) != STATUS_OK) {
+            pwm_err = STATUS_ERROR;
+        }
     }
+    return pwm_err;
 }

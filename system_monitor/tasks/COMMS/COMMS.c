@@ -78,6 +78,5 @@ void COMMS(void *args)
         
         /* 3. Update global system status*/
         update_system_status(sys_stat);
-        vTaskDelay(pdMS_TO_TICKS(TRANSFER_PERIOD));
     }
 }
