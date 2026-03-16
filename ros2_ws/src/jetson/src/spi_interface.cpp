@@ -182,16 +182,34 @@ private:
 
         std::fill(msg_out.data.begin(), msg_out.data.end(), 0);
         std::copy(spi_in.begin() + DATA_POS, spi_in.begin() + DATA_POS + msg_out.size, msg_out.data.begin());
-        msg_out.crc = static_cast<std::uint16_t>(spi_in[CRC1_POS])
-                    | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
+        const auto crc_le = static_cast<std::uint16_t>(spi_in[CRC1_POS])
+                          | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
+        const auto crc_be = static_cast<std::uint16_t>(spi_in[CRC2_POS])
+                          | (static_cast<std::uint16_t>(spi_in[CRC1_POS]) << 8);
+        const auto expected_crc = encode_crc16(msg_out);
+        msg_out.crc = crc_le;
 
         for (int i = 0; i < 64; i++) {
             RCLCPP_INFO(this->get_logger(), "\ni: %d, in: %X, out %X", i, spi_in[i], spi_out[i]);
         }
 
-        if (!check_crc16(msg_out)) {
-            RCLCPP_INFO(this->get_logger(), "Bad crc: %X", msg_out.crc);
+        if (expected_crc != crc_le && expected_crc != crc_be) {
+            RCLCPP_INFO(
+                this->get_logger(),
+                "Bad crc: received_le=%X received_be=%X expected=%X",
+                crc_le,
+                crc_be,
+                expected_crc
+            );
             return;
+        }
+
+        if (expected_crc == crc_be && expected_crc != crc_le) {
+            msg_out.crc = crc_be;
+            RCLCPP_WARN(
+                this->get_logger(),
+                "Received CRC matched only after byte swap; sender is using opposite byte order"
+            );
         }
 
         publisher_->publish(msg_out);
