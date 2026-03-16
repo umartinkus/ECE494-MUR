@@ -83,7 +83,7 @@ void SENSOR(void* params){
         sensor_data.imu2 = imu2_data;
         memcpy(sensor_data.bar30_data, bar30_buffer, sizeof(bar30_buffer));
         
-        ESP_LOGI(TAG, "size: %d", sizeof(sensor_data));
+        // ESP_LOGI(TAG, "size: %d", sizeof(sensor_data));
 
         update_sensor_data(sensor_data);
         vTaskDelay(pdMS_TO_TICKS(500));
