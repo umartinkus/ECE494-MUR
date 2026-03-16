@@ -117,7 +117,7 @@ static void bar30_read_raw(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBu
     vTaskDelay(pdMS_TO_TICKS(20)); // Delay for conversion - this is as per the datasheet
     cmd = CMD_MS58XX_READ_ADC;
     i2c_master_transmit_receive(bar30_handle, &cmd, MS5837_I2C_CMD_SIZE, dataBuffer, MS5837_ADC_READ_SIZE, I2C1_MASTER_TIMEOUT_MS);
-    ESP_LOGI(TAG, "Pressure ADC raw data: 0x%02x%02x%02x", dataBuffer[0], dataBuffer[1], dataBuffer[2]); // DELETE
+    // ESP_LOGI(TAG, "Pressure ADC raw data: 0x%02x%02x%02x", dataBuffer[0], dataBuffer[1], dataBuffer[2]); // DELETE
     
     // Send command to read temperature
     cmd = ADDR_CMD_CONVERT_D2_OSR256;
@@ -125,7 +125,7 @@ static void bar30_read_raw(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBu
     vTaskDelay(pdMS_TO_TICKS(20)); // max delay as per the datasheet
     cmd = CMD_MS58XX_READ_ADC;
     i2c_master_transmit_receive(bar30_handle, &cmd, MS5837_I2C_CMD_SIZE, dataBuffer + 3, MS5837_ADC_READ_SIZE, I2C1_MASTER_TIMEOUT_MS);
-    ESP_LOGI(TAG, "Temperature ADC raw data: 0x%02x%02x%02x", dataBuffer[3], dataBuffer[4], dataBuffer[5]); // DELETE
+    // ESP_LOGI(TAG, "Temperature ADC raw data: 0x%02x%02x%02x", dataBuffer[3], dataBuffer[4], dataBuffer[5]); // DELETE
 }
 
 /**
@@ -141,7 +141,7 @@ static void bar30_read_raw(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBu
  */
 uint8_t bar30_read(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBuffer){
     if(bar30_handle == NULL || dataBuffer == NULL) {
-        ESP_LOGE(TAG, "Invalid argument: bar30_handle and dataBuffer must not be NULL");
+        // ESP_LOGE(TAG, "Invalid argument: bar30_handle and dataBuffer must not be NULL");
         return 1; // return error code
     }
     uint8_t raw_buffer[6]; // buffer to hold raw ADC data (3 bytes for pressure, 3 bytes for temperature)
@@ -154,7 +154,7 @@ uint8_t bar30_read(i2c_master_dev_handle_t bar30_handle, uint8_t* dataBuffer){
     dT = bar30_calculate_temp(raw_buffer + 3, &temp);
     bar30_calculate_pressure(&pressure, dT, raw_buffer);
     if(temp > 8500 || temp < -4000 || pressure > 300000 || pressure < 20) {
-        ESP_LOGW(TAG, "Calculated temperature or pressure out of expected range. Check sensor connection and calibration coefficients.");
+        // ESP_LOGW(TAG, "Calculated temperature or pressure out of expected range. Check sensor connection and calibration coefficients.");
         temp_c = -999.0; // set to error value
         pressure_bar = -999.0; // set to error value
         error = 1;
@@ -184,7 +184,7 @@ static int64_t bar30_calculate_temp(uint8_t *raw_temp, int32_t *temp){
 	int32_t D2_temp = (raw_temp[0] << 16) | (raw_temp[1] << 8) | raw_temp[2];
     int64_t dT = D2_temp-((uint32_t)C[5] << 8);
     *temp = 2000l+(int64_t)dT*C[6]/8388608LL;
-    ESP_LOGI(TAG, "Calculated temperature (before scaling): %d", *temp); // DELETE
+    // ESP_LOGI(TAG, "Calculated temperature (before scaling): %d", *temp); // DELETE
     return dT;
 }
 
@@ -204,5 +204,5 @@ static void bar30_calculate_pressure(int32_t *pressure, int64_t dT, uint8_t *raw
     int64_t SENS = (C[1] << 15) + ((C[3] * dT) >> 8);
     int64_t raw_pressure_ll = (raw_pressure[0] << 16 | raw_pressure[1] << 8 | raw_pressure[2]);\
     *pressure = (((raw_pressure_ll * SENS) >> 21) - OFF) >> 13;
-    ESP_LOGI(TAG, "Calculated pressure (before scaling): %d", *pressure); // DELETE
+    // ESP_LOGI(TAG, "Calculated pressure (before scaling): %d", *pressure); // DELETE
 }

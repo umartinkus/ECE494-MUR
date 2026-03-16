@@ -31,6 +31,7 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
 
     // do that crc mf
     encode_crc16(&packet);
+    ESP_LOGI(PACKET_TAG, "crc out: %X", packet.crc);
 
     memcpy(s_tx_buf, &packet, sizeof(packet));
     memset(s_rx_buf, 0, sizeof(s_rx_buf));
@@ -52,7 +53,7 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
 
     packet_t rx_packet = {0};
     memcpy(&rx_packet, s_rx_buf, sizeof(rx_packet));
-    ESP_LOGI(PACKET_TAG, "rx sync bytes: %X", rx_packet.crc);
+    // ESP_LOGI(PACKET_TAG, "rx sync bytes: %X", rx_packet.crc);
 
     // check the sync
     // check the crc
