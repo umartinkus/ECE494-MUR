@@ -35,6 +35,7 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
     memcpy(s_tx_buf, &packet, sizeof(packet));
     memset(s_rx_buf, 0, sizeof(s_rx_buf));
 
+    #ifdef DEBUG
     ESP_LOGI(
         PACKET_TAG,
         "tx hdr size=%u addr=%u crc=%04X",
@@ -74,7 +75,7 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
         s_tx_buf[56], s_tx_buf[57], s_tx_buf[58], s_tx_buf[59],
         s_tx_buf[60], s_tx_buf[61], s_tx_buf[62], s_tx_buf[63]
     );
-
+    #endif
     esp_err_t ret = spi_transaction(s_tx_buf, s_rx_buf, PACKET_SIZE);
 
     if (ret != ESP_OK) {
