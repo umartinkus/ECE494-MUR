@@ -9,6 +9,7 @@
 #include "esp_attr.h"
 
 #define PACKET_TAG "transfer_packet"
+/* Define PACKET_DEBUG at build time when packet-level logging is needed. */
 
 static DMA_ATTR WORD_ALIGNED_ATTR uint8_t s_tx_buf[PACKET_SIZE];
 static DMA_ATTR WORD_ALIGNED_ATTR uint8_t s_rx_buf[PACKET_SIZE];
@@ -35,7 +36,7 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
     memcpy(s_tx_buf, &packet, sizeof(packet));
     memset(s_rx_buf, 0, sizeof(s_rx_buf));
 
-    #ifdef DEBUG
+    #ifdef PACKET_DEBUG
     ESP_LOGI(
         PACKET_TAG,
         "tx hdr size=%u addr=%u crc=%04X",
@@ -80,11 +81,11 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
 
     if (ret != ESP_OK) {
         if (ret == ESP_ERR_TIMEOUT) {
-            #ifdef DEBUG
+            #ifdef PACKET_DEBUG
             ESP_LOGW(PACKET_TAG, "spi transaction timed out waiting for master");
             #endif
         } else {
-            #ifdef DEBUG
+            #ifdef PACKET_DEBUG
             ESP_LOGE(PACKET_TAG, "spi transaction failed: %s", esp_err_to_name(ret));
             #endif
         }
@@ -95,8 +96,10 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
     packet_t rx_packet = {0};
     memcpy(&rx_packet, s_rx_buf, sizeof(rx_packet));
 
+    #ifdef PACKET_DEBUG
     ESP_LOGI(PACKET_TAG, "crc out: %X", packet.crc);
     ESP_LOGI(PACKET_TAG, "rx crc: %X", rx_packet.crc);
+    #endif
 
     // check the sync
     // check the crc
@@ -108,13 +111,13 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
             }
             xQueueSendToBack(queue, &rx_packet, pdMS_TO_TICKS(10));
         } else {
-            #ifdef DEBUG
+            #ifdef PACKET_DEBUG
             ESP_LOGI(PACKET_TAG, "packet failed crc");
             #endif
             return ESP_ERR_INVALID_CRC;
         }
     } else {
-        #ifdef DEBUG
+        #ifdef PACKET_DEBUG
         ESP_LOGI(PACKET_TAG, "packet had no sync bytes");
         #endif
         return ESP_ERR_INVALID_RESPONSE;

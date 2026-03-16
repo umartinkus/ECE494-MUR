@@ -15,11 +15,8 @@
 
 #define STATUS_ADDRESS 0
 #define DATA_ADDRESS 1
-#define DEBUG
 
-#ifdef DEBUG
 const static char *TAG = "COMMS";
-#endif
 static system_status_t sys_stat = {STATUS_UNINITIALIZED};
 static sensor_data_t sensor_data = {0};
 
@@ -32,9 +29,9 @@ void COMMS(void *args)
     // loop until spi works is initialized
     while(spi3_slave_init() != ESP_OK){
         update_spi_bus_status(STATUS_ERROR);
-        #ifdef DEBUG
+#ifdef COMMS_DEBUG
         ESP_LOGI(TAG, "SPI BUS: Not initialized");
-        #endif
+#endif
         vTaskDelay(pdMS_TO_TICKS(200));
     }
 
@@ -67,16 +64,18 @@ void COMMS(void *args)
             }
         } else if (transfer_status == ESP_ERR_TIMEOUT) {
             update_spi_bus_status(STATUS_ERROR);
-            #ifdef DEBUG
+#ifdef COMMS_DEBUG
             ESP_LOGW(TAG, "SPI transfer timed out waiting for master");
-            #endif
+#endif
         } else if (transfer_status == ESP_ERR_INVALID_CRC) {
             update_spi_bus_status(STATUS_CRC_FAILED);
         } else {
             update_spi_bus_status(STATUS_ERROR);
-            #ifdef DEBUG
+#ifdef COMMS_DEBUG
             ESP_LOGW(TAG, "SPI transfer failed: %s", esp_err_to_name(transfer_status));
-            #endif
+#endif
         }
+
+        vTaskDelay(pdMS_TO_TICKS(1));
     }
 }
