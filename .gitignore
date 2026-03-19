@@ -11,3 +11,4 @@ build.clang/
 log/
 install/
 sdkconfig
+ros2_ws/launch/__pycache__/MARLIN_launch.cpython-310.pyc
