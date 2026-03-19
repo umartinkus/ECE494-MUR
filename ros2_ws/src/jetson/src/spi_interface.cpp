@@ -225,7 +225,7 @@ private:
         auto msg_out = custom_interfaces::msg::SPI();
         if (!decode_rx_packet(spi_in, spi_out, msg_out)) {
             // return;
-            continue;
+            RCLCPP_WARN(this->get_logger(), "Failed to decode SPI response, publishing empty message with crc=0");
         }
 
         publisher_->publish(msg_out);
