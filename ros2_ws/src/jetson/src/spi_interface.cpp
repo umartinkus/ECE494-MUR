@@ -224,7 +224,8 @@ private:
 
         auto msg_out = custom_interfaces::msg::SPI();
         if (!decode_rx_packet(spi_in, spi_out, msg_out)) {
-            return;
+            // return;
+            continue;
         }
 
         publisher_->publish(msg_out);

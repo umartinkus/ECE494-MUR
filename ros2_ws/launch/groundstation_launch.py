@@ -6,14 +6,12 @@ def generate_launch_description():
         Node(
             package='joy',
             executable='game_controller_node',
-            name = 'controller',
-            namespace='marlin',
+            name = 'gs',
             arguments=['--ros-args', '-p', 'coalesce_interval_ms:=20']
         ),
         Node(
             package='jetson',
             executable='dualsense',
-            name='dualsense_node',
-            namespace='marlin'
+            name='gs',
         )
     ])
