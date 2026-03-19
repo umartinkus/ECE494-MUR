@@ -13,8 +13,8 @@
 #include "esp_log.h"
 #include "freertos/task.h"
 
-#define STATUS_ADDRESS 0
-#define DATA_ADDRESS 1
+#define STATUS_ADDRESS 1
+#define DATA_ADDRESS 3
 
 #ifdef DEBUG
 const static char *TAG = "COMMS";

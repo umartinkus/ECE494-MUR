@@ -14,7 +14,7 @@
 #include "freertos/task.h"
 
 #define STATUS_ADDRESS 0
-#define DATA_ADDRESS 1
+#define DATA_ADDRESS 2
 
 const static char *TAG = "COMMS";
 static system_status_t sys_stat = {STATUS_UNINITIALIZED};
