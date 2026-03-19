@@ -160,17 +160,17 @@ private:
         msg_out.synch = spi_in[SYNCH_POS];
         msg_out.syncl = spi_in[SYNCL_POS];
 
-        if (msg_out.synch != START_FRAMEH || msg_out.syncl != START_FRAMEL) {
-            RCLCPP_INFO(this->get_logger(), "Bad sync bytes");
-            return false;
-        }
+        // if (msg_out.synch != START_FRAMEH || msg_out.syncl != START_FRAMEL) {
+        //     RCLCPP_INFO(this->get_logger(), "Bad sync bytes");
+        //     return false;
+        // }
 
         msg_out.size = spi_in[SIZE_POS];
         msg_out.address = spi_in[ADDR_POS];
-        if (msg_out.size > msg_out.data.size()) {
-            RCLCPP_INFO(this->get_logger(), "Payload too large: %u", msg_out.size);
-            return false;
-        }
+        // if (msg_out.size > msg_out.data.size()) {
+        //     RCLCPP_INFO(this->get_logger(), "Payload too large: %u", msg_out.size);
+        //     return false;
+        // }
 
         std::fill(msg_out.data.begin(), msg_out.data.end(), 0);
         std::copy(spi_in.begin() + DATA_POS, spi_in.begin() + DATA_POS + msg_out.size, msg_out.data.begin());
@@ -185,22 +185,22 @@ private:
         //     RCLCPP_INFO(this->get_logger(), "\ni: %d, in: %X, out %X", i, spi_in[i], spi_out[i]);
         // }
 
-        if (expected_crc != crc_le && expected_crc != crc_be) {
-            RCLCPP_INFO(
-                this->get_logger(),
-                "Bad crc: received_le=%X",
-                crc_le
-            );
-            return false;
-        }
+        // if (expected_crc != crc_le && expected_crc != crc_be) {
+        //     RCLCPP_INFO(
+        //         this->get_logger(),
+        //         "Bad crc: received_le=%X",
+        //         crc_le
+        //     );
+        //     return false;
+        // }
 
-        if (expected_crc == crc_be && expected_crc != crc_le) {
-            msg_out.crc = crc_be;
-            RCLCPP_WARN(
-                this->get_logger(),
-                "Received CRC matched only after byte swap; sender is using opposite byte order"
-            );
-        }
+        // if (expected_crc == crc_be && expected_crc != crc_le) {
+        //     msg_out.crc = crc_be;
+        //     RCLCPP_WARN(
+        //         this->get_logger(),
+        //         "Received CRC matched only after byte swap; sender is using opposite byte order"
+        //     );
+        // }
 
         return true;
     }
