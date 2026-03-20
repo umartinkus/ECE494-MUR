@@ -23,6 +23,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "custom_interfaces/msg/spi.hpp"
 
+// Fixed byte offsets for the 64-byte SPI packet exchanged with the ESP32.
 #define SYNCH_POS 0
 #define SYNCL_POS 1
 #define SIZE_POS 2
@@ -33,7 +34,7 @@
 
 #define SPI_PACKET_SIZE 64
 
-// class that owns the SPI port 
+// Small RAII wrapper around a Linux spidev file descriptor.
 class SpiDevice {
 public:
     SpiDevice() = default;
@@ -47,6 +48,7 @@ public:
   SpiDevice(const SpiDevice&) = delete;
   SpiDevice& operator=(const SpiDevice&) = delete;
 
+    // Open the device and configure the SPI bus settings used by this node.
   uint32_t openPort(const std::string& device, uint32_t speed_hz, uint8_t mode = SPI_MODE_0,
                     uint8_t bits_per_word = 8) {
         if (fd_ >= 0) {
@@ -80,12 +82,13 @@ public:
         return speed_hz_;
   }
 
+    // Execute one full-duplex SPI transaction.
     void transfer(std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) const {
         if (fd_ < 0) {
             throw std::runtime_error("SPI port is not open. Call openPort() first.");
         }
 
-        // make sure it is sending 64 bytes
+        // The ESP side expects a fixed 64-byte frame every transfer.
         if (tx.size() < SPI_PACKET_SIZE) {
             tx.resize(SPI_PACKET_SIZE);
         return;
@@ -112,6 +115,7 @@ private:
     uint32_t speed_hz_{500000};
 };
 
+// ROS node that bridges a ROS topic to one Linux SPI device and republishes the reply.
 class SPI_Interface : public rclcpp::Node {
 public:
     SPI_Interface(std::string port, std::string spi_topic) : Node("spi_interface") {
@@ -129,6 +133,7 @@ public:
         RCLCPP_INFO(this->get_logger(), "SPI Node Started");
     }
 private:
+    // Build an outbound 64-byte SPI frame from the ROS message fields.
     std::vector<uint8_t> build_tx_packet(const custom_interfaces::msg::SPI &msg) {
         spi_out_.start_frameH = msg.synch;
         spi_out_.start_frameL = msg.syncl;
@@ -151,6 +156,9 @@ private:
         return spi_out;
     }
 
+    // Decode the returned SPI frame into a ROS message.
+    //
+    // Several validation checks are currently left commented out while bring-up is in progress.
     bool decode_rx_packet(
         const std::vector<uint8_t>& spi_in,
         const std::vector<uint8_t>& spi_out,
@@ -174,10 +182,9 @@ private:
 
         std::fill(msg_out.data.begin(), msg_out.data.end(), 0);
         std::copy(spi_in.begin() + DATA_POS, spi_in.begin() + DATA_POS + msg_out.size, msg_out.data.begin());
+
         const auto crc_le = static_cast<std::uint16_t>(spi_in[CRC1_POS])
                           | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
-        const auto crc_be = static_cast<std::uint16_t>(spi_in[CRC2_POS])
-                          | (static_cast<std::uint16_t>(spi_in[CRC1_POS]) << 8);
         const auto expected_crc = encode_crc16(msg_out);
         msg_out.crc = crc_le;
 
@@ -202,11 +209,20 @@ private:
         //     );
         // }
 
+        if (expected_crc != crc_le) {
+            RCLCPP_WARN(
+                this->get_logger(),
+                "Bad CRC: expected %X, received_le=%X",
+                expected_crc,
+                crc_le
+            );
+        }
         return true;
     }
 
     void spi_callback(const custom_interfaces::msg::SPI &msg_in) {
         custom_interfaces::msg::SPI msg = msg_in;
+        // Alternate response addresses so the ESP can return different packet types on each cycle.
         msg.address = address_;
         address_ = !address_;
 
@@ -218,6 +234,7 @@ private:
         std::vector<uint8_t> prime_rx;
         std::vector<uint8_t> spi_in;
 
+        // The first transfer clocks the request into the slave; the second reads back its prepared response.
         spi1_.transfer(spi_out, prime_rx);
         ::usleep(5000);
         spi1_.transfer(spi_out, spi_in);
@@ -241,9 +258,9 @@ private:
 };
 
 
-
 int main(int argc, char* argv[]) {
     rclcpp::init(argc, argv);
+    // Run one node per SPI bus so both devices can be serviced by the same executor.
     std::shared_ptr<rclcpp::Node> node1 = std::make_shared<SPI_Interface>("/dev/spidev0.0", "spi_send");
     std::shared_ptr<rclcpp::Node> node2 = std::make_shared<SPI_Interface>("/dev/spidev1.0", "spi_monitor");
     

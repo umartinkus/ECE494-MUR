@@ -9,8 +9,9 @@ class MonitorPoller(Node):
     def __init__(self) -> None:
         """Create the ROS2 node and start polling loop."""
         super().__init__("monitor_poller")
-        self.publisher_ = self.create_publisher(SPI, "/spi_monitor", 10)
+        self.publisher_ = self.create_publisher(SPI, "/spi_send", 10)
         self.timer = self.create_timer(0.05, self._poll_spi_monitor)
+        self.address_val = 0
 
     def _poll_spi_monitor(self) -> None:
         """Trigger an update of the SPI monitor UI."""
@@ -18,10 +19,11 @@ class MonitorPoller(Node):
         msg = SPI()
         msg.synch = 0x55
         msg.syncl = 0x55
-        msg.address = 99  # Address doesn't matter for polling - monitor will publish to /spi_receive
+        msg.address = self.address_val  # Address doesn't matter for polling - monitor will publish to /spi_receive
         msg.size = 0
         msg.crc = 0
         self.publisher_.publish(msg)
+        self.address_val = not self.address_val  # Alternate between address 0 and 1 for each poll
 
 def main(args=None):
     rclpy.init(args=args)
