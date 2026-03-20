@@ -97,6 +97,7 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
     memcpy(&rx_packet, s_rx_buf, sizeof(rx_packet));
 
     ESP_LOGI(PACKET_TAG, "rx hdr size=%u addr=%u crc=%04X", rx_packet.data_size, rx_packet.device_address, rx_packet.crc);
+    ESP_LOGI(PACKET_TAG, "tx crc: %04X", packet.crc);
 
     // check the sync
     // check the crc
@@ -106,7 +107,9 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
             if (rx_packet_out != NULL) {
                 *rx_packet_out = rx_packet;
             }
-            xQueueSendToBack(queue, &rx_packet, pdMS_TO_TICKS(10));
+            if (queue != NULL) {
+                (void)xQueueSendToBack(queue, &rx_packet, 0);
+            }
         } else {
             #ifdef DEBUG
             ESP_LOGI(PACKET_TAG, "packet failed crc");

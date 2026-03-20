@@ -143,16 +143,12 @@ private:
         std::fill(std::begin(spi_out_.data), std::end(spi_out_.data), 0);
         std::memcpy(spi_out_.data, msg.data.data(), spi_out_.data_size);
 
-        auto crc_msg = msg;
-        crc_msg.size = spi_out_.data_size;
-        spi_out_.crc = encode_crc16(crc_msg);
+        spi_out_.crc = encode_crc16(msg);
 
         std::vector<uint8_t> spi_out(
             reinterpret_cast<uint8_t*>(&spi_out_),
             reinterpret_cast<uint8_t*>(&spi_out_) + sizeof(spi_out_)
         );
-        spi_out[CRC1_POS] = static_cast<std::uint8_t>(spi_out_.crc & 0xFF);
-        spi_out[CRC2_POS] = static_cast<std::uint8_t>((spi_out_.crc >> 8) & 0xFF);
         return spi_out;
     }
 
