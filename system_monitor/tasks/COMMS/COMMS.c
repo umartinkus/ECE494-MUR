@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include <stdio.h>
 #include "COMMS.h"
 #include "common_types.h"
 #include "freertos/idf_additions.h"

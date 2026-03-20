@@ -3,6 +3,9 @@ from rclpy.node import Node
 
 from custom_interfaces.msg import SPI
 
+GET_STATUS = 1
+GET_DATA = 3
+
 class MonitorPoller(Node):
     """ROS2 node that periodically polls for new data from the SPI monitor and updates the UI."""
 
@@ -19,11 +22,15 @@ class MonitorPoller(Node):
         msg = SPI()
         msg.synch = 0x55
         msg.syncl = 0x55
-        msg.address = self.address_val  # Address doesn't matter for polling - monitor will publish to /spi_receive
+        msg.address = self.address_val  
         msg.size = 0
         msg.crc = 0
         self.publisher_.publish(msg)
-        self.address_val = not self.address_val  # Alternate between address 0 and 1 for each poll
+
+        if self.address_val == GET_STATUS:
+            self.address_val = GET_DATA
+        else:
+            self.address_val = GET_STATUS
 
 def main(args=None):
     rclpy.init(args=args)

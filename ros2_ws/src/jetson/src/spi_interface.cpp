@@ -228,8 +228,8 @@ private:
 
         std::vector<uint8_t> spi_out = build_tx_packet(msg);
 
-        RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
-        RCLCPP_INFO(this->get_logger(), "first sync byte: %X, %X", spi_out[0], spi_out[1]);
+        // RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
+        // RCLCPP_INFO(this->get_logger(), "first sync byte: %X, %X", spi_out[0], spi_out[1]);
 
         std::vector<uint8_t> prime_rx;
         std::vector<uint8_t> spi_in;
