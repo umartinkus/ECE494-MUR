@@ -220,12 +220,7 @@ private:
         return true;
     }
 
-    void spi_callback(const custom_interfaces::msg::SPI &msg_in) {
-        custom_interfaces::msg::SPI msg = msg_in;
-        // Alternate response addresses so the ESP can return different packet types on each cycle.
-        msg.address = address_;
-        address_ = !address_;
-
+    void spi_callback(const custom_interfaces::msg::SPI &msg) {
         std::vector<uint8_t> spi_out = build_tx_packet(msg);
 
         // RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
@@ -252,7 +247,6 @@ private:
 
     packet_t spi_out_{};
     SpiDevice spi1_;
-    int address_ = 0;
     rclcpp::Subscription<custom_interfaces::msg::SPI>::SharedPtr subscription_;
     rclcpp::Publisher<custom_interfaces::msg::SPI>::SharedPtr publisher_;
 };

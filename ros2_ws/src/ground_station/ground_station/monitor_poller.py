@@ -14,7 +14,7 @@ class MonitorPoller(Node):
         super().__init__("monitor_poller")
         self.publisher_ = self.create_publisher(SPI, "/spi_send", 10)
         self.timer = self.create_timer(0.05, self._poll_spi_monitor)
-        self.address_val = 0
+        self.address_val = GET_DATA
 
     def _poll_spi_monitor(self) -> None:
         """Trigger an update of the SPI monitor UI."""
