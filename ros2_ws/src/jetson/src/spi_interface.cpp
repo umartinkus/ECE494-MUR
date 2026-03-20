@@ -136,6 +136,62 @@ public:
         RCLCPP_INFO(this->get_logger(), "SPI Node Started");
     }
 private:
+    void debug_log_packet(const std::vector<uint8_t>& packet, const char* label) {
+    #ifdef DEBUG
+        if (packet.size() < SPI_PACKET_SIZE) {
+            RCLCPP_WARN(
+                this->get_logger(),
+                "%s packet too short: %zu bytes (expected %d)",
+                label,
+                packet.size(),
+                SPI_PACKET_SIZE
+            );
+            return;
+        }
+
+        RCLCPP_INFO(this->get_logger(), "%s packet dump (64 bytes):", label);
+        RCLCPP_INFO(
+            this->get_logger(),
+            "[%02d..%02d] %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+            0, 15,
+            packet[0], packet[1], packet[2], packet[3],
+            packet[4], packet[5], packet[6], packet[7],
+            packet[8], packet[9], packet[10], packet[11],
+            packet[12], packet[13], packet[14], packet[15]
+        );
+        RCLCPP_INFO(
+            this->get_logger(),
+            "[%02d..%02d] %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+            16, 31,
+            packet[16], packet[17], packet[18], packet[19],
+            packet[20], packet[21], packet[22], packet[23],
+            packet[24], packet[25], packet[26], packet[27],
+            packet[28], packet[29], packet[30], packet[31]
+        );
+        RCLCPP_INFO(
+            this->get_logger(),
+            "[%02d..%02d] %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+            32, 47,
+            packet[32], packet[33], packet[34], packet[35],
+            packet[36], packet[37], packet[38], packet[39],
+            packet[40], packet[41], packet[42], packet[43],
+            packet[44], packet[45], packet[46], packet[47]
+        );
+        RCLCPP_INFO(
+            this->get_logger(),
+            "[%02d..%02d] %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+            48, 63,
+            packet[48], packet[49], packet[50], packet[51],
+            packet[52], packet[53], packet[54], packet[55],
+            packet[56], packet[57], packet[58], packet[59],
+            packet[60], packet[61], packet[62], packet[63]
+        );
+    #else
+        (void)packet;
+        (void)label;
+    #endif
+    }
+
     // Build an outbound 64-byte SPI frame from the ROS message fields.
     std::vector<uint8_t> build_tx_packet(const custom_interfaces::msg::SPI &msg) {
         spi_out_.start_frameH = msg.synch;
@@ -235,6 +291,7 @@ private:
         spi1_.transfer(spi_out, prime_rx);
         ::usleep(5000);
         spi1_.transfer(spi_out, spi_in);
+        debug_log_packet(spi_in, "RX");
 
         auto msg_out = custom_interfaces::msg::SPI();
         if (!decode_rx_packet(spi_in, spi_out, msg_out)) {
