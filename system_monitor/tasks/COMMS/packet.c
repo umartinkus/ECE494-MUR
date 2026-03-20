@@ -9,7 +9,7 @@
 #include "esp_attr.h"
 
 #define PACKET_TAG "transfer_packet"
-#define DEBUG
+// #define DEBUG
 
 static DMA_ATTR WORD_ALIGNED_ATTR uint8_t s_tx_buf[PACKET_SIZE];
 static DMA_ATTR WORD_ALIGNED_ATTR uint8_t s_rx_buf[PACKET_SIZE];
