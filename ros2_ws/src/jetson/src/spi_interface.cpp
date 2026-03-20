@@ -35,6 +35,8 @@
 #define SPI_PACKET_SIZE 64
 #define DATA_SIZE 58
 
+#define DEBUG
+
 // Small RAII wrapper around a Linux spidev file descriptor.
 class SpiDevice {
 public:
@@ -145,6 +147,9 @@ private:
         std::memcpy(spi_out_.data, msg.data.data(), spi_out_.data_size);
 
         spi_out_.crc = encode_crc16(msg);
+        #ifdef DEBUG
+        RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
+        #endif
 
         std::vector<uint8_t> spi_out(
             reinterpret_cast<uint8_t*>(&spi_out_),
