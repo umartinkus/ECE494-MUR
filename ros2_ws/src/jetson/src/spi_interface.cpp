@@ -33,6 +33,7 @@
 #define CRC2_POS 63
 
 #define SPI_PACKET_SIZE 64
+#define DATA_SIZE 58
 
 // Small RAII wrapper around a Linux spidev file descriptor.
 class SpiDevice {
@@ -177,7 +178,7 @@ private:
         // }
 
         std::fill(msg_out.data.begin(), msg_out.data.end(), 0);
-        std::copy(spi_in.begin() + DATA_POS, spi_in.begin() + DATA_POS + msg_out.size, msg_out.data.begin());
+        std::copy(spi_in.begin() + DATA_POS, spi_in.begin() + DATA_POS + DATA_SIZE, msg_out.data.begin());
 
         const auto crc_le = static_cast<std::uint16_t>(spi_in[CRC1_POS])
                           | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
