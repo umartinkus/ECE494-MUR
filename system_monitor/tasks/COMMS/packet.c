@@ -97,8 +97,10 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
     packet_t rx_packet = {0};
     memcpy(&rx_packet, s_rx_buf, sizeof(rx_packet));
 
+    #ifdef DEBUG
     ESP_LOGI(PACKET_TAG, "rx hdr size=%u addr=%u crc=%04X", rx_packet.data_size, rx_packet.device_address, rx_packet.crc);
     ESP_LOGI(PACKET_TAG, "tx crc: %04X", packet.crc);
+    #endif
 
     // check the sync
     // check the crc

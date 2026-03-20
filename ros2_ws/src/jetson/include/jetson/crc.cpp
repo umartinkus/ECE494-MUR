@@ -18,7 +18,7 @@ std::uint16_t compute_crc16(const custom_interfaces::msg::SPI &msg) {
     packet_bytes.push_back(msg.syncl);
     packet_bytes.push_back(static_cast<std::uint8_t>(payload_size));
     packet_bytes.push_back(msg.address);
-    packet_bytes.insert(packet_bytes.end(), msg.data.begin(), msg.data.begin() + DATA_SIZE);
+    packet_bytes.insert(packet_bytes.end(), msg.data.begin(), msg.data.begin() + payload_size);
 
     for (const std::uint8_t value : packet_bytes) {
         const std::uint8_t div = static_cast<std::uint8_t>((crc >> 8) ^ value);
