@@ -294,6 +294,8 @@ private:
         debug_log_packet(prime_rx, "PRIME RX");
         debug_log_packet(spi_in, "RX");
 
+        decode_rx_packet(prime_rx, spi_out, msg_out);
+
         auto msg_out = custom_interfaces::msg::SPI();
         if (!decode_rx_packet(spi_in, spi_out, msg_out)) {
             // return;
