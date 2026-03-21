@@ -13,11 +13,12 @@
 #include "esp_log.h"
 #include "freertos/task.h"
 
-#define STATUS_ADDRESS 0
-#define DATA_ADDRESS 2
+#define STATUS_ADDRESS 0x00
+#define DATA_ADDRESS 0x02
 
 const static char *TAG = "COMMS";
-static system_status_t sys_stat = {STATUS_UNINITIALIZED};
+
+static system_status_t sys_stat = {0};
 static sensor_data_t sensor_data = {0};
 
 void COMMS(void *args)
@@ -29,9 +30,7 @@ void COMMS(void *args)
     // loop until spi works is initialized
     while(spi3_slave_init() != ESP_OK){
         update_spi_bus_status(STATUS_ERROR);
-#ifdef COMMS_DEBUG
         ESP_LOGI(TAG, "SPI BUS: Not initialized");
-#endif
         vTaskDelay(pdMS_TO_TICKS(200));
     }
 
@@ -57,6 +56,10 @@ void COMMS(void *args)
             );
         }
 
+        #ifdef COMMS_DEBUG 
+        ESP_LOGI(TAG, "Transfer status: %s", esp_err_to_name(transfer_status));
+        ESP_LOGI(TAG, "Next Address: %X", next_response_address);
+        #endif
         if (transfer_status == ESP_OK) {
             update_spi_bus_status(STATUS_OK);
             if (rx_packet.device_address == STATUS_ADDRESS || rx_packet.device_address == DATA_ADDRESS) {
@@ -64,18 +67,19 @@ void COMMS(void *args)
             }
         } else if (transfer_status == ESP_ERR_TIMEOUT) {
             update_spi_bus_status(STATUS_ERROR);
-#ifdef COMMS_DEBUG
+            #ifdef COMMS_DEBUG
             ESP_LOGW(TAG, "SPI transfer timed out waiting for master");
-#endif
+            #endif
         } else if (transfer_status == ESP_ERR_INVALID_CRC) {
             update_spi_bus_status(STATUS_CRC_FAILED);
+            #ifdef COMMS_DEBUG
+            ESP_LOGW(TAG, "SPI transfer failed due to CRC mismatch");
+            #endif
         } else {
             update_spi_bus_status(STATUS_ERROR);
-#ifdef COMMS_DEBUG
+            #ifdef COMMS_DEBUG
             ESP_LOGW(TAG, "SPI transfer failed: %s", esp_err_to_name(transfer_status));
-#endif
+            #endif
         }
-
-        vTaskDelay(pdMS_TO_TICKS(1));
     }
 }

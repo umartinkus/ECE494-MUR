@@ -77,7 +77,6 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
         s_tx_buf[60], s_tx_buf[61], s_tx_buf[62], s_tx_buf[63]
     );
     #endif
-
     esp_err_t ret = spi_transaction(s_tx_buf, s_rx_buf, PACKET_SIZE);
 
     if (ret != ESP_OK) {

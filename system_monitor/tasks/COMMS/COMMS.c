@@ -56,8 +56,10 @@ void COMMS(void *args)
             );
         }
         
+        #ifdef COMMS_DEBUG 
         ESP_LOGI(TAG, "Transfer status: %s", esp_err_to_name(transfer_status));
         ESP_LOGI(TAG, "Next Address: %X", next_response_address);
+        #endif
         if (transfer_status == ESP_OK) {
             update_spi_bus_status(STATUS_OK);
             if (rx_packet.device_address == STATUS_ADDRESS || rx_packet.device_address == DATA_ADDRESS) {
@@ -65,17 +67,17 @@ void COMMS(void *args)
             }
         } else if (transfer_status == ESP_ERR_TIMEOUT) {
             update_spi_bus_status(STATUS_ERROR);
-            #ifdef DEBUG
+            #ifdef COMMS_DEBUG
             ESP_LOGW(TAG, "SPI transfer timed out waiting for master");
             #endif
         } else if (transfer_status == ESP_ERR_INVALID_CRC) {
             update_spi_bus_status(STATUS_CRC_FAILED);
-            #ifdef DEBUG
+            #ifdef COMMS_DEBUG
             ESP_LOGW(TAG, "SPI transfer failed due to CRC mismatch");
             #endif
         } else {
             update_spi_bus_status(STATUS_ERROR);
-            #ifdef DEBUG
+            #ifdef COMMS_DEBUG
             ESP_LOGW(TAG, "SPI transfer failed: %s", esp_err_to_name(transfer_status));
             #endif
         }

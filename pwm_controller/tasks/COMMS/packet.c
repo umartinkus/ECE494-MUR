@@ -109,7 +109,9 @@ esp_err_t transfer_packet(uint8_t size, uint8_t address, const uint8_t* data, Qu
             if (rx_packet_out != NULL) {
                 *rx_packet_out = rx_packet;
             }
-            xQueueSendToBack(queue, &rx_packet, pdMS_TO_TICKS(10));
+            if (queue != NULL) {
+                xQueueSendToBack(queue, &rx_packet, 0);
+            }
         } else {
             #ifdef PACKET_DEBUG
             ESP_LOGI(PACKET_TAG, "packet failed crc");
