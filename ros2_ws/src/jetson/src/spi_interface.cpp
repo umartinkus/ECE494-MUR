@@ -290,13 +290,13 @@ private:
         std::vector<uint8_t> spi_in;
 
         // The first transfer clocks the request into the slave; the second reads back its prepared response.
-        spi1_.transfer(spi_out, prime_rx);
-        ::usleep(5000);
+        // spi1_.transfer(spi_out, prime_rx);
+        // ::usleep(5000);
         spi1_.transfer(spi_out, spi_in);
-        debug_log_packet(prime_rx, "PRIME RX");
+        // debug_log_packet(prime_rx, "PRIME RX");
         debug_log_packet(spi_in, "RX");
 
-        decode_rx_packet(prime_rx, spi_out, msg_out);
+        // decode_rx_packet(prime_rx, spi_out, msg_out);
 
         auto msg_out = custom_interfaces::msg::SPI();
         if (!decode_rx_packet(spi_in, spi_out, msg_out)) {
