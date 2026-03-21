@@ -3,8 +3,8 @@ from rclpy.node import Node
 
 from custom_interfaces.msg import SPI
 
-GET_STATUS = 1
-GET_DATA = 3
+GET_STATUS = 0x01
+GET_DATA = 0x03
 
 class MonitorPoller(Node):
     """ROS2 node that periodically polls for new data from the SPI monitor and updates the UI."""
