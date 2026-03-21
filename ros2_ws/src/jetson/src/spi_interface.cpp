@@ -298,9 +298,9 @@ private:
         // I'm not sure why, but the but sometimes the first packet is the good one
         // we will accept whichever one decodes successfully for now, but this should be investigated further.
         auto msg_out = custom_interfaces::msg::SPI();
-        if (!decode_rx_packet(spi_in, spi_out, msg_out)) {
+        if (!decode_rx_packet(spi_in, msg_out)) {
             RCLCPP_WARN(this->get_logger(), "Failed to decode SPI response, publishing empty message with crc=0");
-        } else if (!decode_rx_packet(prime_rx, spi_out, msg_out)) {
+        } else if (!decode_rx_packet(prime_rx, msg_out)) {
             RCLCPP_WARN(this->get_logger(), "Failed to decode prime SPI response, but main response decoded successfully");
         }
 
