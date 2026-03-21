@@ -12,7 +12,7 @@ class MonitorPoller(Node):
     def __init__(self) -> None:
         """Create the ROS2 node and start polling loop."""
         super().__init__("monitor_poller")
-        self.publisher_ = self.create_publisher(SPI, "/spi_send", 10)
+        self.publisher_ = self.create_publisher(SPI, "/spi_monitor", 10)
         self.timer = self.create_timer(0.2, self._poll_spi_monitor)
         self.address_val = GET_DATA
 
