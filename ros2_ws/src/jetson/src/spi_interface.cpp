@@ -274,6 +274,8 @@ private:
                 expected_crc,
                 crc_le
             );
+        } else if (expected_crc == crc_le) {
+            RCLCPP_INFO(this->get_logger(), "CRC check passed");
         }
         return true;
     }
