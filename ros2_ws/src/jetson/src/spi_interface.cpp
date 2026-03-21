@@ -290,18 +290,19 @@ private:
         std::vector<uint8_t> spi_in;
 
         // The first transfer clocks the request into the slave; the second reads back its prepared response.
-        // spi1_.transfer(spi_out, prime_rx);
-        // ::usleep(5000);
+        spi1_.transfer(spi_out, prime_rx);
+        ::usleep(5000);
         spi1_.transfer(spi_out, spi_in);
-        // debug_log_packet(prime_rx, "PRIME RX");
+        debug_log_packet(prime_rx, "PRIME RX");
         debug_log_packet(spi_in, "RX");
 
-        // decode_rx_packet(prime_rx, spi_out, msg_out);
-
+        // I'm not sure why, but the but sometimes the first packet is the good one
+        // we will accept whichever one decodes successfully for now, but this should be investigated further.
         auto msg_out = custom_interfaces::msg::SPI();
         if (!decode_rx_packet(spi_in, spi_out, msg_out)) {
-            // return;
             RCLCPP_WARN(this->get_logger(), "Failed to decode SPI response, publishing empty message with crc=0");
+        } else if (!decode_rx_packet(prime_rx, spi_out, msg_out)) {
+            RCLCPP_WARN(this->get_logger(), "Failed to decode prime SPI response, but main response decoded successfully");
         }
 
         publisher_->publish(msg_out);
