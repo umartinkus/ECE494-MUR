@@ -219,7 +219,6 @@ private:
     // Several validation checks are currently left commented out while bring-up is in progress.
     bool decode_rx_packet(
         const std::vector<uint8_t>& spi_in,
-        const std::vector<uint8_t>& spi_out,
         custom_interfaces::msg::SPI& msg_out
     ) {
         msg_out = custom_interfaces::msg::SPI();
