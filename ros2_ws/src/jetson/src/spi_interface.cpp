@@ -240,10 +240,10 @@ private:
 
         const auto crc_le = static_cast<std::uint16_t>(spi_in[CRC1_POS])
                           | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
-        const auto expected_crc = encode_crc16(msg_out);
         msg_out.crc = crc_le;
-
+                          
         #ifdef DEBUG
+        const auto expected_crc = encode_crc16(msg_out);
         if (expected_crc != crc_le) {
             RCLCPP_WARN(
                 this->get_logger(),
