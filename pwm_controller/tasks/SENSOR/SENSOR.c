@@ -13,8 +13,7 @@
 #include "sys_common.h"
 
 /*Constants*/
-// #define DEBUG
-#define TAG "Sensors"
+#define DEBUG
 
 /*Private variables*/
 static sensor_data_t sensor_data = {0};
@@ -39,9 +38,13 @@ static void sensor_init(void)
 
     get_system_status(&sys_status);
 
-    i2c1_master_init(&bus1);
-    sys_status.i2c_bus_status = STATUS_OK;
+    
+    if (sys_status.i2c_bus_status != STATUS_OK) {
+        i2c1_master_init(&bus1);
+        sys_status.i2c_bus_status = STATUS_OK;
+    }
 
+    
     i2c1_master_add_device(MPU9250_I2C_ADDRESS0, &imu1, &bus1);
     i2c1_master_add_device(MPU9250_I2C_ADDRESS1, &imu2, &bus1);
     i2c1_master_add_device(ADDR_I2C_MS5837, &ps, &bus1);
@@ -65,6 +68,14 @@ void SENSOR(void* params){
     for(;;){
         mpu9250_get_pose(imu1, &imu1_data);
         mpu9250_get_pose(imu2, &imu2_data);
+        
+        #ifdef DEBUG
+        ESP_LOGI(TAG, "IMU1 - Accel: (%d, %d, %d), Gyro: (%d, %d, %d), Mag: (%d, %d, %d), Temp: %d",
+            imu1_data.accel.x, imu1_data.accel.y, imu1_data.accel.z,
+            imu1_data.gyro.x, imu1_data.gyro.y, imu1_data.gyro.z,
+            imu1_data.mag.x, imu1_data.mag.y, imu1_data.mag.z,
+            imu1_data.temp);
+        #endif
 
         bar30_read(ps, bar30_buffer);
 
