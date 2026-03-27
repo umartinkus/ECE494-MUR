@@ -305,11 +305,11 @@ private:
             return;
         }
 
-        RCLCPP_WARN(this->get_logger(), "Failed to decode both SPI responses: \n
-        spi_in: %02X %02X, %04X\n
-        prime_rx: %02X %02X, %04X",
-        spi_in[SYNCH_POS], spi_in[SYNCL_POS], static_cast<uint16_t>(spi_in[CRC1_POS]) | (static_cast<uint16_t>(spi_in[CRC2_POS]) << 8),
-        prime_rx[SYNCH_POS], prime_rx[SYNCL_POS], static_cast<uint16_t>(prime_rx[CRC1_POS]) | (static_cast<uint16_t>(prime_rx[CRC2_POS]) << 8)
+        RCLCPP_INFO(this->get_logger(), "Failed to decode both SPI responses: \n
+        spi_in: %02X %02X, %X\n
+        prime_rx: %02X %02X, %X",
+        msg_out.synch, msg_out.syncl, msg_out.crc,
+        msg_out_prime.synch, msg_out_prime.syncl, msg_out_prime.crc
         );
         return;
     }
