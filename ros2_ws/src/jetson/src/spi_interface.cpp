@@ -306,10 +306,10 @@ private:
         }
 
         RCLCPP_INFO(this->get_logger(), "Failed to decode both SPI responses: \n
-        spi_in: %02X %02X, %X\n
-        prime_rx: %02X %02X, %X",
-        msg_out.synch, msg_out.syncl, msg_out.crc,
-        msg_out_prime.synch, msg_out_prime.syncl, msg_out_prime.crc
+        spi_in: sync: %X %X, address: %X, crc: %X\n
+        prime_rx: sync: %X %X, address: %X, crc: %X",
+        msg_out.synch, msg_out.syncl, msg_out.address, msg_out.crc,
+        msg_out_prime.synch, msg_out_prime.syncl, msg_out_prime.address, msg_out_prime.crc
         );
         return;
     }
