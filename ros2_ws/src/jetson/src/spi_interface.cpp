@@ -241,7 +241,22 @@ private:
         const auto crc_le = static_cast<std::uint16_t>(spi_in[CRC1_POS])
                           | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
         msg_out.crc = crc_le;
-                          
+
+
+        if (msg_out.synch != START_FRAMEH || msg_out.syncl != START_FRAMEL) {
+            #ifdef DEBUG
+            RCLCPP_WARN(this->get_logger(), "Bad sync bytes: %02X %02X", msg_out.synch, msg_out.syncl);
+            #endif
+            return false;
+        }
+
+        if (msg_out.crc != encode_crc16(msg_out)) {
+            #ifdef DEBUG
+            RCLCPP_WARN(this->get_logger(), "Bad CRC: expected %X, received %X", encode_crc16(msg_out), msg_out.crc);
+            #endif
+            return false;
+        }
+
         #ifdef DEBUG
         const auto expected_crc = encode_crc16(msg_out);
         if (expected_crc != crc_le) {
@@ -278,13 +293,15 @@ private:
         // I'm not sure why, but the but sometimes the first packet is the good one
         // we will accept whichever one decodes successfully for now, but this should be investigated further.
         auto msg_out = custom_interfaces::msg::SPI();
-        if (!decode_rx_packet(spi_in, msg_out)) {
-            RCLCPP_WARN(this->get_logger(), "Failed to decode SPI response, publishing empty message with crc=0");
-        } else if (!decode_rx_packet(prime_rx, msg_out)) {
-            RCLCPP_WARN(this->get_logger(), "Failed to decode prime SPI response, but main response decoded successfully");
+        if (decode_rx_packet(spi_in, msg_out)) {
+            publisher_->publish(msg_out);
+            return;
+        } else if (decode_rx_packet(prime_rx, msg_out)) {
+            publisher_->publish(msg_out);
+            return;
         }
 
-        publisher_->publish(msg_out);
+        RCLCPP_WARN(this->get_logger(), "Failed to decode both SPI responses");
         return;
     }
     custom_interfaces::msg::SPI msg_out;

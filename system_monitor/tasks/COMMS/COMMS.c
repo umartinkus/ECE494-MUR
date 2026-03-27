@@ -17,7 +17,7 @@
 
 const static char *TAG = "COMMS";
 
-static system_status_t sys_stat = {STATUS_UNINITIALIZED};
+static system_status_t sys_stat = {0};
 static sensor_data_t sensor_data = {0};
 
 void COMMS(void *args)

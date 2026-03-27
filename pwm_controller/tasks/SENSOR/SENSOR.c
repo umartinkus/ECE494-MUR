@@ -13,8 +13,7 @@
 #include "sys_common.h"
 
 /*Constants*/
-#define DEBUG
-#define DEBUG
+// #define DEBUG
 
 /*Private variables*/
 static sensor_data_t sensor_data = {0};
@@ -54,8 +53,6 @@ static void sensor_init(void)
 
 void SENSOR(void* params){
     uint8_t bar30_buffer[BAR30_READ_BUFFER_SIZE] = {0};
-    float bar30_pressure = 0.0f;
-    float bar30_temp = 0.0f;
     (void)params;
 
     sensor_init();
