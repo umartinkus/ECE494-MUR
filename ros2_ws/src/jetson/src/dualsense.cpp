@@ -38,19 +38,19 @@ private:
         latest_wrench_.fill(0.0f);
 
         if (msg.axes.size() > 0) {
-            latest_wrench_[0] = - static_cast<float>(msg.axes[0]);  // sway
+            latest_wrench_[0] = static_cast<float>(msg.axes[0]);  // sway
         }
         if (msg.axes.size() > 1) {
-            latest_wrench_[1] = static_cast<float>(msg.axes[1]);  // surge
+            latest_wrench_[1] =  - static_cast<float>(msg.axes[1]);  // surge
         }
         if (msg.axes.size() > 5) {
-            latest_wrench_[2] = static_cast<float>(msg.axes[4] - msg.axes[5]);  // heave
-            latest_wrench_[3] = - static_cast<float>(msg.axes[3]);  // pitch
-            latest_wrench_[4] = - static_cast<float>(msg.axes[2]);  // roll
+            latest_wrench_[2] =  - static_cast<float>(msg.axes[4] - msg.axes[5]);  // heave
+            latest_wrench_[3] = static_cast<float>(msg.axes[3]) * 0.2;  // pitch
+            latest_wrench_[4] = static_cast<float>(msg.axes[2]) * 0.2;  // roll
         }
 
         if (msg.buttons.size() > 10 && (msg.buttons[9] || msg.buttons[10])) {
-            latest_wrench_[5] = static_cast<float>(msg.buttons[9] - msg.buttons[10]) * 0.3f;
+            latest_wrench_[5] = - static_cast<float>(msg.buttons[9] - msg.buttons[10]) * 0.3f;
         }
     }
 

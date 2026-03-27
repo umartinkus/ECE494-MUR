@@ -1,4 +1,6 @@
 sudo timedatectl set-ntp false
-sudo timedatectl set-time "2030-01-01 00:00:00"
+
+read -p "Input the current date and time (YYYY-MM-DD HH:MM:SS): " datetime
+sudo timedatectl set-time "$datetime"
 
 source /home/jetson/ros2_ws/install/setup.bash

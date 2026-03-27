@@ -35,8 +35,6 @@
 #define SPI_PACKET_SIZE 64
 #define DATA_SIZE 58
 
-#define DEBUG
-
 // Small RAII wrapper around a Linux spidev file descriptor.
 class SpiDevice {
 public:
@@ -219,7 +217,6 @@ private:
     // Several validation checks are currently left commented out while bring-up is in progress.
     bool decode_rx_packet(
         const std::vector<uint8_t>& spi_in,
-        const std::vector<uint8_t>& spi_out,
         custom_interfaces::msg::SPI& msg_out
     ) {
         msg_out = custom_interfaces::msg::SPI();
@@ -243,30 +240,10 @@ private:
 
         const auto crc_le = static_cast<std::uint16_t>(spi_in[CRC1_POS])
                           | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
-        const auto expected_crc = encode_crc16(msg_out);
         msg_out.crc = crc_le;
-
-        // for (int i = 0; i < 64; i++) {
-        //     RCLCPP_INFO(this->get_logger(), "\ni: %d, in: %X, out %X", i, spi_in[i], spi_out[i]);
-        // }
-
-        // if (expected_crc != crc_le && expected_crc != crc_be) {
-        //     RCLCPP_INFO(
-        //         this->get_logger(),
-        //         "Bad crc: received_le=%X",
-        //         crc_le
-        //     );
-        //     return false;
-        // }
-
-        // if (expected_crc == crc_be && expected_crc != crc_le) {
-        //     msg_out.crc = crc_be;
-        //     RCLCPP_WARN(
-        //         this->get_logger(),
-        //         "Received CRC matched only after byte swap; sender is using opposite byte order"
-        //     );
-        // }
-
+                          
+        #ifdef DEBUG
+        const auto expected_crc = encode_crc16(msg_out);
         if (expected_crc != crc_le) {
             RCLCPP_WARN(
                 this->get_logger(),
@@ -277,6 +254,8 @@ private:
         } else if (expected_crc == crc_le) {
             RCLCPP_INFO(this->get_logger(), "CRC check passed");
         }
+        #endif
+
         return true;
     }
 
@@ -299,9 +278,9 @@ private:
         // I'm not sure why, but the but sometimes the first packet is the good one
         // we will accept whichever one decodes successfully for now, but this should be investigated further.
         auto msg_out = custom_interfaces::msg::SPI();
-        if (!decode_rx_packet(spi_in, spi_out, msg_out)) {
+        if (!decode_rx_packet(spi_in, msg_out)) {
             RCLCPP_WARN(this->get_logger(), "Failed to decode SPI response, publishing empty message with crc=0");
-        } else if (!decode_rx_packet(prime_rx, spi_out, msg_out)) {
+        } else if (!decode_rx_packet(prime_rx, msg_out)) {
             RCLCPP_WARN(this->get_logger(), "Failed to decode prime SPI response, but main response decoded successfully");
         }
 

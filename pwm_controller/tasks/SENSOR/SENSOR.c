@@ -14,6 +14,7 @@
 
 /*Constants*/
 #define DEBUG
+#define DEBUG
 
 /*Private variables*/
 static sensor_data_t sensor_data = {0};
@@ -68,6 +69,15 @@ void SENSOR(void* params){
     for(;;){
         mpu9250_get_pose(imu1, &imu1_data);
         mpu9250_get_pose(imu2, &imu2_data);
+        
+        #ifdef DEBUG
+        ESP_LOGI(TAG, "IMU1 - Accel: (%d, %d, %d), Gyro: (%d, %d, %d), Mag: (%d, %d, %d), Temp: %d",
+            imu1_data.accel.x, imu1_data.accel.y, imu1_data.accel.z,
+            imu1_data.gyro.x, imu1_data.gyro.y, imu1_data.gyro.z,
+            imu1_data.mag.x, imu1_data.mag.y, imu1_data.mag.z,
+            imu1_data.temp);
+        #endif
+
         bar30_read(ps, bar30_buffer);
         sensor_data.imu1 = imu1_data;
         sensor_data.imu2 = imu2_data;

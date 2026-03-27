@@ -1,6 +1,14 @@
 #include "i2c1.h"
 // #include "sys_common.h"
 #include "configuration.h"
+#include "esp_log.h"
+#include "mpu9250.h"
+
+#define I2C_DEBUG
+
+#ifdef I2C_DEBUG
+const static char *TAG = "I2C1";
+#endif
 
 /**
  * @brief 
@@ -90,6 +98,7 @@ error_code_t i2c1_master_add_device(uint8_t dev_addr,
     };
     int retry_count = 0;
     while(i2c_master_bus_add_device(*bus_handle, &dev_config, dev_handle) != ESP_OK && retry_count++ < 5){
+        ESP_LOGI(TAG, "Failed to add device with address 0x%02X to I2C bus, retrying... (%d)", dev_addr, retry_count);
     }
     
     if(retry_count >= 5) {
