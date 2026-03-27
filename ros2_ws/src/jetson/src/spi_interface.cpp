@@ -242,6 +242,8 @@ private:
                           | (static_cast<std::uint16_t>(spi_in[CRC2_POS]) << 8);
         msg_out.crc = crc_le;
 
+
+        #ifdef DEBUG
         if (msg_out.synch != START_FRAMEH || msg_out.syncl != START_FRAMEL) {
             RCLCPP_WARN(this->get_logger(), "Bad sync bytes: %02X %02X", msg_out.synch, msg_out.syncl);
             return false;
@@ -251,6 +253,7 @@ private:
             RCLCPP_WARN(this->get_logger(), "Bad CRC: expected %X, received %X", encode_crc16(msg_out), msg_out.crc);
             return false;
         }
+        #endif
                           
         #ifdef DEBUG
         const auto expected_crc = encode_crc16(msg_out);
@@ -289,11 +292,9 @@ private:
         // we will accept whichever one decodes successfully for now, but this should be investigated further.
         auto msg_out = custom_interfaces::msg::SPI();
         if (decode_rx_packet(spi_in, msg_out)) {
-            RCLCPP_WARN(this->get_logger(), "Sync: %X, %X", msg_out.synch, msg_out.syncl);
             publisher_->publish(msg_out);
             return;
         } else if (decode_rx_packet(prime_rx, msg_out)) {
-            RCLCPP_WARN(this->get_logger(), "Sync: %X, %X", msg_out.synch, msg_out.syncl);
             publisher_->publish(msg_out);
             return;
         }
