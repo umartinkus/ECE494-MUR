@@ -282,6 +282,10 @@ private:
 
         std::vector<uint8_t> prime_rx;
         std::vector<uint8_t> spi_in;
+        
+        // empty the msg out and in buffers to avoid confusion during debugging
+        msg_out = {};
+        msg_out_prime = {};
 
         // The first transfer clocks the request into the slave; the second reads back its prepared response.
         spi1_.transfer(spi_out, prime_rx);
@@ -296,15 +300,21 @@ private:
         if (decode_rx_packet(spi_in, msg_out)) {
             publisher_->publish(msg_out);
             return;
-        } else if (decode_rx_packet(prime_rx, msg_out)) {
-            publisher_->publish(msg_out);
+        } else if (decode_rx_packet(prime_rx, msg_out_prime)) {
+            publisher_->publish(msg_out_prime);
             return;
         }
 
-        RCLCPP_WARN(this->get_logger(), "Failed to decode both SPI responses");
+        RCLCPP_WARN(this->get_logger(), "Failed to decode both SPI responses: \n
+        spi_in: %02X %02X, %04X\n
+        prime_rx: %02X %02X, %04X",
+        spi_in[SYNCH_POS], spi_in[SYNCL_POS], static_cast<uint16_t>(spi_in[CRC1_POS]) | (static_cast<uint16_t>(spi_in[CRC2_POS]) << 8),
+        prime_rx[SYNCH_POS], prime_rx[SYNCL_POS], static_cast<uint16_t>(prime_rx[CRC1_POS]) | (static_cast<uint16_t>(prime_rx[CRC2_POS]) << 8)
+        );
         return;
     }
     custom_interfaces::msg::SPI msg_out;
+    custom_interfaces::msg::SPI msg_out_prime;
 
     packet_t spi_out_{};
     SpiDevice spi1_;

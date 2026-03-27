@@ -32,7 +32,6 @@ void COMMS(void *args)
         ESP_LOGI(TAG, "SPI BUS: Not initialized");
         vTaskDelay(pdMS_TO_TICKS(200));
     }
-
     
     esp_err_t transfer_status; 
     for(;;){

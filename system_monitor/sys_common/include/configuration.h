@@ -13,6 +13,13 @@
 #define SPI3_CLK_PIN 18
 #define SPI3_MOSI_PIN 23
 #define SPI3_MISO_PIN 19
+
+// test spi config
+// #define SPI3_CS_PIN 16
+// #define SPI3_CLK_PIN 17
+// #define SPI3_MOSI_PIN 18
+// #define SPI3_MISO_PIN 5
+
 #define SPI3_MODE 0
 #define SPI3_SLAVE_QUEUE_SIZE 4
 #define SPI3_MAX_TRANSFER_SZ 4096
