@@ -1,5 +1,5 @@
 #include "i2c1.h"
-#include "sys_common.h"
+// #include "sys_common.h"
 #include "configuration.h"
 #include "esp_log.h"
 #include "mpu9250.h"
@@ -17,21 +17,21 @@ const static char *TAG = "I2C1";
  * 
  * 
  * 
- * @return N/A
+ * @return Status of I2C1 bus 1
  * @param bus_handle pointer to the i2c bus handle
  * @note if the bus initialization is unsuccessful, the system state is updated with a failed I2C bus
  * @bug Optional known bugs can be listed here.
  */
-void i2c1_master_init(i2c_master_bus_handle_t *bus_handle){
+error_code_t i2c1_master_init(i2c_master_bus_handle_t *bus_handle){
     if(bus_handle == NULL) {
         // 1. pull the system state,
         // 2. update the i2c bus member in sys state
         // 3. push the updated sys state to the global
-        system_status_t sys_update = {0};
-        get_system_status(&sys_update);
-        sys_update.i2c_bus_status = STATUS_ERROR;
-        update_system_status(sys_update);
-        return;
+        // system_status_t sys_update = {0};
+        // get_system_status(&sys_update);
+        return STATUS_ERROR;
+        // update_system_status(sys_update);
+        // return;
     }
     const i2c_master_bus_config_t bus_config = {
         .i2c_port = I2C1_MASTER_NUM,
@@ -48,11 +48,12 @@ void i2c1_master_init(i2c_master_bus_handle_t *bus_handle){
         // 1. pull the system state,
         // 2. update the i2c bus member in sys state
         // 3. push the updated sys state to the global state
-        system_status_t sys_update = {0};
-        get_system_status(&sys_update);
-        sys_update.i2c_bus_status = STATUS_ERROR;
-        update_system_status(sys_update);
+        // system_status_t sys_update = {0};
+        // get_system_status(&sys_update);
+        return STATUS_ERROR;
+        // update_system_status(sys_update);
     }
+    return STATUS_OK;
 }
 
 /**
@@ -62,7 +63,7 @@ void i2c1_master_init(i2c_master_bus_handle_t *bus_handle){
  * 
  * 
  * 
- * @return N/A
+ * @return Status of the I2C device addded to I2C1
  * @param dev_addr hex device address
  * @param bus_handle pointer to the i2c bus handle
  * @param dev_handle pointer to i2c device handle
@@ -71,7 +72,7 @@ void i2c1_master_init(i2c_master_bus_handle_t *bus_handle){
  * @bug Optional known bugs can be listed here.
  */
 
-void i2c1_master_add_device(uint8_t dev_addr,
+error_code_t i2c1_master_add_device(uint8_t dev_addr,
     i2c_master_dev_handle_t *dev_handle,
     i2c_master_bus_handle_t *bus_handle)
 {
@@ -80,14 +81,14 @@ void i2c1_master_add_device(uint8_t dev_addr,
         // 1. pull the system state,
         // 2. update the i2c bus status in sys state
         // 3. push the updated sys state to the global state
-        return;
+        return STATUS_ERROR;
     }
     if(dev_handle == NULL){
         //  2DO
         // 1. pull the system state,
         // 2. update the i2c dev status in sys state
         // 3. push the updated sys state to the global state
-        return;
+        return STATUS_ERROR;
     }
 
     const i2c_device_config_t dev_config = {
@@ -101,15 +102,11 @@ void i2c1_master_add_device(uint8_t dev_addr,
     }
     
     if(retry_count >= 5) {
-        system_status_t sys_update = {0};
-        get_system_status(&sys_update);
-        if (dev_addr == MPU9250_I2C_ADDRESS0) {
-            sys_update.imu1_status = STATUS_ERROR;
-        } else if (dev_addr == MPU9250_I2C_ADDRESS1) {
-            sys_update.imu2_status = STATUS_ERROR;
-        }
-        update_system_status(sys_update);
-
-        return;
+        //  2DO
+        // 1. pull the system state,
+        // 2. update the i2c dev status in sys state
+        // 3. push the updated sys state to the global state
+        return STATUS_ERROR;
     }
+    return STATUS_OK;
 }
