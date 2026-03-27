@@ -298,7 +298,7 @@ private:
             return;
         }
 
-        RCLCPP_WARN(this->get_logger(), "Failed to decode both SPI responses, publishing empty message with crc=0");
+        RCLCPP_WARN(this->get_logger(), "Failed to decode both SPI responses");
         return;
     }
     custom_interfaces::msg::SPI msg_out;
