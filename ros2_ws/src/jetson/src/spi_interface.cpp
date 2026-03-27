@@ -289,11 +289,11 @@ private:
         // we will accept whichever one decodes successfully for now, but this should be investigated further.
         auto msg_out = custom_interfaces::msg::SPI();
         if (decode_rx_packet(spi_in, msg_out)) {
-            RCLCPP_WARN(this->get_logger(), "Decoded first response");
+            RCLCPP_WARN(this->get_logger(), "Sync: %X, %X", msg_out.synch, msg_out.syncl);
             publisher_->publish(msg_out);
             return;
         } else if (decode_rx_packet(prime_rx, msg_out)) {
-            RCLCPP_WARN(this->get_logger(), "Decoded second response");
+            RCLCPP_WARN(this->get_logger(), "Sync: %X, %X", msg_out.synch, msg_out.syncl);
             publisher_->publish(msg_out);
             return;
         }
