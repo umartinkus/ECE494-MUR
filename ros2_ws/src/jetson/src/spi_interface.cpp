@@ -243,18 +243,20 @@ private:
         msg_out.crc = crc_le;
 
 
-        #ifdef DEBUG
         if (msg_out.synch != START_FRAMEH || msg_out.syncl != START_FRAMEL) {
+            #ifdef DEBUG
             RCLCPP_WARN(this->get_logger(), "Bad sync bytes: %02X %02X", msg_out.synch, msg_out.syncl);
+            #endif
             return false;
         }
 
         if (msg_out.crc != encode_crc16(msg_out)) {
+            #ifdef DEBUG
             RCLCPP_WARN(this->get_logger(), "Bad CRC: expected %X, received %X", encode_crc16(msg_out), msg_out.crc);
+            #endif
             return false;
         }
-        #endif
-                          
+
         #ifdef DEBUG
         const auto expected_crc = encode_crc16(msg_out);
         if (expected_crc != crc_le) {
