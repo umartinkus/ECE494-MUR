@@ -200,7 +200,7 @@ private:
         std::fill(std::begin(spi_out_.data), std::end(spi_out_.data), 0);
         std::memcpy(spi_out_.data, msg.data.data(), spi_out_.data_size);
 
-        spi_out_.crc = encode_crc16(msg);
+        spi_out_.crc = compute_crc16(msg);
         #ifdef DEBUG
         RCLCPP_INFO(this->get_logger(), "CRC Sent: %X", spi_out_.crc);
         #endif
@@ -250,15 +250,15 @@ private:
             return false;
         }
 
-        if (msg_out.crc != encode_crc16(msg_out)) {
+        if (msg_out.crc != compute_crc16(msg_out)) {
             #ifdef DEBUG
-            RCLCPP_WARN(this->get_logger(), "Bad CRC: expected %X, received %X", encode_crc16(msg_out), msg_out.crc);
+            RCLCPP_WARN(this->get_logger(), "Bad CRC: expected %X, received %X", compute_crc16(msg_out), msg_out.crc);
             #endif
             return false;
         }
 
         #ifdef DEBUG
-        const auto expected_crc = encode_crc16(msg_out);
+        const auto expected_crc = compute_crc16(msg_out);
         if (expected_crc != crc_le) {
             RCLCPP_WARN(
                 this->get_logger(),
@@ -305,11 +305,19 @@ private:
             return;
         }
 
-        RCLCPP_INFO(this->get_logger(), "Failed to decode both SPI responses: \n
-        spi_in:: sync:: %X %X, address:: %X, crc:: %X\n
-        prime_rx:: sync:: %X %X, address:: %X, crc:: %X",
-        msg_out.synch, msg_out.syncl, msg_out.address, msg_out.crc,
-        msg_out_prime.synch, msg_out_prime.syncl, msg_out_prime.address, msg_out_prime.crc
+        RCLCPP_INFO(
+            this->get_logger(),
+            "Failed to decode both SPI responses:\n"
+            "spi_in: sync=%X %X, address=%X, crc=%X\n"
+            "prime_rx: sync=%X %X, address=%X, crc=%X",
+            msg_out.synch,
+            msg_out.syncl,
+            msg_out.address,
+            msg_out.crc,
+            msg_out_prime.synch,
+            msg_out_prime.syncl,
+            msg_out_prime.address,
+            msg_out_prime.crc
         );
         return;
     }

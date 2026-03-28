@@ -6,7 +6,6 @@
 
 #define DATA_SIZE 58
 
-namespace {
 
 std::uint16_t compute_crc16(const custom_interfaces::msg::SPI &msg) {
     std::uint8_t div = 0;
