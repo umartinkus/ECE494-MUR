@@ -46,6 +46,8 @@ void SENSOR(void*){
         get_system_status(&sys_update);
         sys_update.leak1_status = STATUS_OK;
         sys_update.leak2_status = STATUS_OK; 
+        sys_update.batt1_status = STATUS_OK;    
+        sys_update.batt2_status = STATUS_OK;
         update_system_status(sys_update);
     };
     for(;;){
@@ -72,10 +74,19 @@ void SENSOR(void*){
 
         if(adc_driver_read_mv(&adc_inputs[BATT1_ADC_INPUT], &sensor_data.batt1) != STATUS_OK){
             // UPDATE SYS STATUS WITH BATT1 DETECTION ERROR/MALFUNCTION
+            system_status_t sys_update = {STATUS_UNINITIALIZED};
+            get_system_status(&sys_update);
+            sys_update.batt1_status = STATUS_ERROR;
+            update_system_status(sys_update);
+
         }
 
-        if(adc_driver_read_mv(&adc_inputs[BATT2_ADC_INPUT], &sensor_data.batt1) != STATUS_OK){
+        if(adc_driver_read_mv(&adc_inputs[BATT2_ADC_INPUT], &sensor_data.batt2) != STATUS_OK){
             // UPDATE SYS STATUS WITH BATT2 DETECTION ERROR/MALFUNCTION
+            system_status_t sys_update = {STATUS_UNINITIALIZED};
+            get_system_status(&sys_update);
+            sys_update.batt2_status = STATUS_ERROR;
+            update_system_status(sys_update);
         }
         #ifdef DEBUG
         ESP_LOGI(TAG,"LEAK1: %D, LEAK2: %D, BATT1: %D, BATT2: %D",sensor_data.leak1, sensor_data.leak2, sensor_data.batt1, sensor_data.batt2);

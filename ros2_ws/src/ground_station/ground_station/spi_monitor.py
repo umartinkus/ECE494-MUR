@@ -29,10 +29,11 @@ STATUS_NAMES = (
     "bar30_status",
     "i2c_bus_status_2",
     "spi_bus_status_2",
-    "batt1_status",
-    "batt2_status",
+    "ADC_status",
     "leak1_status",
     "leak2_status",
+    "batt1_status",
+    "batt2_status",
     "temp1_status",
     "temp2_status",
 )
@@ -200,8 +201,8 @@ class SpiMonitor(Node):
         """Decode secondary sensor packet (leaks, battery voltages, battery temps)."""
         values = struct.unpack("<2f4i", payload)
 
-        leak1, leak2, batt1, batt2 = values[0:4]
-        batt_temp1, batt_temp2 = values[4:6]
+        leak1, leak2, batt1, batt2 = values[2:6]
+        batt_temp1, batt_temp2 = values[0:2]
 
         self._sensor_vars["batt_temp1_status"].set(f"{batt_temp1} °C")
         self._sensor_vars["batt_temp2_status"].set(f"{batt_temp2} °C")
